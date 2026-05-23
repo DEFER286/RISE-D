@@ -47,23 +47,23 @@
   const auth = firebase.auth();
   const provider = new firebase.auth.GoogleAuthProvider();
 // Firebase jaqabsiisuu erga darbitee booda...
-
-// Button Google yeroo tuqamu koodii hojjetu
+    // 1. Button Google yeroo tuqamu kallattiidhaan Redirect gochuuf
 document.getElementById('google-login-btn').addEventListener('click', () => {
-  // Bilbila irratti Popup akka dhowwamne eeyyama saphaphaan saaqna
-  auth.signInWithPopup(provider)
-    .then((result) => {
-      // Gammachuun gaafa milkaa'u kallattiidhaan gara index.html dabarsi
+  auth.signInWithRedirect(provider);
+});
+
+// 2. Erga Google irraa deebi'anii booda milkaa'uu isaa to'achuuf
+auth.getRedirectResult()
+  .then((result) => {
+    if (result.user) {
       alert("Baga nagaan dhufte: " + result.user.displayName);
       // Erga milkaa'ee booda kallattiidhaan gara home.html dabarsi
-window.location.href = "home.html";
-    })
-    .catch((error) => {
-      console.error("Rakkina uumame: ", error.message);
-      // Yoo popup dide koodii hordoffii kana gadi lakkisa
-      auth.signInWithRedirect(provider);
-    });
-});
+      window.location.href = "home.html";
+    }
+  })
+  .catch((error) => {
+    console.error("Rakkina uumame: ", error.message);
+  });
 </script>
 </body>
 </html>
