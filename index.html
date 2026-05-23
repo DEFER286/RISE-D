@@ -43,9 +43,9 @@
         <div style="background-color: #1A0D2E; padding: 20px; border-radius: 12px; border: 1px solid #333; max-width: 400px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
             <h4 style="margin: 0 0 10px 0; font-size: 20px; color: white;">RISE.D - Project</h4>
             <p style="color: #ccc; font-size: 14px; line-height: 1.5; margin-bottom: 15px;">
-                Weebsaayitii ammayyaa tajaajila Google Sign-In (Firebase) qabu fi Netlify irratti fe'ame.
+                Weebsaayitii ammayyaa tajaajila adda Qabu kana ilaaluuf👇
             </p>
-            <a href="signup.html" style="color: #ff9800; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">Ilaali (Demo) →</a>
+            <a href="home.html" style="color: #ff9800; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">Ilaali (Demo) →</a>
         </div>
     </section>
 
@@ -54,26 +54,6 @@
         <p style="margin: 5px 0; color: #ccc;">📧 Gmail: dedechadefera@gmail.com</p>
         <p style="margin: 15px 0 0 0; font-size: 12px; color: #666;">&copy; 2026 Defera Dedecha. All rights reserved.</p>
     </footer>
-<script>
-  // Yeroo weebsaayitiin saaqamu koodii Netlify dammaqsuuf
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.init();
-  }
-
-  // Sarara 47 irratti liinkii 'signup.html' qabdu sana dhuunfaan to'achuuf
-  const demoBtn = document.querySelector('a[href="signup.html"]');
-  
-  if (demoBtn) {
-    demoBtn.addEventListener('click', (e) => {
-      e.preventDefault(); // Gara fuula biraatti akka hin dabarre dhoorkuuf
-      window.netlifyIdentity.open('signup'); // Pop-up login/signup saaquuf
-    });
-  }
-
-  // Akkuma namichi Google'n mirkaneesseen gara bakka itti aanutti dabarsuuf
-  window.netlifyIdentity.on('login', (user) => {
-    window.location.href = "/admin/"; // Gara dashboard ketti geessa
-  });
-</script>
+    
 </body>
 </html>
