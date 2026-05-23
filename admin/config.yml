@@ -16,3 +16,13 @@ collections:
       - { label: "Guyyaa", name: "date", widget: "datetime" }
       - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
       
+        - name: "instructive"
+          label: "Instructive Stories"
+          folder: "posts/instructive"
+          create: true
+          slug: "{{slug}}"
+          fields:
+            - { label: "Mata-duree", name: "title", widget: "string" }
+            - { label: "Guyyaa", name: "date", widget: "datetime" }
+            - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
+      
