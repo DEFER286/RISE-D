@@ -6,6 +6,7 @@
     <title>Portfolio Kiyya</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body style="background-color: #110A1C; color: white; font-family: sans-serif; margin: 0; padding: 0;">
 
@@ -53,6 +54,26 @@
         <p style="margin: 5px 0; color: #ccc;">📧 Gmail: dedechadefera@gmail.com</p>
         <p style="margin: 15px 0 0 0; font-size: 12px; color: #666;">&copy; 2026 Defera Dedecha. All rights reserved.</p>
     </footer>
+<script>
+  // Yeroo weebsaayitiin saaqamu koodii Netlify dammaqsuuf
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.init();
+  }
 
+  // Sarara 47 irratti liinkii 'signup.html' qabdu sana dhuunfaan to'achuuf
+  const demoBtn = document.querySelector('a[href="signup.html"]');
+  
+  if (demoBtn) {
+    demoBtn.addEventListener('click', (e) => {
+      e.preventDefault(); // Gara fuula biraatti akka hin dabarre dhoorkuuf
+      window.netlifyIdentity.open('signup'); // Pop-up login/signup saaquuf
+    });
+  }
+
+  // Akkuma namichi Google'n mirkaneesseen gara bakka itti aanutti dabarsuuf
+  window.netlifyIdentity.on('login', (user) => {
+    window.location.href = "/admin/"; // Gara dashboard ketti geessa
+  });
+</script>
 </body>
 </html>
