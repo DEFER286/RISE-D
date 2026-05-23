@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: DEFER286/RISE-D
   branch: main
 
 media_folder: "images"
