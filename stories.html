@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructive Stories - RISE.D</title>
+</head>
+<body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding: 0; font-family: sans-serif; color: #ffffff;">
+
+    <!-- Menu Button ☰ -->
+    <nav style="position: relative; z-index: 9999;">
+                
+        <div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
+        
+        <!-- Menu Gadi-ba'u -->
+        <div id="side-menu" style="display: none; background-color: #1A0D2E; position: fixed; top: 50px; left: 0; width: 100%; text-align: center; padding: 20px; overflow-y: auto; max-height: 80vh;">
+            <a href="index.html" style="display: block; color: white; padding: 10px; text-decoration: none; font-size: 18px;">Portfolio</a>
+            <a href="about.html" style="display: block; color: white; padding: 10px; text-decoration: none; font-size: 18px;">About</a>
+            
+            <div style="margin: 10px 0;">
+                <a href="#" id="home-dropdown-btn" style="display: block; color: #ff9800; padding: 10px; text-decoration: none; font-size: 18px; font-weight: bold;">Home ▼</a>
+                <div id="home-sub-menu" style="display: none; background-color: #2A1D3E; padding: 10px; border-radius: 8px; margin: 5px 20%; border-left: 3px solid #ff9800;">
+                    <a href="motivation.html" style="display: block; color: white; padding: 8px; text-decoration: none; font-size: 15px;">1. Motivational Speech</a>
+                    <a href="stories.html" style="display: block; color: white; padding: 8px; text-decoration: none; font-size: 15px; margin-top: 5px;">2. Instructive Stories</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Qabiyyee Fuulachaa (Content) -->
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; margin-top: 20px;">
+        <!-- Koodii `stories.html` keessatti akkasitti galchinna -->
+<div style="max-width: 600px; margin: 0 auto; padding: 20px; margin-top: 20px;">
+
+    <!-- Liinkii gara Home geessu (Koodii Haaraa) -->
+    <div style="text-align: left; margin-bottom: 20px;">
+        <a href="home.html" style="color: #ff9800; text-decoration: none; font-size: 16px; font-weight: bold; background-color: #2A1D3E; padding: 8px 15px; border-radius: 20px; border: 1px solid #ff9800;">
+            ⬅ Gara Home Deebi'i
+        </a>
+    </div>
+
+    <!-- Mata-duree weebsaayitiikee (Kun akkuma jirutti tura, hin badu!) -->
+    <h1 style="color: #ff9800; text-align: center; font-size: 2.2em;">📚 Instructive Stories</h1>
+    
+    <!-- Qabiyyee fayiilii stories koodii hafe hunda... -->
+    
+        <p style="text-align: center; color: #ddd; margin-bottom: 40px;">Seenaawwan gaggabaaboo barsiisaa ta'an.</p>
+
+        <!-- Seenaa 1ffaa -->
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px; border-left: 5px solid #00bcd4; backdrop-filter: blur(5px);">
+            <h3 style="color: #ffffff; margin-top: 0;">Qarshii fi Yeroo</h3>
+            <p style="color: #dddddd; line-height: 1.6; font-size: 16px;">"Gaaf tokko namichi tokko... (Asitti seenaa barsiisaa barreessita). Yeroon warqeedha, kanaafuu yeroo keetti sirnaan fayyadami."</p>
+        </div>
+
+    </div>
+
+    <!-- Koodii JavaScript Menu Hojjechiisuuf -->
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const sideMenu = document.getElementById('side-menu');
+        menuBtn.addEventListener('click', () => {
+            sideMenu.style.display = sideMenu.style.display === 'none' ? 'block' : 'none';
+        });
+
+        const homeBtn = document.getElementById('home-dropdown-btn');
+        const homeSubMenu = document.getElementById('home-sub-menu');
+        homeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (homeSubMenu.style.display === 'none') {
+                homeSubMenu.style.display = 'block';
+                homeBtn.innerHTML = 'Home ▲';
+            } else {
+                homeSubMenu.style.display = 'none';
+                homeBtn.innerHTML = 'Home ▼';
+            }
+        });
+    </script>
+</body>
+</html>

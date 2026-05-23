@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISE.D - About</title>
+    <style>
+        /* CSS Fuula About Miidhagsu */
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+        nav {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        nav a {
+            margin: 0 15px;
+            font-size: 18px;
+            color: #ff9900;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        nav a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<nav<!-- Hamburger Button -->
+<div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
+
+<!-- Menu Gadi-ba'u (Hidden by default) -->
+<div id="side-menu" style="display: none; background-color: #1A0D2E; position: fixed; top: 50px; left: 0; width: 100%; text-align: center; padding: 20px;">
+    <a href="index.html" style="display: block; color: white; padding: 10px;">Portfolio</a>
+    <a href="about.html" style="display: block; color: white; padding: 10px;">About</a>
+    <a href="home.html" style="display: block; color: white; padding: 10px;">Home</a>
+</div>
+</nav>
+
+
+    <div style="padding: 60px 20px; max-width: 600px; margin: 0 auto;">
+        <h1 style="color: #ff9900; font-size: 35px; margin-bottom: 20px;">Waa'ee RISE.D</h1>
+        <p style="font-size: 18px; line-height: 1.6;">
+            RISE.D garee tajaajila adda addaa dhaloota quubsu kennuuf hundeeffamedha. 
+            Nuuti Motivation, Inspiration, Web Design fi Video Editing irratti xiyyeeffannoo keenya gurguddaa goonee hojjenna.
+        </p>
+    </div>
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const sideMenu = document.getElementById('side-menu');
+
+    menuBtn.addEventListener('click', () => {
+        if (sideMenu.style.display === 'none') {
+            sideMenu.style.display = 'block';
+        } else {
+            sideMenu.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>

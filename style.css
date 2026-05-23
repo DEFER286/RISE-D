@@ -1,0 +1,55 @@
+/* Background fi Font Waliigalaa */
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+}
+
+/* Menu webyitii (Navigation Bar) */
+nav {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+nav a {
+    margin: 0 15px;
+    font-size: 18px;
+    color: #ff9900;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Liinkii Contact qofaa */
+.contact-links a {
+    color: #ff9900;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.contact-links a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.contact-links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.contact-links li {
+    margin: 10px 0;
+}

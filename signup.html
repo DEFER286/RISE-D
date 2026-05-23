@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISE.D - Sign Up</title>
+</head>
+<body style="background-color: #110A1C; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh;">
+
+    <div style="background-color: #1A0D2E; padding: 30px; border-radius: 12px; max-width: 350px; width: 90%; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-family: sans-serif;">
+        <h2 style="color: #ff9800; margin-bottom: 20px;">Sign Up / Galmeessi</h2>
+        
+        <form>
+            <input type="text" placeholder="Maqaa Kee" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ff9800; border-radius: 6px; background-color: #25163F; color: white; box-sizing: border-box;">
+            <input type="email" placeholder="Gmail kee galchi" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ff9800; border-radius: 6px; background-color: #25163F; color: white; box-sizing: border-box;">
+            <input type="password" placeholder="Password haaraa" required style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ff9800; border-radius: 6px; background-color: #25163F; color: white; box-sizing: border-box;">
+            
+            <button type="submit" style="width: 100%; padding: 12px; background-color: #ff9800; color: #110A1C; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; margin-bottom: 15px;">Eegali / Submit</button>
+        </form>
+
+        <div style="color: #888; margin: 10px 0; font-size: 14px;">— YKN —</div>
+
+        <button id="google-login-btn" style="width: 100%; padding: 12px; background-color: white; color: #333; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 18px; height: 18px;">
+            
+            Sign in with Google
+        </button>
+    </div>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+<script>
+  // Koodii Iccitii Firebase Configuration
+   // Koodii Iccitii Firebase Configuration (Deetaa Kee Isa Dhugaa)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDTqWFjdmXuPvoEnyhcuRcsiV8infSRGoU",
+    authDomain: "rise-d.firebaseapp.com",
+    projectId: "rise-d",
+    storageBucket: "rise-d.firebasestorage.app",
+    messagingSenderId: "837804358810",
+    appId: "1:837804358810:web:cc6861543bc952559b7323",
+    measurementId: "G-KE3FRR2XHP"
+  };
+
+  // Firebase jalqabsiisuu
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const provider = new firebase.auth.GoogleAuthProvider();
+// Firebase jaqabsiisuu erga darbitee booda...
+
+// Button Google yeroo tuqamu koodii hojjetu
+document.getElementById('google-login-btn').addEventListener('click', () => {
+  // Bilbila irratti Popup akka dhowwamne eeyyama saphaphaan saaqna
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      // Gammachuun gaafa milkaa'u kallattiidhaan gara index.html dabarsi
+      alert("Baga nagaan dhufte: " + result.user.displayName);
+      // Erga milkaa'ee booda kallattiidhaan gara home.html dabarsi
+window.location.href = "home.html";
+    })
+    .catch((error) => {
+      console.error("Rakkina uumame: ", error.message);
+      // Yoo popup dide koodii hordoffii kana gadi lakkisa
+      auth.signInWithRedirect(provider);
+    });
+});
+</script>
+</body>
+</html>

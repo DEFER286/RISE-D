@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISE.D - DASHBOARD</title>
+</head>
+<body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding: 0; font-family: sans-serif; color: #ffffff;">
+
+    <nav <!-- Hamburger Button -->
+<div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
+
+<!-- Koodii kana qofa galchi -->
+<div id="side-menu" style="display: none; background-color: #1A0D2E; position: fixed; top: 50px; left: 0; width: 100%; text-align: center; padding: 20px; overflow-y: auto; max-height: 80vh; z-index: 1000;">
+    <a href="index.html" style="display: block; color: white; padding: 10px;">Portfolio</a>
+    <a href="about.html" style="display: block; color: white; padding: 10px;">About</a>
+    <a <!-- Koodii kana "side-menu" keessatti galchi -->
+<div style="margin: 10px 0;">
+    <a href="#" id="home-dropdown-btn" style="display: block; color: #ff9800; padding: 10px; text-decoration: none; font-size: 18px; font-weight: bold;">
+        Home ▼
+    </a>
+    <!-- Koodii kana qofa galchi -->
+<div id="home-sub-menu" style="display: none; background-color: #2A1D3E; margin-top: 10px; padding: 10px; border-radius: 8px; margin: 5px 20%; border-left: 3px solid #ff9800; position: relative; z-index: 1001;">
+    
+        <a href="motivation.html" style="display: block; color: white; padding: 8px; text-decoration: none; font-size: 15px;">1. Motivational Speech</a>
+        <a href="stories.html" style="display: block; color: white; padding: 8px; text-decoration: none; font-size: 15px; margin-top: 5px;">2. Instructive Stories</a>
+    </div>
+</div>
+</a>
+</div>    
+
+</nav>
+
+    <div style="margin-top: 100px; text-align: center; padding: 20px;">
+        <h1<!-- Koodii Mata-duree Haaraa -->
+<h1 style="color: #ff9800; font-size: 2.5em; text-align: center; margin-top: 80px;">RISE.D DASHBOARD</h1>
+<p style="text-align: center; color: #ddd; margin-bottom: 30px;">
+    Baga nagaan gara fuula dhuunfaa keetiitti dhufte! Barruulee jajjabeessoo asitti argatta!
+</p>
+        
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px; border-left: 5px solid #ff9800; backdrop-filter: blur(5px);">
+            <span style="color: #ff9800; font-size: 14px; font-weight: bold;">📅 Caamsaa 19, 2026 | ✨ Inspiration</span>
+            <h3 style="color: #ffffff; margin: 10px 0; font-size: 22px;">Inspiration: Tarkaanfii Jalqabaa</h3>
+            <p style="color: #dddddd; line-height: 1.6; font-size: 16px;">
+                "Guddinni guddaan tarkaanfii xiqqoo ati har'a fudhattu irraa jalqaba. Gufannaan dhufullee, onnee guutuun ka'anii ittifufuun furtuu milkaa'inaati!"
+            </p>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px; border-left: 5px solid #00bcd4; backdrop-filter: blur(5px);">
+            <span style="color: #00bcd4; font-size: 14px; font-weight: bold;">📅 Caamsaa 18, 2026 | 🔥 Motivation</span>
+            <h3 style="color: #ffffff; margin: 10px 0; font-size: 22px;">Motivation: Mul'ata Kee Jiraadhu</h3>
+            <p style="color: #dddddd; line-height: 1.6; font-size: 16px;"></p>
+                "Wanti ati har'a hojjettu fuuldura kee ammayyeessa. Humna keetti amani, dandeettii kee guddifachuuf carraaqi!"
+            </p>
+        </div>
+<!-- Koodii JavaScript Menu Hojjechiisuuf -->
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const sideMenu = document.getElementById('side-menu');
+    menuBtn.addEventListener('click', () => {
+        sideMenu.style.display = sideMenu.style.display === 'none' ? 'block' : 'none';
+    });
+
+    const homeBtn = document.getElementById('home-dropdown-btn');
+    const homeSubMenu = document.getElementById('home-sub-menu');
+    homeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (homeSubMenu.style.display === 'none') {
+            homeSubMenu.style.display = 'block';
+            homeBtn.innerHTML = 'Home ▲';
+        } else {
+            homeSubMenu.style.display = 'none';
+            homeBtn.innerHTML = 'Home ▼';
+        }
+    });
+</script>
+
+</body>
+</html>
