@@ -18,13 +18,19 @@ collections:
       - { label: "Guyyaa", name: "date", widget: "datetime" }
       - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
 
-  - name: "instructive"
-    label: "Instructive Stories"
-    folder: "posts/instructive"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Mata-duree", name: "title", widget: "string" }
-      - { label: "Guyyaa", name: "date", widget: "datetime" }
-      - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
-      
+  # Akkaataa Haaraa: Seenaawwan hunda faayilii JSON tokko keessatti kuusuuf
+  - name: "instructive_data"
+    label: "Instructive Stories (JSON)"
+    files:
+      - label: "Barruulee Barsiisoo Hunda"
+        name: "stories"
+        file: "data/stories.json"
+        fields:
+          - label: "Tarree Seenaawwanii (List of Stories)"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Mata-duree", name: "title", widget: "string" }
+              - { label: "Guyyaa", name: "date", widget: "datetime" }
+              - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
+              
