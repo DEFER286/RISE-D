@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: main # Yoo branch kee 'master' ta'e gara master tti jijjiiri
+  branch: main
 
 media_folder: "images"
 public_folder: "/images"
@@ -15,14 +15,14 @@ collections:
       - { label: "Mata-duree", name: "title", widget: "string" }
       - { label: "Guyyaa", name: "date", widget: "datetime" }
       - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
-      
-        - name: "instructive"
-          label: "Instructive Stories"
-          folder: "posts/instructive"
-          create: true
-          slug: "{{slug}}"
-          fields:
-            - { label: "Mata-duree", name: "title", widget: "string" }
-            - { label: "Guyyaa", name: "date", widget: "datetime" }
-            - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
+
+  - name: "instructive"
+    label: "Instructive Stories"
+    folder: "posts/instructive"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Mata-duree", name: "title", widget: "string" }
+      - { label: "Guyyaa", name: "date", widget: "datetime" }
+      - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
       
