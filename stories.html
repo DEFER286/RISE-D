@@ -46,34 +46,43 @@
     
         <p style="text-align: center; color: #ddd; margin-bottom: 40px;">Seenaawwan gaggabaaboo barsiisaa ta'an.</p>
 
-        <!-- Seenaa 1ffaa -->
-        <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px; border-left: 5px solid #00bcd4; backdrop-filter: blur(5px);">
-            <h3 style="color: #ffffff; margin-top: 0;">Qarshii fi Yeroo</h3>
-            <p style="color: #dddddd; line-height: 1.6; font-size: 16px;">"Gaaf tokko namichi tokko... (Asitti seenaa barsiisaa barreessita). Yeroon warqeedha, kanaafuu yeroo keetti sirnaan fayyadami."</p>
-        </div>
-
-    </div>
-
-    <!-- Koodii JavaScript Menu Hojjechiisuuf -->
+        <!-- Barruuleen CMS irraa asitti ofumaan seenu -->
+<div id="stories-container"></div>
+    
+   <!-- Koodii JavaScript Menu Hojjechiisuuf -->
     <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const sideMenu = document.getElementById('side-menu');
-        menuBtn.addEventListener('click', () => {
-            sideMenu.style.display = sideMenu.style.display === 'none' ? 'block' : 'none';
-        });
+  // 1. Menu hojjechiisuuf (Isa duraa)
+  const menuBtn = document.getElementById('menu-btn');
+  const sideMenu = document.getElementById('side-menu');
+  menuBtn.addEventListener('click', () => {
+    sideMenu.style.display = sideMenu.style.display === 'none' ? 'block' : 'none';
+  });
 
-        const homeBtn = document.getElementById('home-dropdown-btn');
-        const homeSubMenu = document.getElementById('home-sub-menu');
-        homeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (homeSubMenu.style.display === 'none') {
-                homeSubMenu.style.display = 'block';
-                homeBtn.innerHTML = 'Home ▲';
-            } else {
-                homeSubMenu.style.display = 'none';
-                homeBtn.innerHTML = 'Home ▼';
-            }
-        });
-    </script>
+  const homeBtn = document.getElementById('home-dropdown-btn');
+  const homeSubMenu = document.getElementById('home-sub-menu');
+  homeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    homeSubMenu.style.display = homeSubMenu.style.display === 'none' ? 'block' : 'none';
+    homeBtn.innerHTML = homeSubMenu.style.display === 'block' ? 'Home ▲' : 'Home ▼';
+  });
+
+  // 2. Barruulee CMS irraa "Fetch" gochuuf (Koodii Haaraa)
+  fetch('data/stories.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('stories-container');
+      data.items.forEach(story => {
+        const storyDiv = document.createElement('div');
+        storyDiv.innerHTML = `
+          <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px;">
+            <h3 style="color: #ff9800;">${story.title}</h3>
+            <p style="color: #ddd;">${story.body}</p>
+          </div>
+        `;
+        container.appendChild(storyDiv);
+      });
+    })
+    .catch(error => console.log('Barruun hin argamne:', error));
+        </script>
 </body>
 </html>
