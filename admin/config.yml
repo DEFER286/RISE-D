@@ -1,0 +1,18 @@
+backend:
+  name: git-gateway
+  branch: main # Yoo branch kee 'master' ta'e gara master tti jijjiiri
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "motivation"
+    label: "Motivational Speeches"
+    folder: "posts/motivation"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Mata-duree", name: "title", widget: "string" }
+      - { label: "Guyyaa", name: "date", widget: "datetime" }
+      - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
+      
