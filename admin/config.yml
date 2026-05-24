@@ -8,17 +8,23 @@ media_folder: "images"
 public_folder: "/images"
 
 collections:
-  - name: "motivation"
-    label: "Motivational Speeches"
-    folder: "posts/motivation"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Mata-duree", name: "title", widget: "string" }
-      - { label: "Guyyaa", name: "date", widget: "datetime" }
-      - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
+  # Akkaataa Haaraa: Motivational Speeches hundas JSON tokko keessatti kuusuuf
+  - name: "motivation_data"
+    label: "Motivational Speeches (JSON)"
+    files:
+      - label: "Barruulee Onnachiisoo Hunda"
+        name: "motivation"
+        file: "data/motivation.json"
+        fields:
+          - label: "Tarree Barruulee Onnachiisoo"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Mata-duree", name: "title", widget: "string" }
+              - { label: "Guyyaa", name: "date", widget: "datetime" }
+              - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
 
-  # Akkaataa Haaraa: Seenaawwan hunda faayilii JSON tokko keessatti kuusuuf
+  # Inni Instructive Stories akkuma jirutti itti fufa
   - name: "instructive_data"
     label: "Instructive Stories (JSON)"
     files:
