@@ -69,8 +69,8 @@
   // 2. Barruulee CMS irraa "Fetch" gochuuf (Koodii Haaraa)
   fetch('data/stories.json')
     .then(response => response.json())
-            .then(data => {
-            const container = document.getElementById('latest-stories'); // ykn maqaa ID container keetii mirkaneeffadhu
+        .then(data => {
+            const container = document.getElementById('stories-container');
             data.items.forEach(story => {
                 const storyDiv = document.createElement('div');
                 storyDiv.innerHTML = `
@@ -92,6 +92,7 @@
                 }, 100);
             }
         })
+        
     .catch(error => console.log('Barruun hin argamne:', error));
         </script>
 </body>
