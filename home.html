@@ -82,13 +82,14 @@ fetch('data/motivation.json')
     const latest = data.items.slice(0, 2); // Isa dhuma maxxanfame 2 qofa fudhata
     latest.forEach(item => {
     container.innerHTML += `
-    <a href="motivation.html#${item.title.split(' ')[0]} style="text-decoration: none; color: inherit; display: block;">
+    <a href="motivation.html#${item.title.split('')[0]}" style="text-decoration: none; color: inherit; display: block;">
         <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; margin-bottom: 15px; border-left: 4px solid #ff9800; border-radius: 8px; cursor: pointer;">
             <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
             <p style="color: #ddd; font-size: 14px; margin-bottom: 0;">${item.body.substring(0, 100)}...</p>
         </div>
     </a>
 `;
+        
     
     });
   }).catch(err => console.log('Motivation hin argamne:', err));
@@ -101,12 +102,14 @@ fetch('data/stories.json')
     const latest = data.items.slice(0, 2); // Isa dhuma maxxanfame 2 qofa fudhata
     latest.forEach(item => {
 container.innerHTML += `
-    <a href="stories.html#${item.title.split(' ')[0]} style="text-decoration: none; color: inherit; display: block;">
+    <a href="stories.html#${item.title.split('')[0]}" style="text-decoration: none; color: inherit; display: block;">
         <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; margin-bottom: 15px; border-left: 4px solid #00BCD4; border-radius: 8px; cursor: pointer;">
             <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
             <p style="color: #ddd; font-size: 14px; margin-bottom: 0;">${item.body.substring(0, 100)}...</p>
         </div>
     </a>
+`;
+        
 `;
         
     });
