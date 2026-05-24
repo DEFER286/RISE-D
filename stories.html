@@ -73,12 +73,13 @@
       const container = document.getElementById('stories-container');
       data.items.forEach(story => {
         const storyDiv = document.createElement('div');
-        storyDiv.innerHTML = `
-          <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px;">
-            <h3 style="color: #ff9800;">${story.title}</h3>
-            <p style="color: #ddd; white-space: pre-wrap;">${story.body}</p>
-          </div>
+                storyDiv.innerHTML = `
+            <div id="${story.slug}" style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px; scroll-margin-top: 100px;">
+                <h3 style="color: #00BCD4;">${story.title}</h3>
+                <p style="color: #ddd; white-space: pre-wrap;">${story.body}</p>
+            </div>
         `;
+        
         container.appendChild(storyDiv);
       });
     })
