@@ -72,20 +72,30 @@
   // 2. Barruulee Motivation JSON keessaa harkisee fiduu
   fetch('data/motivation.json')
     .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById('motivation-container');
-      data.items.forEach(speech => {
-        const speechDiv = document.createElement('div');
-                            speechDiv.innerHTML = `
-                <div id="${speech.title.split(' ')[0]}" style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px; scroll-margin-top: 100px;">
-                    <h3 style="color: #00BCD4;">${speech.title}</h3>
-                    <p style="color: #ddd; white-space: pre-wrap;">${speech.body}</p>
-                </div>
-            `;
-          
-        container.appendChild(speechDiv);
-      });
-    })
+        .then(data => {
+            const container = document.getElementById('motivation-container');
+            data.items.forEach(speech => {
+                const speechDiv = document.createElement('div');
+                speechDiv.innerHTML = `
+                    <div id="${speech.title.split(' ')[0]}" style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px; scroll-margin-top: 100px;">
+                        <h3 style="color: #00BCD4;">${speech.title}</h3>
+                        <p style="color: #ddd; white-space: pre-wrap;">${speech.body}</p>
+                    </div>
+                `;
+                container.appendChild(speechDiv);
+            });
+
+            // GADI SIQUU (SCROLL) OFUMAAN HAALA KANAAN SEENAA
+            if (window.location.hash) {
+                setTimeout(() => {
+                    const targetElement = document.querySelector(window.location.hash);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 100);
+            }
+        })
+      
     .catch(error => console.log('Barruun Motivation hin argamne:', error));
                 </script>
         
