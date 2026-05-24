@@ -46,34 +46,47 @@
     
         <p style="text-align: center; color: #ddd; margin-bottom: 40px;">Sagalee onnachiisoo fi jechoottan jajjabeessoo asitti argattu.</p>
 
-        <!-- Barruu 1ffaa -->
-        <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px; border-left: 5px solid #ff9800; backdrop-filter: blur(5px); position: relative; z-index: 1;">
-            <h3 style="color: #ffffff; margin-top: 0;">Humna Keetti Amani</h3>
-            <p style="color: #dddddd; line-height: 1.6; font-size: 16px;">"Namni kamiyyuu yeroo jalqabu dogoggoruu danda'a. Garuu kufaatiin dhuma osoo hin taane, barumsa haaraadha. Ka'iiti irra deebiin yaali! Galma keetiif of kenni."</p>
-        </div>
+        <!-- Barruuleen Motivation CMS irraa asitti ofumaan seenu -->
+<div id="motivation-container"></div>
+    
 
-    </div>
+   </div>
 
     <!-- Koodii JavaScript Menu Hojjechiisuuf -->
     <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const sideMenu = document.getElementById('side-menu');
-        menuBtn.addEventListener('click', () => {
-            sideMenu.style.display = sideMenu.style.display === 'none' ? 'block' : 'none';
-        });
+  // 1. Menu hojjechiisuuf
+  const menuBtn = document.getElementById('menu-btn');
+  const sideMenu = document.getElementById('side-menu');
+  menuBtn.addEventListener('click', () => {
+    sideMenu.style.display = sideMenu.style.display === 'none' ? 'block' : 'none';
+  });
 
-        const homeBtn = document.getElementById('home-dropdown-btn');
-        const homeSubMenu = document.getElementById('home-sub-menu');
-        homeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (homeSubMenu.style.display === 'none') {
-                homeSubMenu.style.display = 'block';
-                homeBtn.innerHTML = 'Home ▲';
-            } else {
-                homeSubMenu.style.display = 'none';
-                homeBtn.innerHTML = 'Home ▼';
-            }
-        });
-    </script>
+  const homeBtn = document.getElementById('home-dropdown-btn');
+  const homeSubMenu = document.getElementById('home-sub-menu');
+  homeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    homeSubMenu.style.display = homeSubMenu.style.display === 'none' ? 'block' : 'none';
+    homeBtn.innerHTML = homeSubMenu.style.display === 'block' ? 'Home ▲' : 'Home ▼';
+  });
+
+  // 2. Barruulee Motivation JSON keessaa harkisee fiduu
+  fetch('data/motivation.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('motivation-container');
+      data.items.forEach(speech => {
+        const speechDiv = document.createElement('div');
+        speechDiv.innerHTML = `
+          <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px;">
+            <h3 style="color: #ff9800;">${speech.title}</h3>
+            <p style="color: #ddd;">${speech.body}</p>
+          </div>
+        `;
+        container.appendChild(speechDiv);
+      });
+    })
+    .catch(error => console.log('Barruun Motivation hin argamne:', error));
+                </script>
+        
 </body>
 </hml>
