@@ -1,7 +1,7 @@
 backend:
   name: git-gateway
   branch: main
-
+site_domain: rise-design.netlify.app
 site_url: https://rise-d.vercel.app
 
 media_folder: "images"
