@@ -2,8 +2,9 @@ backend:
   name: github
   repo: DEFER286/RISE-D
   branch: main
-media_folder: "images"
-public_folder: "/images"
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
 
 collections:
   # Akkaataa Haaraa: Motivational Speeches hundas JSON tokko keessatti kuusuuf
@@ -21,6 +22,7 @@ collections:
               - { label: "Mata-duree", name: "title", widget: "string" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
 
   # Inni Instructive Stories akkuma jirutti itti fufa
   - name: "instructive_data"
@@ -37,4 +39,5 @@ collections:
               - { label: "Mata-duree", name: "title", widget: "string" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
               
