@@ -43,7 +43,10 @@
 <p style="text-align: center; color: #ddd; margin-bottom: 30px;">
     Baga nagaan gara fuula dhuunfaa keetiitti dhufte! Barruulee jajjabeessoo asitti argatta!
 </p>
-        
+        <div style="max-width: 500px; margin: 20px auto; padding: 0 10px;">
+        <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Mata-duree ykn jecha barbaadi..." style="width: 100%; padding: 12px 15px; border-radius: 25px; border: 2px solid #ff9800; background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 15px; outline: none; transition: 0.3s;">
+    </div>
+    
     <div <!-- Kutaa Preview Barruulee Haaraa -->
 <div style="margin-top: 30px;">
     <!-- Kutaa Motivation -->
@@ -131,7 +134,37 @@
                 });
             }).catch(err => console.log('Seenaan hin argamne:', err));
 
+             // Hojii Search Bar: Saanduqa hundaa qoratee kan barbaadame qofa hambisa
+        function searchDashboard() {
+            const input = document.getElementById('dashboard-search').value.toLowerCase();
             
+            // Saanduqa Motivation hunda qorachuuf
+            const motivationContainer = document.getElementById('latest-motivation');
+            const motivationBoxes = motivationContainer.getElementsByTagName('a');
+            
+            for (let i = 0; i < motivationBoxes.length; i++) {
+                let text = motivationBoxes[i].textContent || motivationBoxes[i].innerText;
+                if (text.toLowerCase().indexOf(input) > -1) {
+                    motivationBoxes[i].style.display = "";
+                } else {
+                    motivationBoxes[i].style.display = "none";
+                }
+            }
+            
+            // Saanduqa Stories hunda qorachuuf
+            const storiesContainer = document.getElementById('latest-stories');
+            const storiesBoxes = storiesContainer.getElementsByTagName('a');
+            
+            for (let i = 0; i < storiesBoxes.length; i++) {
+                let text = storiesBoxes[i].textContent || storiesBoxes[i].innerText;
+                if (text.toLowerCase().indexOf(input) > -1) {
+                    storiesBoxes[i].style.display = "";
+                } else {
+                    storiesBoxes[i].style.display = "none";
+                }
+            }
+        }
+       
 </script>
    <!-- KUTAA SUBSCRIBE ASITTI GALEERA -->
 <div style="max-width: 600px; margin: 0 auto; padding: 0 20px;">
