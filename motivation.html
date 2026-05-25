@@ -113,6 +113,16 @@
                     `;
                     container.appendChild(speechDiv);
                 });
+                                // ✨ KOODII AUTO-SCROLL (ASITTI QOFA GALCHI)
+                if (window.location.hash) {
+                    setTimeout(() => {
+                        const targetElement = document.querySelector(window.location.hash);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 300);
+              }
+            
             })
             .catch(error => console.log('Barruun Motivation hin argamne:', error));
             
