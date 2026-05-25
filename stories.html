@@ -92,14 +92,16 @@
     .then(response => response.json())
         .then(data => {
             const container = document.getElementById('stories-container');
-            data.items.forEach(story => {
-                const storyDiv = document.createElement('div');
-                storyDiv.innerHTML = `
-                    <div id="${story.title.split(' ')[0]}" style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 25px; border-radius: 12px; scroll-margin-top: 100px;">
-                        <h3 style="color: #00BCD4;">${story.title}</h3>
-                        <p style="color: #ddd; white-space: pre-wrap;">${story.body}</p>
-                    </div>
-                `;
+                    data.items.forEach(story => {
+            const storyDiv = document.createElement('div');
+            storyDiv.innerHTML = `
+                <div id="${story.title.split(' ')[0]}" style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 25px; overflow: hidden;">
+                    ${story.image ? `<img src="${story.image}" alt="${story.title}" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; display: block;">` : ''}
+                    <h3 style="color: #00BCD4; margin-top: 0;">${story.title}</h3>
+                    <p style="color: #ddd; white-space: pre-wrap; line-height: 1.6;">${story.body}</p>
+                </div>
+            `;
+                            
                 container.appendChild(storyDiv);
             });
 
