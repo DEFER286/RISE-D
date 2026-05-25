@@ -48,7 +48,7 @@
 <div style="margin-top: 30px;">
     <!-- Kutaa Motivation -->
     <h2 style="color: #FF9800; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">🔥 Motivation Haaraa</h2>
-    <div id="latest-motivation"></div>
+    <div id="latest-motivation"></div> 
     <div style="text-align: right; margin-bottom: 30px;">
         <a href="motivation.html" style="color: #FF9800; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi ➔</a>
     </div>
@@ -81,20 +81,24 @@
             homeBtn.innerHTML = 'Home ▼';
         }
     });
-</script>
-    <script>
-        // 1. Motivation haaraa 2 CMS irraa fiduuf
+
+    
+                        // 1. Motivation hunda saanduqa sarara muraasaan Dashboard irratti fiduuf (Suuraa Ala)
         fetch('data/motivation.json')
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('latest-motivation');
-                const latest = data.items.slice(0, 2); 
-                latest.forEach(item => {
+                container.innerHTML = ''; 
+                
+                // Isa haaraa dursa gubbaatti kaayna
+                const allItems = data.items.reverse();
+                
+                allItems.forEach(item => {
                     container.innerHTML += `
-                        <a href="motivation.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block; margin-bottom: 25px;">
-                            <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #ff9800;">
+                        <a href="motivation.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block; margin-bottom: 20px;">
+                            <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #ff9800; transition: 0.3s;">
                                 <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px;">${item.body.substring(0, 100)}...</p>
+                                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.body.substring(0, 120)}...</p>
                                 <span style="color: #ff9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
                             </div>
                         </a>
@@ -102,24 +106,31 @@
                 });
             }).catch(err => console.log('Motivation hin argamne:', err));
 
-        // 2. Seenaawwan haaraa 2 CMS irraa fiduuf
+
+
+        // 2. Seenaawwan hunda saanduqa sarara muraasaan Dashboard irratti fiduuf (Suuraa Ala)
         fetch('data/stories.json')
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('latest-stories');
-                const latest = data.items.slice(0, 2); 
-                latest.forEach(item => {
+                container.innerHTML = ''; 
+                
+                // Isa haaraa dursa gubbaatti kaayna
+                const allItems = data.items.reverse();
+                
+                allItems.forEach(item => {
                     container.innerHTML += `
-                        <a href="stories.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block; margin-bottom: 25px;">
-                            <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #00BCD4;">
+                        <a href="stories.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block; margin-bottom: 20px;">
+                            <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #00BCD4; transition: 0.3s;">
                                 <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px;">${item.body.substring(0, 100)}...</p>
-                                <span style="color: #ff9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
+                                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.body.substring(0, 120)}...</p>
+                                <span style="color: #00BCD4; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
                             </div>
                         </a>
                     `;
                 });
             }).catch(err => console.log('Seenaan hin argamne:', err));
+
             
 </script>
    <!-- KUTAA SUBSCRIBE ASITTI GALEERA -->
