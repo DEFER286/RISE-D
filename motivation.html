@@ -90,40 +90,32 @@
     homeBtn.innerHTML = homeSubMenu.style.display === 'block' ? 'Home ▲' : 'Home ▼';
   });
 
-  // 2. Barruulee Motivation JSON keessaa harkisee fiduu
-  fetch('data/motivation.json')
-    .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById('motivation-container');
+        // 2. Barruulee Motivation JSON keessaa harkisee fiduu
+        fetch('data/motivation.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('motivation-container');
                 data.items.forEach(speech => {
-            const speechDiv = document.createElement('div');
-            const shortBody = speech.body.length > 120 ? speech.body.substring(0, 120) + "..." : speech.body;
-
-            speechDiv.innerHTML = `
-                <div id="${speech.title.split(' ')[0]}" 
-                     style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 25px; cursor: pointer;" 
-                     onclick="window.location.href='motivation.html#${speech.title.split(' ')[0]}'">
-                    <h3 style="color: #00BCD4; margin-top: 0;">${speech.title}</h3>
-                    <p style="color: #ddd; line-height: 1.6;">${shortBody}</p>
-                    <span style="color: #ff9800; font-size: 14px; font-weight: bold;">Guutuu Dubbisi →</span>
-                </div>
-            `;
-            container.appendChild(speechDiv);
-        });
-            
-        
-            // GADI SIQUU (SCROLL) OFUMAAN HAALA KANAAN SEENAA
-            if (window.location.hash) {
-                setTimeout(() => {
-                    const targetElement = document.querySelector(window.location.hash);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    const speechDiv = document.createElement('div');
+                    
+                    // Yoo suuraan jiraate akka argisiisu, yoo dhabame immoo duwwaa ta'a
+                    let imageHtml = '';
+                    if (speech.image) {
+                        imageHtml = `<img src="${speech.image}" alt="${speech.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">`;
                     }
-                }, 100);
-            }
-        })
-      
-    .catch(error => console.log('Barruun Motivation hin argamne:', error));
+
+                    speechDiv.innerHTML = `
+                        <div id="${speech.title.split(' ')[0]}" style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+                            ${imageHtml}
+                            <h3 style="color: #00BCD4; margin-top: 0;">${speech.title}</h3>
+                            <p style="color: #ddd; line-height: 1.6; white-space: pre-wrap;">${speech.body}</p>
+                        </div>
+                    `;
+                    container.appendChild(speechDiv);
+                });
+            })
+            .catch(error => console.log('Barruun Motivation hin argamne:', error));
+            
                 </script>
         
 </body>
