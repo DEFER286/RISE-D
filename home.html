@@ -83,42 +83,44 @@
     });
 </script>
     <script>
-// 1. Motivation haaraa 2 CMS irraa fiduuf
-fetch('data/motivation.json')
-  .then(response => response.json())
-  .then(data => {
-    const container = document.getElementById('latest-motivation');
-    const latest = data.items.slice(0, 2); // Isa dhuma maxxanfame 2 qofa fudhata
-    latest.forEach(item => {
-            container.innerHTML += `
-            <a href="motivation.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block;">
-                <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; margin-bottom: 15px; border-left: 4px solid #ff9800; border-radius: 8px; cursor: pointer;">
-                    <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                    <p style="color: #ddd; font-size: 14px; margin-bottom: 0;">${item.body.substring(0, 100)}...</p>
-                </div>
-            </a>
-        `;
-    });
-  }).catch(err => console.log('Motivation hin argamne:', err));
+        // 1. Motivation haaraa 2 CMS irraa fiduuf
+        fetch('data/motivation.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('latest-motivation');
+                const latest = data.items.slice(0, 2); 
+                latest.forEach(item => {
+                    container.innerHTML += `
+                        <a href="motivation.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block; margin-bottom: 25px;">
+                            <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #ff9800;">
+                                <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
+                                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px;">${item.body.substring(0, 100)}...</p>
+                                <span style="color: #ff9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
+                            </div>
+                        </a>
+                    `;
+                });
+            }).catch(err => console.log('Motivation hin argamne:', err));
 
-// 2. Seenaawwan haaraa 2 CMS irraa fiduuf
-fetch('data/stories.json')
-  .then(response => response.json())
-  .then(data => {
-    const container = document.getElementById('latest-stories');
-    const latest = data.items.slice(0, 2); // Isa dhuma maxxanfame 2 qofa fudhata
-    latest.forEach(item => {
-
-            container.innerHTML += `
-            <a href="stories.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block;">
-                <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; margin-bottom: 15px; border-left: 4px solid #00BCD4; border-radius: 8px; cursor: pointer;">
-                    <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                    <p style="color: #ddd; font-size: 14px; margin-bottom: 0;">${item.body.substring(0, 100)}...</p>
-                </div>
-            </a>
-        `;
-    });
-  }).catch(err => console.log('Seenaan hin argamne:', err));
+        // 2. Seenaawwan haaraa 2 CMS irraa fiduuf
+        fetch('data/stories.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('latest-stories');
+                const latest = data.items.slice(0, 2); 
+                latest.forEach(item => {
+                    container.innerHTML += `
+                        <a href="stories.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block; margin-bottom: 25px;">
+                            <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #00BCD4;">
+                                <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
+                                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px;">${item.body.substring(0, 100)}...</p>
+                                <span style="color: #ff9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
+                            </div>
+                        </a>
+                    `;
+                });
+            }).catch(err => console.log('Seenaan hin argamne:', err));
+            
 </script>
    <!-- KUTAA SUBSCRIBE ASITTI GALEERA -->
 <div style="max-width: 600px; margin: 0 auto; padding: 0 20px;">
