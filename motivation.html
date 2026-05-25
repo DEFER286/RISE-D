@@ -108,7 +108,8 @@
                         <div id="${speech.title.split(' ')[0]}" style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 25px;">
                             ${imageHtml}
                             <h3 style="color: #00BCD4; margin-top: 0;">${speech.title}</h3>
-                          <div style="color: #ddd; line-height: 1.8; white-space: pre-line;">${speech.body}</div>
+                    <div style="color: #ddd; line-height: 1.6; white-space: pre-wrap;">${speech.body}</div>
+
                     `;
                     container.appendChild(speechDiv);
                 });
