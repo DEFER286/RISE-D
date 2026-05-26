@@ -94,104 +94,101 @@
         </div>
     </div>
 
-   <script>
-    fetch('data/education.json')
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById('all-education-articles');
-            container.innerHTML = '';
-            
-            // 1. Barruulee ijaaruu fi iddoo Utterances fi Emoji qopheessuu
-            data.items.forEach((item) => {
-                const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
-                
-                container.innerHTML += `
-                    <div class="article-card" id="${itemID}">
-                        <h2 class="article-title">${item.title}</h2>
-                        <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
-                        <div class="article-body">${item.body || ''}</div>
-                        
-                        <!-- Emoji Reactions Box (Miidhagaa Haaraa) -->
-                        <div class="reaction-box" style="margin: 25px 0; padding: 10px; border-top: 1px solid #333; text-align: center;">
-                            <p style="color: #888; font-size: 14px; margin-bottom: 10px;">What do you think?</p>
-                            <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">👍 <span id="like-${itemID}">0</span></button>
-                            <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">❤️ <span id="love-${itemID}">0</span></button>
-                            <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">😆 <span id="funny-${itemID}">0</span></button>
-                        </div>
+<script>
+fetch('data/education.json')
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('all-education-articles');
+        container.innerHTML = '';
 
-                        <!-- Saanduqa Utterances (Comments) -->
-                        <div class="comment-box" id="utterances-${itemID}"></div>
-                    </div>
-                `;
-            });
+        // 1. Barruulee ijaaruu fi iddoo Utterances fi Emoji qopheessuu
+        data.items.forEach(item => {
+            // Mallattoolee akka ?, ', !, fi kkf qulqulleessuuf (Emoji'n akka hojjetuuf)
+            const itemID = item.title.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase();
 
-            // 2. Barruu hunda jalatti Utterances fe'uu
-            data.items.forEach((item) => {
-                const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
-                
-                const script = document.createElement('script');
-                script.src = 'https://utteranc.es/client.js';
-                script.setAttribute('repo', 'DEFER286/RISE-D'); 
-                script.setAttribute('issue-term', itemID); 
-                script.setAttribute('theme', 'github-dark'); 
-                script.setAttribute('crossorigin', 'anonymous');
-                script.async = true;
-
-                document.getElementById('utterances-' + itemID).appendChild(script);
-                
-                // Emoji kuusaa keessaa fiduu (Local Storage irraa)
-                loadReactions(itemID);
-            });
-
-                        // C. KOODII AUTO-SCROLL (Amguddaan fi Kan Hin Maqne)
-            if (window.location.hash) {
-                const hashValue = decodeURIComponent(window.location.hash.substring(1)).toLowerCase().trim();
-                
-                setTimeout(() => {
-                    const allCards = document.querySelectorAll('.article-card');
-                    let targetElement = null;
-
-                    allCards.forEach(card => {
-                        if (card.id.includes(hashValue) || hashValue.includes(card.id)) {
-                            targetElement = card;
-                        }
-                    });
-
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    } else {
-                        const allTitles = document.querySelectorAll('h3');
-                        allTitles.forEach(title => {
-                            if (title.innerText.toLowerCase().includes(hashValue)) {
-                                title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                        });
-                    }
-                }, 1000); 
+            // Suuraan yoo jiraate qofa akka ba'u gochuuf
+            let imgHTML = '';
+            if (item.photo) {
+                imgHTML = `<div class="article-image" style="margin-bottom: 15px; text-align: center;">
+                            <img src="${item.photo}" alt="${item.title}" style="max-width: 100%; border-radius: 8px; height: auto;">
+                           </div>`;
             }
 
-        })
-        .catch(error => console.error('Rakkoon uumameera:', error));
+            container.innerHTML += `
+                <div class="article-card" id="${itemID}">
+                    <h2 class="article-title">${item.title}</h2>
+                    <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
+                    
+                    ${imgHTML} <!-- Suuraan asitti dhalata -->
 
-    // Emojii reaction hordofuuf fi kuusuuf function koodii
-    function handleReaction(itemID, type) {
-        let count = parseInt(localStorage.getItem(`${itemID}-${type}`) || 0);
-        count++;
-        localStorage.setItem(`${itemID}-${type}`, count);
-        document.getElementById(`${type}-${itemID}`).innerText = count;
-    }
+                    <div class="article-body">${item.body || ''}</div>
 
-    function loadReactions(itemID) {
-        ['like', 'love', 'funny'].forEach(type => {
-            let count = localStorage.getItem(`${itemID}-${type}`) || 0;
-            const element = document.getElementById(`${type}-${itemID}`);
-            if (element) element.innerText = count;
+                    <!-- Emoji Reactions Box -->
+                    <div class="reaction-box" style="margin: 25px 0; padding: 10px; border-top: 1px solid #333; text-align: center;">
+                        <p style="color: #888; font-size: 14px; margin-bottom: 10px;">What do you think?</p>
+                        <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">👍 <span id="like-${itemID}">0</span></button>
+                        <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">❤️ <span id="love-${itemID}">0</span></button>
+                        <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">😆 <span id="funny-${itemID}">0</span></button>
+                    </div>
+
+                    <!-- Saanduqa Utterances (Comments) -->
+                    <div class="comment-box" id="utterances-${itemID}"></div>
+                </div>
+            `;
         });
-    }
+
+        // 2. Barruu hunda jalatti Utterances fe'uu
+        data.items.forEach(item => {
+            const itemID = item.title.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase();
+
+            const script = document.createElement('script');
+            script.src = 'https://utteranc.es/client.js';
+            script.setAttribute('repo', 'DEFER286/RISE-D');
+            script.setAttribute('issue-term', itemID);
+            script.setAttribute('theme', 'github-dark');
+            script.setAttribute('crossorigin', 'anonymous');
+            script.async = true;
+
+            const targetCommentBox = document.getElementById(`utterances-${itemID}`);
+            if (targetCommentBox) {
+                targetCommentBox.appendChild(script);
+            }
+
+            // Emoji kuusaa keessaa fiduu
+            loadReactions(itemID);
+        });
+
+        // C. Koodii Auto-Scroll
+        if (window.location.hash) {
+            const hashValue = decodeURIComponent(window.location.hash.substring(1)).toLowerCase().trim();
+            setTimeout(() => {
+                const targetElement = document.getElementById(hashValue);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 1000);
+        }
+    })
+    .catch(error => console.error('Rakkoon uumameera:', error));
+
+// Emojii reaction hordofuuf (Backticks sirraa'eera)
+function handleReaction(itemID, type) {
+    let count = parseInt(localStorage.getItem(`${itemID}-${type}`) || 0);
+    count++;
+    localStorage.setItem(`${itemID}-${type}`, count);
+    
+    const element = document.getElementById(`${type}-${itemID}`);
+    if (element) element.innerText = count;
+}
+
+function loadReactions(itemID) {
+    ['like', 'love', 'funny'].forEach(type => {
+        let count = parseInt(localStorage.getItem(`${itemID}-${type}`) || 0);
+        const element = document.getElementById(`${type}-${itemID}`);
+        if (element) element.innerText = count;
+    });
+}
 </script>
-
-
-
    
 </body>
 </html>
