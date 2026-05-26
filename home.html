@@ -62,6 +62,15 @@
     <div style="text-align: right; margin-bottom: 30px;">
         <a href="stories.html" style="color: #00BCD4; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi ➔</a>
     </div>
+            <!-- 🎓 Gorsa Barnoota Haaraa -->
+        <div style="margin-top: 30px;">
+            <h2 style="color: #FF9800; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">🎓 Gorsa Barnoota Haaraa</h2>
+            <div id="education-container"></div>
+            <div style="text-align: right; margin-bottom: 30px;">
+                <a href="education.html" style="color: #FF9800; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi →</a>
+            </div>
+        </div>
+    
 </div>
         
 <!-- Koodii JavaScript Menu Hojjechiisuuf -->
@@ -133,6 +142,32 @@
                     `;
                 });
             }).catch(err => console.log('Seenaan hin argamne:', err));
+        // 3. Gorsa Barnoota hunda saanduqa sarara muraasaan Dashboard irratti fiduuf
+fetch('data/education.json')
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('education-container');
+        container.innerHTML = '';
+
+        if(data.items && data.items.length > 0) {
+            const allItems = data.items.reverse();
+            allItems.forEach(item => {
+                container.innerHTML += `
+                    <a href="education.html" style="text-decoration: none; color: inherit;">
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,152,0,0.2); margin-bottom: 15px;">
+                            <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
+                            <p style="color: #ddd; margin-bottom: 10px; line-height: 1.5;">${item.body ? item.body.substring(0, 100) + '...' : ''}</p>
+                            <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
+                        </div>
+                    </a>
+                `;
+            });
+        } else {
+            container.innerHTML = '<p style="color: #aaa; text-align: center;">Ammaaf barruun gorsa barnootaa hin jiru.</p>';
+        }
+    })
+    .catch(err => console.log('Gorsi Barnootaa hin argamne:', err));
+
 
              // Hojii Search Bar: Saanduqa hundaa qoratee kan barbaadame qofa hambisa
         function searchDashboard() {
