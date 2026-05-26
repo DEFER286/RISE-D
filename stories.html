@@ -140,16 +140,33 @@
                 // Emoji kuusaa keessaa fiduu
                 loadReactions(itemID);
             });
-
-            // C. KOODII AUTO-SCROLL (Sirriitti akka hojjetuuf saffisa isaa 500ms gooneerra)
+            // C. KOODII AUTO-SCROLL (Amguddaan fi Kan Hin Maqne)
             if (window.location.hash) {
-                const target = document.querySelector(window.location.hash);
-                if (target) {
-                    setTimeout(() => {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }, 500);
-                }
+                const hashValue = decodeURIComponent(window.location.hash.substring(1)).toLowerCase().trim();
+                
+                setTimeout(() => {
+                    const allCards = document.querySelectorAll('.article-card');
+                    let targetElement = null;
+
+                    allCards.forEach(card => {
+                        if (card.id.includes(hashValue) || hashValue.includes(card.id)) {
+                            targetElement = card;
+                        }
+                    });
+
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        const allTitles = document.querySelectorAll('h3');
+                        allTitles.forEach(title => {
+                            if (title.innerText.toLowerCase().includes(hashValue)) {
+                                title.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        });
+                    }
+                }, 1000); 
             }
+
         })
         .catch(error => console.error('Barruun Stories hin argamne:', error));
 
