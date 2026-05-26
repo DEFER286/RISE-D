@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISE-D | Gorsa Barnootaa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1A0D2E;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .main-container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        h1.page-title {
+            color: #FF9800;
+            text-align: center;
+            border-bottom: 2px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 40px;
+        }
+        .article-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            margin-bottom: 40px;
+            scroll-margin-top: 40px; /* Yeroo scroll ta'u gubbaa irraa hamma tokko akka dhiisuuf */
+            transition: all 0.3s ease;
+        }
+        .article-card:target {
+            border-color: #FF9800;
+            background: rgba(255, 152, 0, 0.1); /* Barruun filatame dabalataan akka ifuuf */
+        }
+        .article-title {
+            color: #FF9800;
+            margin-top: 0;
+        }
+        .article-date {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .article-body {
+            line-height: 1.8;
+            color: #ddd;
+            white-space: pre-wrap;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #FF9800;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <a href="home.html" class="back-btn">← Gara Dashboard Deebi'i</a>
+        <h1 class="page-title">🎓 Gorsa Barnoota Hunda</h1>
+        
+        <div id="all-education-articles">
+            <!-- Barruuleen hundi as keessatti ijaarama -->
+        </div>
+    </div>
+
+    <script>
+        // Fayiila JSON keessaa barruulee hunda fiduu
+        fetch('data/education.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('all-education-articles');
+                container.innerHTML = '';
+
+                if (data.items && data.items.length > 0) {
+                    const allItems = data.items.reverse();
+                    
+                    allItems.forEach(item => {
+                        // Maqaa mata-duree irraa ID uumuu (Akkuma home.html irratti goone)
+                        const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
+                        
+                        container.innerHTML += `
+                            <div class="article-card" id="${itemID}">
+                                <h2 class="article-title">${item.title}</h2>
+                                <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
+                                <div class="article-body">${item.body || ''}</div>
+                            </div>
+                        `;
+                    });
+
+                    // Erga barruuleen hundi ijaaramee booda, gara ID liinkii irratti dhufeetti scroll goona
+                    if (window.location.hash) {
+                        const targetElement = document.querySelector(window.location.hash);
+                        if (targetElement) {
+                            setTimeout(() => {
+                                targetElement.scrollIntoView({ behavior: 'smooth' });
+                            }, 300);
+                        }
+                    }
+                } else {
+                    container.innerHTML = '<p style="text-align: center; color: #aaa;">Ammaaf barruun gorsa barnootaa hin jiru.</p>';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('all-education-articles').innerHTML = '<p style="text-align: center; color: #aaa;">Rakkon uumameera.</p>';
+            });
+    </script>
+</body>
+</html>
+
