@@ -93,53 +93,50 @@
             <!-- Barruuleen hundi as keessatti ijaarama -->
         </div>
     </div>
+<script>
+    fetch('data/education.json')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('all-education-articles');
+            container.innerHTML = '';
+            const allItems = data.items;
 
-      <script>
-        fetch('data/education.json')
-            .then(response => response.json())
-            .then(data => {
-                const container = document.getElementById('all-education-articles');
-                container.innerHTML = '';
-
-                if (data.items && data.items.length > 0) {
-                    // Reverse hin goonu, akka JSON keessa jirutti tartiiba isaatiin dhiifna
-                    const allItems = data.items; 
-                    
-                    allItems.forEach(item => {
-                        const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
-                        
-                        container.innerHTML += `
-                            <div class="article-card" id="${itemID}">
-                                <h2 class="article-title">${item.title}</h2>
-                                <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
-                                <div class="article-body">${item.body || ''}</div>
-                                
-                                <div class="comment-box">
-                                    <div id="disqus_thread"></div>
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    // Disqus fi Scroll... (koodii duraanii akkuma jirutti dhiisi)
-                    var disqus_config = function () {
-                        this.page.url = window.location.href;
-                        this.page.identifier = 'education-all';
-                    };
-                    (function() {
-                        var d = document, s = d.createElement('script');
-                        s.src = 'https://rise-d.disqus.com/embed.js';
-                        s.setAttribute('data-timestamp', +new Date());
-                        (d.head || d.body).appendChild(s);
-                    })();
-
-                    if (window.location.hash) {
-                        const target = document.querySelector(window.location.hash);
-                        if (target) target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
+            allItems.forEach((item, index) => {
+                const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
+                
+                // 1. Iddoo Disqus hundaaf id adda baasi
+                container.innerHTML += `
+                    <div class="article-card" id="${itemID}">
+                        <h2 class="article-title">${item.title}</h2>
+                        <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
+                        <div class="article-body">${item.body || ''}</div>
+                        <div class="comment-box">
+                            <div id="disqus_thread_${index}"></div>
+                        </div>
+                    </div>
+                `;
             });
-    </script>
 
+            // 2. Disqus hundaaf jalqabsiisi
+            allItems.forEach((item, index) => {
+                const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
+                var disqus_config = function () {
+                    this.page.url = window.location.href.split('#')[0] + '#' + itemID;
+                    this.page.identifier = 'edu-' + itemID;
+                };
+                var d = document, s = d.createElement('script');
+                s.src = 'https://rise-d.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            });
+
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+</script>
+
+      
 </body>
 </html>
