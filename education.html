@@ -104,24 +104,43 @@
             data.items.forEach((item, index) => {
                 const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
                 
-                // Barruu tokkoon tokkoof id "disqus_thread" qabu uuma
+                // Barruu tokkoon tokkoof div id adda ta'e uuma
                 container.innerHTML += `
                     <div class="article-card" id="${itemID}">
                         <h2 class="article-title">${item.title}</h2>
                         <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
                         <div class="article-body">${item.body || ''}</div>
                         <div class="comment-box">
-                            <div id="disqus_thread"></div>
+                            <div id="disqus_thread_${index}"></div>
                         </div>
                     </div>
                 `;
             });
 
-            // Disqus script fe'uu
-            var disqus_config = function () {
-                this.page.url = window.location.href;
-                this.page.identifier = 'rise-d-education';
-            };
+            // Disqus hundaaf adda-adda irratti fe'i
+            data.items.forEach((item, index) => {
+                const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
+                
+                var disqus_config = function () {
+                    this.page.url = window.location.href.split('#')[0] + '#' + itemID;
+                    this.page.identifier = 'edu-' + itemID;
+                };
+
+                // Disqus thread element jijjiiruu (target disqus_thread_index)
+                var d = document, s = d.createElement('script');
+                s.src = 'https://rise-d.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                
+                // Disqus thread target element hundaaf adda baasuu
+                window.disqus_config = function() {
+                    this.page.identifier = 'edu-' + itemID;
+                    this.page.url = window.location.href.split('#')[0] + '#' + itemID;
+                };
+                
+                // Note: Disqus static code kanatti fayyadamuu qabda
+            });
+            
+            // Disqus Load gochuuf (Simple version)
             (function() {
                 var d = document, s = d.createElement('script');
                 s.src = 'https://rise-d.disqus.com/embed.js';
@@ -130,6 +149,7 @@
             })();
         });
 </script>
+
    
 </body>
 </html>
