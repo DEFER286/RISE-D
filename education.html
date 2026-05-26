@@ -22,6 +22,7 @@
             border-bottom: 2px solid #FF9800;
             padding-bottom: 10px;
             margin-bottom: 40px;
+            font-size: 32px;
         }
         .article-card {
             background: rgba(255, 255, 255, 0.05);
@@ -29,12 +30,12 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 152, 0, 0.2);
             margin-bottom: 40px;
-            scroll-margin-top: 40px; /* Yeroo scroll ta'u gubbaa irraa hamma tokko akka dhiisuuf */
+            scroll-margin-top: 40px;
             transition: all 0.3s ease;
         }
         .article-card:target {
             border-color: #FF9800;
-            background: rgba(255, 152, 0, 0.1); /* Barruun filatame dabalataan akka ifuuf */
+            background: rgba(255, 152, 0, 0.1);
         }
         .article-title {
             color: #FF9800;
@@ -50,20 +51,39 @@
             color: #ddd;
             white-space: pre-wrap;
         }
+        /* Qabduu (Button) Gara Home Deebi'i jedhu bifa saanduqaatiin */
+        .back-btn-container {
+            text-align: left;
+            margin-bottom: 30px;
+        }
         .back-btn {
             display: inline-block;
-            margin-bottom: 20px;
+            padding: 10px 20px;
+            border: 2px solid #FF9800;
+            border-radius: 30px;
             color: #FF9800;
             text-decoration: none;
             font-weight: bold;
+            font-size: 16px;
+            background: rgba(255, 152, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: #FF9800;
+            color: #1A0D2E;
         }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <a href="home.html" class="back-btn">← Gara Dashboard Deebi'i</a>
-        <h1 class="page-title">🎓 Gorsa Barnoota Hunda</h1>
+        <!-- 2. Gara Home Deebi'i jedhu bifa saanduqaatiin asitti dhufeera -->
+        <div class="back-btn-container">
+            <a href="home.html" class="back-btn">← Gara Home Deebi'i</a>
+        </div>
+        
+        <!-- 1. GORSA BARNOOTA HUNDA osoo hin taane GORSA BARNOOTA qofa jedha -->
+        <h1 class="page-title">🎓 Gorsa Barnoota</h1>
         
         <div id="all-education-articles">
             <!-- Barruuleen hundi as keessatti ijaarama -->
@@ -71,7 +91,6 @@
     </div>
 
     <script>
-        // Fayiila JSON keessaa barruulee hunda fiduu
         fetch('data/education.json')
             .then(response => response.json())
             .then(data => {
@@ -82,7 +101,6 @@
                     const allItems = data.items.reverse();
                     
                     allItems.forEach(item => {
-                        // Maqaa mata-duree irraa ID uumuu (Akkuma home.html irratti goone)
                         const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
                         
                         container.innerHTML += `
@@ -94,7 +112,6 @@
                         `;
                     });
 
-                    // Erga barruuleen hundi ijaaramee booda, gara ID liinkii irratti dhufeetti scroll goona
                     if (window.location.hash) {
                         const targetElement = document.querySelector(window.location.hash);
                         if (targetElement) {
@@ -114,4 +131,3 @@
     </script>
 </body>
 </html>
-
