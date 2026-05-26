@@ -106,7 +106,10 @@ fetch('data/education.json')
             // Mallattoolee akka ?, ', !, fi kkf qulqulleessuuf (Emoji'n akka hojjetuuf)
             const itemID = item.title.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase();
 
-            
+            let imageHtml = '';
+                if (speech.image) {
+                    imageHtml = `<img src="${speech.image}" alt="${speech.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">`;
+                }
 
 
             container.innerHTML += `
