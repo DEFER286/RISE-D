@@ -94,7 +94,7 @@
         </div>
     </div>
 
-        <script>
+      <script>
         fetch('data/education.json')
             .then(response => response.json())
             .then(data => {
@@ -102,12 +102,12 @@
                 container.innerHTML = '';
 
                 if (data.items && data.items.length > 0) {
-                    const allItems = data.items.reverse();
+                    // Reverse hin goonu, akka JSON keessa jirutti tartiiba isaatiin dhiifna
+                    const allItems = data.items; 
                     
                     allItems.forEach(item => {
                         const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
                         
-                        // Barruu fi Disqus waliin ijaaruu
                         container.innerHTML += `
                             <div class="article-card" id="${itemID}">
                                 <h2 class="article-title">${item.title}</h2>
@@ -121,7 +121,7 @@
                         `;
                     });
 
-                    // Disqus jalqabsiisuu
+                    // Disqus fi Scroll... (koodii duraanii akkuma jirutti dhiisi)
                     var disqus_config = function () {
                         this.page.url = window.location.href;
                         this.page.identifier = 'education-all';
@@ -133,7 +133,6 @@
                         (d.head || d.body).appendChild(s);
                     })();
 
-                    // Scroll gochuu
                     if (window.location.hash) {
                         const target = document.querySelector(window.location.hash);
                         if (target) target.scrollIntoView({ behavior: 'smooth' });
