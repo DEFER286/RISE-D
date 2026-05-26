@@ -101,54 +101,55 @@
             const container = document.getElementById('all-education-articles');
             container.innerHTML = '';
             
-            data.items.forEach((item, index) => {
+            // 1. Barruulee ijaaruu fi iddoo Utterances itti galu qopheessuu
+            data.items.forEach((item) => {
                 const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
                 
-                // Barruu tokkoon tokkoof div id adda ta'e uuma
                 container.innerHTML += `
                     <div class="article-card" id="${itemID}">
                         <h2 class="article-title">${item.title}</h2>
                         <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
                         <div class="article-body">${item.body || ''}</div>
-                        <div class="comment-box">
-                            <div id="disqus_thread_${index}"></div>
-                        </div>
+                        
+                        <!-- Saanduqa Utterances adda ta'e barruu hundaaf -->
+                        <div class="comment-box" id="utterances-${itemID}"></div>
                     </div>
                 `;
             });
 
-            // Disqus hundaaf adda-adda irratti fe'i
-            data.items.forEach((item, index) => {
+            // 2. Barruu hunda jalatti Utterances fe'uu
+            data.items.forEach((item) => {
                 const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
                 
-                var disqus_config = function () {
-                    this.page.url = window.location.href.split('#')[0] + '#' + itemID;
-                    this.page.identifier = 'edu-' + itemID;
-                };
+                const script = document.createElement('script');
+                script.src = 'https://utteranc.es/client.js';
+                
+                // Maqaa repo keetii isa sirrii
+                script.setAttribute('repo', 'DEFER286/RISE-D'); 
+                
+                // 'pathname' bakka, itemID fayyadamna akka barruun wal hin makamne
+                script.setAttribute('issue-term', itemID); 
+                script.setAttribute('theme', 'github-dark'); 
+                script.setAttribute('crossorigin', 'anonymous');
+                script.async = true;
 
-                // Disqus thread element jijjiiruu (target disqus_thread_index)
-                var d = document, s = d.createElement('script');
-                s.src = 'https://rise-d.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                
-                // Disqus thread target element hundaaf adda baasuu
-                window.disqus_config = function() {
-                    this.page.identifier = 'edu-' + itemID;
-                    this.page.url = window.location.href.split('#')[0] + '#' + itemID;
-                };
-                
-                // Note: Disqus static code kanatti fayyadamuu qabda
+                // Koodicha iddoo qopheessineefitti maxxansuu
+                document.getElementById('utterances-' + itemID).appendChild(script);
             });
-            
-            // Disqus Load gochuuf (Simple version)
-            (function() {
-                var d = document, s = d.createElement('script');
-                s.src = 'https://rise-d.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
+
+            // Gara barruu barbaadametti ofumaan akka gadi siqu gochuuf
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }, 500);
+                }
+            }
+        })
+        .catch(error => console.error('Rakkoon uumameera:', error));
 </script>
+
 
    
 </body>
