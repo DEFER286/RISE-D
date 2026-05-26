@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instructive Stories - RISE.D</title>
+          <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding: 0; font-family: sans-serif; color: #ffffff;">
 
@@ -104,7 +105,8 @@
                     <div class="article-card" id="${itemID}" style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 30px; border-radius: 8px;">
                         ${imageHtml}
                         <h3 style="color: #00BCD4; margin-top: 0;">${story.title}</h3>
-                        <div style="color: #ddd; line-height: 1.6; white-space: pre-wrap; margin-bottom: 20px;">${story.body}</div>
+                        <div class="article-body" style="color: #ddd; line-height: 1.6; margin-bottom: 20px;">${story.body ? marked.parse(story.body) : ''}</div>
+
                         
                         <!-- Emoji Reactions Box -->
                         <div class="reaction-box" style="margin: 25px 0; padding: 10px; border-top: 1px solid #333; text-align: center;">
