@@ -94,7 +94,7 @@
         </div>
     </div>
 
-    <script>
+        <script>
         fetch('data/education.json')
             .then(response => response.json())
             .then(data => {
@@ -104,55 +104,43 @@
                 if (data.items && data.items.length > 0) {
                     const allItems = data.items.reverse();
                     
-                    allItems.forEach((item, index) => {
+                    allItems.forEach(item => {
                         const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
                         
-                        // Disqus hundaaf adda baasuu qaba (hoolaa tokkoon tokkoof id haaraa)
-                        const disqusShortname = 'rise-d'; // Maqaa Disqus kee isa dhugaa (shortname) kanaan bakka buusi
-                        
+                        // Barruu fi Disqus waliin ijaaruu
                         container.innerHTML += `
                             <div class="article-card" id="${itemID}">
                                 <h2 class="article-title">${item.title}</h2>
                                 <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
                                 <div class="article-body">${item.body || ''}</div>
                                 
-                                <!-- Kutaa Comment (Disqus Thread) -->
                                 <div class="comment-box">
-                                    <div id="disqus_thread_${itemID}"></div>
+                                    <div id="disqus_thread"></div>
                                 </div>
                             </div>
                         `;
-
-                        // Disqus script koodii ofumaan akka fe'amu gochuuf
-                        setTimeout(() => {
-                            window.disqus_config = function () {
-                                this.page.url = window.location.href.split('#')[0] + '#' + itemID;
-                                this.page.identifier = 'education-' + itemID;
-                            };
-                            
-                            var d = document, s = d.createElement('script');
-                            s.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
-                            s.setAttribute('data-timestamp', +new Date());
-                            (d.head || d.body).appendChild(s);
-                        }, 500 * (index + 1));
                     });
 
+                    // Disqus jalqabsiisuu
+                    var disqus_config = function () {
+                        this.page.url = window.location.href;
+                        this.page.identifier = 'education-all';
+                    };
+                    (function() {
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://rise-d.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+
+                    // Scroll gochuu
                     if (window.location.hash) {
-                        const targetElement = document.querySelector(window.location.hash);
-                        if (targetElement) {
-                            setTimeout(() => {
-                                targetElement.scrollIntoView({ behavior: 'smooth' });
-                            }, 500);
-                        }
+                        const target = document.querySelector(window.location.hash);
+                        if (target) target.scrollIntoView({ behavior: 'smooth' });
                     }
-                } else {
-                    container.innerHTML = '<p style="text-align: center; color: #aaa;">Ammaaf barruun gorsa barnootaa hin jiru.</p>';
                 }
-            })
-            .catch(err => {
-                console.error(err);
-                document.getElementById('all-education-articles').innerHTML = '<p style="text-align: center; color: #aaa;">Rakkon uumameera.</p>';
             });
     </script>
+
 </body>
 </html>
