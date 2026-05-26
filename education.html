@@ -106,18 +106,22 @@ fetch('data/education.json')
             // Mallattoolee akka ?, ', !, fi kkf qulqulleessuuf (Emoji'n akka hojjetuuf)
             const itemID = item.title.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase();
 
+                        // Suuraan qubee xiqqaan ykn qubee guddaan yoo ka'ame illee akka dubbisuuf
             let imageHtml = '';
-                if (speech.image) {
-                    imageHtml = `<img src="${speech.image}" alt="${speech.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">`;
-                }
+            let imageSrc = item.photo || item.Photo;
 
+            if (imageSrc) {
+                imageHtml = `<div class="article-image" style="margin-bottom: 20px; text-align: center;">
+                                <img src="${imageSrc}" alt="${item.title}" style="max-width: 100%; max-height: 400px; border-radius: 8px; height: auto; object-fit: cover;">
+                             </div>`;
+            }
 
             container.innerHTML += `
                 <div class="article-card" id="${itemID}">
                     <h2 class="article-title">${item.title}</h2>
                     <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
                     
-                    ${imgHTML} <!-- Suuraan asitti dhalata -->
+                    ${imageHtml} <!-- Suuraan sirriitti asitti dhalata -->
 
                     <div class="article-body">${item.body || ''}</div>
 
