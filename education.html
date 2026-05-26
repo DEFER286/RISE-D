@@ -50,8 +50,8 @@
             line-height: 1.8;
             color: #ddd;
             white-space: pre-wrap;
+            margin-bottom: 30px;
         }
-        /* Qabduu (Button) Gara Home Deebi'i jedhu bifa saanduqaatiin */
         .back-btn-container {
             text-align: left;
             margin-bottom: 30px;
@@ -72,17 +72,21 @@
             background: #FF9800;
             color: #1A0D2E;
         }
+        /* Iddoo Disqus */
+        .comment-box {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <!-- 2. Gara Home Deebi'i jedhu bifa saanduqaatiin asitti dhufeera -->
         <div class="back-btn-container">
             <a href="home.html" class="back-btn">← Gara Home Deebi'i</a>
         </div>
         
-        <!-- 1. GORSA BARNOOTA HUNDA osoo hin taane GORSA BARNOOTA qofa jedha -->
         <h1 class="page-title">🎓 Gorsa Barnoota</h1>
         
         <div id="all-education-articles">
@@ -100,16 +104,37 @@
                 if (data.items && data.items.length > 0) {
                     const allItems = data.items.reverse();
                     
-                    allItems.forEach(item => {
+                    allItems.forEach((item, index) => {
                         const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
+                        
+                        // Disqus hundaaf adda baasuu qaba (hoolaa tokkoon tokkoof id haaraa)
+                        const disqusShortname = 'rise-d'; // Maqaa Disqus kee isa dhugaa (shortname) kanaan bakka buusi
                         
                         container.innerHTML += `
                             <div class="article-card" id="${itemID}">
                                 <h2 class="article-title">${item.title}</h2>
                                 <div class="article-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</div>
                                 <div class="article-body">${item.body || ''}</div>
+                                
+                                <!-- Kutaa Comment (Disqus Thread) -->
+                                <div class="comment-box">
+                                    <div id="disqus_thread_${itemID}"></div>
+                                </div>
                             </div>
                         `;
+
+                        // Disqus script koodii ofumaan akka fe'amu gochuuf
+                        setTimeout(() => {
+                            window.disqus_config = function () {
+                                this.page.url = window.location.href.split('#')[0] + '#' + itemID;
+                                this.page.identifier = 'education-' + itemID;
+                            };
+                            
+                            var d = document, s = d.createElement('script');
+                            s.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+                            s.setAttribute('data-timestamp', +new Date());
+                            (d.head || d.body).appendChild(s);
+                        }, 500 * (index + 1));
                     });
 
                     if (window.location.hash) {
@@ -117,7 +142,7 @@
                         if (targetElement) {
                             setTimeout(() => {
                                 targetElement.scrollIntoView({ behavior: 'smooth' });
-                            }, 300);
+                            }, 500);
                         }
                     }
                 } else {
