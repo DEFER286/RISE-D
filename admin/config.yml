@@ -28,7 +28,7 @@ collections:
   - name: "instructive_data"
     label: "Instructive Stories (JSON)"
     files:
-      - label: "Barruulee Barsiisoo Hunda"
+      - label: "Barruelee Barsiisoo Hunda"
         name: "stories"
         file: "data/stories.json"
         fields:
@@ -40,4 +40,20 @@ collections:
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
               - { label: "Photo", name: "image", widget: "image", required: false }
-              
+
+  # Kutaa Haaraa: Gorsa Barnootaa
+  - name: "education_data"
+    label: "Gorsa Barnootaa (JSON)"
+    files:
+      - label: "Barruulee Gorsa Barnootaa Hunda"
+        name: "education"
+        file: "data/education.json"
+        fields:
+          - label: "Tarree Barruulee Gorsa Barnootaa"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Mata-duree", name: "title", widget: "string" }
+              - { label: "Guyyaa", name: "date", widget: "datetime" }
+              - { label: "Qabiyyee Barruu", name: "body", widget: "markdown" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
