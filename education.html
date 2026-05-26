@@ -79,6 +79,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
+   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
 </head>
 <body>
 
@@ -123,7 +124,8 @@ fetch('data/education.json')
                     
                     ${imageHtml} <!-- Suuraan sirriitti asitti dhalata -->
 
-                    <div class="article-body">${item.body || ''}</div>
+                    <div class="article-body">${item.body ? marked.parse(item.body) : ''}</div>
+
 
                     <!-- Emoji Reactions Box -->
                     <div class="reaction-box" style="margin: 25px 0; padding: 10px; border-top: 1px solid #333; text-align: center;">
