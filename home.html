@@ -62,7 +62,7 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 5px;
-        }
+    }
 
         .subscribe-card-text {
             color: #ddd;
@@ -102,7 +102,7 @@
         }
 
         .email-subscribe-button:hover {
-            background-color: #e08700 !important;
+           ackground-color: #e08700 !important;
         }
     </style>
 </head>
@@ -123,8 +123,9 @@
     <a href="#" id="home-dropdown-btn" style="display: block; width: 100%; text-align: center; color: #ff9800; text-decoration: none; font-size: 18px; font-weight: bold;">Home ▲</a>
     
     <div id="home-sub-menu" style="display: none; background-color: #2A1D3E; margin: 10px auto 0 auto; padding: 15px; border-radius: 8px; width: 80%; text-align: center;">
-        <a href="motivation.html" style="display: block; color: white; padding: 10px 0; text-decoration: none; font-size: 15px; text-align: center; margin-bottom: 5px;">🔥 Motivation SPEECH</a>
-        <a href="stories.html" style="display: block; color: white; padding: 10px 0; text-decoration: none; font-size: 15px; text-align: center;">📚 INSTRUCTIVE STORIES</a>
+        <a href="motivation.html" style="display: block; color: white; padding: 10px 0; text-decoration: none; font-size: 15px; text-align: leftr; margin-bottom: 5px;">🔥 Motivation SPEECH</a>
+        <a href="stories.html" style="display: block; color: white; padding: 10px 0; text-decoration: none; font-size: 15px; text-align: left;">📚 INSTRUCTIVE STORIES</a>
+        <a href="education.html" style="display: block; color: white; padding: 10px 0; text-decoration: none; font-size: 15px; text-align: left;">📚 GORSA BARNOOTA</a>    
     </div>
 
 </div>
@@ -301,19 +302,22 @@
         }
        
 </script>
-   <!-- KUTAA SUBSCRIBE ASITTI GALEERA -->
-<div style="max-width: 600px; margin: 0 auto; padding: 0 20px;">
-    <div style="background: rgba(255, 255, 255, 0.05); padding: 40px 20px; border-radius: 12px; text-align: center; margin-top: 50px; margin-bottom: 40px;">
-        <h2 style="color: #fff; margin-bottom: 15px; font-size: 24px;">RISE.D SUBSCRIBE</h2>
-        <p style="color: #ddd; font-size: 14px; margin-bottom: 25px; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;">
-            Barruulee hamilee fi seenaawwan jajjabeessoo haaraa nuti maxxansinu battalumaan e-mail keessan irratti argachuuf ammuma Subscribe godhaa!
-        </p>
-        <form action="https://formspree.io/f/xbdbaolp" method="POST" style="display: flex; justify-content: center; max-width: 400px; margin: 0 auto;">
-            <input type="email" name="email" placeholder="E-mail keessan galchaa" required style="padding: 12px 15px; width: 65%; border: none; border-radius: 4px 0 0 4px; outline: none; background: #333; color: #fff; font-size: 14px;">
-            <button type="submit" style="padding: 12px 20px; background-color: #ff9800; color: #fff; border: none; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; width: 35%; font-size: 14px;">Subscribe</button>
+   
+      <!-- Kutaa Subscribe Haaraa (Fakkii 2ffaa Irratti Argamu) -->
+<div class="subscribe-card">
+    <div class="subscribe-card-content">
+        <div class="subscribe-card-title">
+            <span style="font-size: 24px;">📩</span> Subscribe
+        </div>
+        <p class="subscribe-card-text">Email kee galchi</p>
+        
+        <!-- Formspree fi Dizaayinii Pill Haaraa -->
+        <form action="https://formspree.io/f/xbdbaolp" method="POST" class="email-input-group" style="width: 100%;">
+            <input type="email" name="email" class="email-input-pill" placeholder="email..." required>
+            <button class="email-subscribe-button" type="submit">Subscribe</button>
         </form>
     </div>
 </div>
-        
+            
 </body>
 </html>
