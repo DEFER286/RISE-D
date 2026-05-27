@@ -4,18 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rise-d Barruu Guutuu</title>
-    <style>
+        <style>
         body { background-color: #1A0D2E; color: white; font-family: Arial, sans-serif; padding: 20px; }
-        .post-container { max-width: 800px; margin: auto; }
+        .post-container { 
+            max-width: 800px; 
+            margin: auto; 
+            position: relative; /* Kun mallattoo X hirkisuuf dabalame */
+        }
+        /* Koodii haaraa mallattoo X ijaaru asitti dabalameera */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            color: #ff9800;
+            text-decoration: none;
+            font-weight: bold;
+            line-height: 1;
+            transition: 0.2s;
+        }
+        .close-btn:hover {
+            color: #fff;
+        }
         h1 { color: #ff9800; }
         .date { color: #888; font-size: 14px; }
         .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
         img { max-width: 100%; border-radius: 8px; margin-bottom: 20px; }
-    </style>
+        </style>
 </head>
 <body>
     <div class="post-container">
-        <a href="home.html" style="color: #ff9800; text-decoration: none;">← Gara Dashboarditti Deebi'i</a>
+        <a href="home.html" class="close-btn" title="Gara Dashboarditti Deebi'i">&times;</a>
         <h1 id="post-title">Loading...</h1>
         <p class="date" id="post-date"></p>
         <div id="post-image-container"></div>
