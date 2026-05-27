@@ -71,7 +71,15 @@
                         document.getElementById('post-title').innerText = post.title;
                         document.getElementById('post-date').innerText = new Date(post.date).toLocaleDateString();
                                             // Bakka buusi sarara 74:
-                    document.getElementById('post-content').innerHTML = post.body.replace(/\n/g, '<br>');
+                    // Markdown bold (**) gara HTML bold (<b>) tti jijjiiruu
+let parsedBody = post.body.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+
+// Sarara haaraa (newline) gara HTML <br> tti jijjiiruu
+parsedBody = parsedBody.replace(/\n/g, '<br>');
+
+// Amma HTML bifa sirriin maxxansi
+document.getElementById('post-content').innerHTML = parsedBody;
+
                     // Itti dabali koodii kana:
                     let itemID = category + "-" + postIndex;
                     let emojiHTML = `
