@@ -133,16 +133,17 @@
                 const allItems = data.items.reverse();
                 
                 allItems.forEach(item => {
-                    container.innerHTML += `
-                        <a href="stories.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block; margin-bottom: 20px;">
-                            <div style="background-color: #251D3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 25px; text-align: left; transition: all 0.3s ease;">
-                                <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.body.substring(0, 120)}...</p>
-                                <span style="color: #00BCD4; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
-                            </div>
-                        </a>
-                    `;
-                });
+    container.innerHTML += `
+        <a href="stories.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit;">
+            <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 25px; text-align: left; transition: all 0.3s ease;">
+                <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
+                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.body ? item.body.substring(0, 100) + '...' : ''}</p>
+                <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
+            </div>
+        </a>
+    `;
+});
+        
             }).catch(err => console.log('Seenaan hin argamne:', err));
                 // 3. Gorsa Barnoota hunda saanduqa sarara muraasaan Dashboard irratti fiduuf
         fetch('data/education.json')
@@ -154,19 +155,18 @@
                 if(data.items && data.items.length > 0) {
                     const allItems = data.items.reverse();
                     allItems.forEach(item => {
-                        // Maqaa mata-duree irraa iddoo (space) haquun gara ID tti jijjiiruuf
-                        const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
-                        
-                        container.innerHTML += `
-                            <a href="education.html#${itemID}" style="text-decoration: none; color: inherit;">
-                                <div style="background-color: #251D3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 25px; text-align: left; transition: all 0.3s ease;">
-                                    <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                                    <p style="color: #ddd; margin-bottom: 10px; line-height: 1.5;">${item.description || (item.body ? item.body.substring(0, 100) + '...' : '')}</p>
-                                    <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
-                                </div>
-                            </a>
-                        `;
-                    });
+    const itemID = item.title.replace(/\s+/g, '-').toLowerCase();
+    container.innerHTML += `
+        <a href="education.html#${itemID}" style="text-decoration: none; color: inherit;">
+            <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 25px; text-align: left; transition: all 0.3s ease;">
+                <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
+                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || (item.body ? item.body.substring(0, 100) + '...' : '')}</p>
+                <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
+            </div>
+        </a>
+    `;
+});
+                                                          
                 } else {
                     container.innerHTML = '<p style="color: #aaa; text-align: center;">Ammaaf barruun gorsa barnootaa hin jiru.</p>';
                 }
