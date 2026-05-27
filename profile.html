@@ -494,62 +494,70 @@
             input.type = input.type === "password" ? "text" : "password";
         }
 
-        function handleSignup(e) {
-            e.preventDefault();
-            const name = document.getElementById('reg-name').value;
-            const email = document.getElementById('reg-email').value;
-            const pass = document.getElementById('reg-pass').value;
-            const passConfirm = document.getElementById('reg-pass-confirm').value;
+ function handleSignup(e) {
+    e.preventDefault();
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
+    const pass = document.getElementById('reg-pass').value;
+    const passConfirm = document.getElementById('reg-pass-confirm').value;
 
-            if (pass !== passConfirm) {
-                alert("Passwords do not match!");
-                return;
-            }
+    if (pass !== passConfirm) {
+        alert("Passwords do not match!");
+        return;
+    }
 
-            const userData = { name: name, email: email, password: pass };
-            localStorage.setItem('riseUserData', JSON.stringify(userData));
-            
-            alert("Account Created Successfully! Switching to Log In.");
-            document.getElementById('form-signup').reset();
-            switchTab('login');
+    const userData = { name: name, email: email, password: pass };
+    localStorage.setItem('riseUserData', JSON.stringify(userData));
+    
+    alert("Account Created Successfully! Switching to Log In.");
+    document.getElementById('form-signup').reset();
+    switchTab('login');
+}
+
+function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-pass').value;
+    
+    const savedDataStr = localStorage.getItem('riseUserData');
+    
+    if (savedDataStr) {
+        const savedData = JSON.parse(savedDataStr);
+        if (savedData.email === email && savedData.password === pass) {
+            localStorage.setItem('riseLoggedInUser', JSON.stringify(savedData));
+            showProfileDashboard(savedData);
+        } else {
+            alert("Incorrect Email or Password.");
         }
+    } else {
+        alert("No account found. Please Sign Up first.");
+    }
+}
 
-        function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-pass').value;
-            
-            const savedDataStr = localStorage.getItem('riseUserData');
-            
-            if (savedDataStr) {
-                const savedData = JSON.parse(savedDataStr);
-                if (savedData.email === email && savedData.password === pass) {
-                    localStorage.setItem('riseLoggedInUser', JSON.stringify(savedData));
-                    showProfileDashboard(savedData);
-                } else {
-                    alert("Incorrect Email or Password.");
-                }
-            } else {
-                alert("No account found. Please Sign Up first.");
-            }
-        }
+function showProfileDashboard(user) {
+    document.getElementById('auth-view').style.display = 'none';
+    document.getElementById('profile-dashboard').style.display = 'block';
+    
+    document.getElementById('display-name').innerText = user.name;
+    document.getElementById('display-email').innerText = user.email;
+    document.getElementById('display-initial').innerText = user.name.charAt(0).toUpperCase();
 
-        function showProfileDashboard(user) {
-            document.getElementById('auth-view').style.display = 'none';
-            document.getElementById('profile-dashboard').style.display = 'block';
-            
-            document.getElementById('display-name').innerText = user.name;
-            document.getElementById('display-email').innerText = user.email;
-            document.getElementById('display-initial').innerText = user.name.charAt(0).toUpperCase();
-        }
+    // 1. Baay'ina Barruu dhuugaan argachuu
+    const readArticles = JSON.parse(localStorage.getItem('readArticlesList')) || [];
+    document.querySelector('.stats-grid .stat-box:nth-child(1) .stat-num').innerText = readArticles.length;
 
-        function handleLogout() {
-            localStorage.removeItem('riseLoggedInUser');
-            document.getElementById('form-login').reset();
-            document.getElementById('profile-dashboard').style.display = 'none';
-            document.getElementById('auth-view').style.display = 'block';
-            switchTab('login');
-        }
-    </script>
+    // 2. Baay'ina Barruu Ol-kaa'amanii dhuugaan argachuu
+    const savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
+    document.querySelector('.stats-grid .stat-box:nth-child(2) .stat-num').innerText = savedArticles.length;
+}
+
+function handleLogout() {
+    localStorage.removeItem('riseLoggedInUser');
+    document.getElementById('form-login').reset();
+    document.getElementById('profile-dashboard').style.display = 'none';
+    document.getElementById('auth-view').style.display = 'block';
+    switchTab('login');
+}
+</script>
 </body>
 </html>
