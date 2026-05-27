@@ -71,8 +71,7 @@
                         document.getElementById('post-title').innerText = post.title;
                         document.getElementById('post-date').innerText = new Date(post.date).toLocaleDateString();
                                             // Bakka buusi sarara 74:
-                    document.getElementById('post-content').innerText = post.body;
-
+                    document.getElementById('post-content').innerHTML = post.body.replace(/\n/g, '<br>');
                     // Itti dabali koodii kana:
                     let itemID = category + "-" + postIndex;
                     let emojiHTML = `
