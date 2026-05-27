@@ -93,10 +93,14 @@ document.getElementById('post-content').innerHTML = parsedBody;
             <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background: #222; border: 1px solid #444; color: #FF9800; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 5px;">🔖 Ol-kaahi</button>
         </div>`;
                         
-                    document.getElementById('post-content').innerHTML += emojiHTML;
-                    loadReactions(itemID);                      
-                    updateSaveButtonVisual(itemID);
-                        if(post.image) {
+                            // Saanduqa emoji bifa haaraan uumuu odoo koodii duraanii hin diigin
+        const emojiContainer = document.createElement('div');
+        emojiContainer.innerHTML = emojiHTML;
+        document.getElementById('post-content').appendChild(emojiContainer);
+        
+        loadReactions(itemID);
+        updateSaveButtonVisual(itemID);
+                        
                             document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}">`;
                         }
                     } else {
