@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KE3FRR2XHP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KE3FRR2XHP');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISE.D - PROFILE</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A);
+            background-attachment: fixed;
+            margin: 0;
+            padding-bottom: 90px !important;
+            font-family: sans-serif;
+            color: white;
+            text-align: center;
+        }
+
+        /* --- Auth Card & Form Styles --- */
+        .auth-container {
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tab-group {
+            display: flex;
+            background-color: #1A112C;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: #FF9800;
+            color: #110A1C;
+        }
+
+        .auth-card {
+            background-color: #1A112C;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px;
+            background-color: #120B24;
+            border: 1px solid #2A1D45;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #FF9800;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            background-color: #FF9800;
+            color: #110A1C;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover { background-color: #e68a00; }
+
+        .divider {
+            margin: 20px 0;
+            color: #888;
+            font-size: 12px;
+            position: relative;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: #333;
+        }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+
+        .btn-google {
+            width: 100%;
+            padding: 14px;
+            background-color: transparent;
+            color: white;
+            border: 1px solid #333;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* --- Logged In Profile Card --- */
+        #profile-dashboard {
+            display: none;
+            background-color: #1A112C;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #FF9800;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background-color: #FF9800;
+            color: #110A1C;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0 auto 15px auto;
+        }
+
+        /* --- Bottom Navigation Bar Style --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #120B24;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888888;
+            font-size: 12px;
+            gap: 4px;
+            transition: color 0.3s ease;
+            width: 25%;
+            text-align: center;
+        }
+
+        .nav-icon { font-size: 20px; }
+        .nav-item.active { color: #FF9800; }
+        .nav-item:hover { color: #ffffff; }
+
+        @media (min-width: 768px) { .bottom-nav { display: none; } }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        
+        <!-- Auth View (Login / Signup Forms) -->
+        <div id="auth-view">
+            <!-- Tabs -->
+            <div class="tab-group">
+                <button class="tab-btn" id="tab-login" onclick="switchTab('login')">Log In</button>
+                <button class="tab-btn active" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Card Container -->
+            <div class="auth-card">
+                
+                <!-- Sign Up Form -->
+                <form id="form-signup" onsubmit="handleSignup(event)">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="reg-name" placeholder="Your First and Last Name" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="reg-email" placeholder="email@example.com" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="reg-pass" placeholder="At least 8 characters" required>
+                            <span class="eye-icon" onclick="togglePassword('reg-pass')">👁️</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="reg-pass-confirm" placeholder="Re-enter password" required>
+                            <span class="eye-icon" onclick="togglePassword('reg-pass-confirm')">👁️</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                </form>
+
+                <!-- Log In Form -->
+                <form id="form-login" style="display: none;" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="login-email" placeholder="email@example.com" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="login-pass" placeholder="Enter your password" required>
+                            <span class="eye-icon" onclick="togglePassword('login-pass')">👁️</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Log In</button>
+                </form>
+
+                <div class="divider">or</div>
+                <button class="btn-google">
+                    <span style="font-weight: bold; font-size: 16px;">G</span> Sign in with Google
+                </button>
+            </div>
+        </div>
+
+        <!-- Logged In Profile Dashboard -->
+        <div id="profile-dashboard">
+            <div class="user-avatar" id="display-initial">R</div>
+            <h2 id="display-name" style="margin-bottom: 5px;">Welcome!</h2>
+            <p id="display-email" style="color: #888; margin-top: 0; margin-bottom: 30px;">user@example.com</p>
+            
+            <button class="btn-primary" style="background-color: transparent; border: 1px solid #FF9800; color: #FF9800;" onclick="handleLogout()">Log Out</button>
+        </div>
+
+    </div>
+
+    <!-- Barri Gadii (Bottom Navigation Bar) -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <span class="nav-icon">🎛️</span>
+            <span class="nav-label">Jalqaba</span>
+        </a>
+        <a href="home.html#dashboard-search" class="nav-item">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">Barbaadi</span>
+        </a>
+        <a href="saved.html" class="nav-item">
+            <span class="nav-icon">🔖</span>
+            <span class="nav-label">Ol-kaa'ame</span>
+        </a>
+        <a href="profile.html" class="nav-item active"> <!-- Asitti Active Ta'a -->
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profile</span>
+        </a>
+    </div>
+
+    <!-- JavaScript For Account Functionality -->
+    <script>
+        // Check if user is already logged in on page load
+        window.onload = function() {
+            const loggedInUser = localStorage.getItem('riseLoggedInUser');
+            if (loggedInUser) {
+                showProfileDashboard(JSON.parse(loggedInUser));
+            }
+        };
+
+        // Switch between Log In and Sign Up tabs
+        function switchTab(tab) {
+            document.getElementById('tab-login').classList.remove('active');
+            document.getElementById('tab-signup').classList.remove('active');
+            document.getElementById('form-login').style.display = 'none';
+            document.getElementById('form-signup').style.display = 'none';
+
+            if (tab === 'login') {
+                document.getElementById('tab-login').classList.add('active');
+                document.getElementById('form-login').style.display = 'block';
+            } else {
+                document.getElementById('tab-signup').classList.add('active');
+                document.getElementById('form-signup').style.display = 'block';
+            }
+        }
+
+        // Toggle Password Visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+
+        // Handle Sign Up
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-pass').value;
+            const passConfirm = document.getElementById('reg-pass-confirm').value;
+
+            if (pass !== passConfirm) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Save user to LocalStorage
+            const userData = { name: name, email: email, password: pass };
+            localStorage.setItem('riseUserData', JSON.stringify(userData));
+            
+            alert("Account Created Successfully! Please Log In.");
+            document.getElementById('form-signup').reset();
+            switchTab('login');
+        }
+
+        // Handle Log In
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+            
+            const savedDataStr = localStorage.getItem('riseUserData');
+            
+            if (savedDataStr) {
+                const savedData = JSON.parse(savedDataStr);
+                if (savedData.email === email && savedData.password === pass) {
+                    // Success Login
+                    localStorage.setItem('riseLoggedInUser', JSON.stringify(savedData));
+                    showProfileDashboard(savedData);
+                } else {
+                    alert("Incorrect Email or Password.");
+                }
+            } else {
+                alert("No account found with this email. Please Sign Up.");
+            }
+        }
+
+        // Show Profile Dashboard
+        function showProfileDashboard(user) {
+            document.getElementById('auth-view').style.display = 'none';
+            document.getElementById('profile-dashboard').style.display = 'block';
+            
+            document.getElementById('display-name').innerText = "Hello, " + user.name + "!";
+            document.getElementById('display-email').innerText = user.email;
+            document.getElementById('display-initial').innerText = user.name.charAt(0).toUpperCase();
+        }
+
+        // Handle Log Out
+        function handleLogout() {
+            localStorage.removeItem('riseLoggedInUser');
+            document.getElementById('form-login').reset();
+            
+            document.getElementById('profile-dashboard').style.display = 'none';
+            document.getElementById('auth-view').style.display = 'block';
+            switchTab('login');
+        }
+    </script>
+</body>
+              </html>
+  
