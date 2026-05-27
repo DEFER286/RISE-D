@@ -193,17 +193,14 @@ input.email-input-pill {
         }
     });
 
-    
-                        // 1. Motivation hunda saanduqa sarara muraasaan Dashboard irratti fiduuf (Suuraa Ala)
+            // 1. Motivation hunda saanduqa sarara muraasaan Dashboard irratti fiduuf
         fetch('data/motivation.json')
-            .then(response => response.json())
-                    .then(data => {
+        .then(response => response.json())
+        .then(data => {
             const container = document.getElementById('latest-motivation');
             container.innerHTML = '';
 
-            // Isa haaraa dursa gubbaatti kaayna
             const allItems = data.items.reverse();
-            // index dabalaniiru asirratti
             allItems.forEach((item, index) => {
                 container.innerHTML += `
                 <a href="post.html?cat=motivation&id=${index}" style="text-decoration: none; color: inherit;">
@@ -216,22 +213,17 @@ input.email-input-pill {
                 `;
             });
         })
-
-                
-            }).catch(err => console.log('Motivation hin argamne:', err));
+        .catch(err => console.log('Motivation hin argamne:', err));
 
 
-
-        // 2. Seenaawwan hunda saanduqa sarara muraasaan Dashboard irratti fiduuf (Suuraa Ala)
+        // 2. Seenaawwan hunda saanduqa sarara muraasaan Dashboard irratti fiduuf
         fetch('data/stories.json')
-            .then(response => response.json())
-            .then(data => {
+        .then(response => response.json())
+        .then(data => {
             const container = document.getElementById('latest-stories');
             container.innerHTML = '';
 
-            // Isa haaraa dursa gubbaatti kaayna
             const allItems = data.items.reverse();
-            // index dabalaniiru asirratti
             allItems.forEach((item, index) => {
                 container.innerHTML += `
                 <a href="post.html?cat=stories&id=${index}" style="text-decoration: none; color: inherit;">
@@ -244,18 +236,18 @@ input.email-input-pill {
                 `;
             });
         })
-        
-            }).catch(err => console.log('Seenaan hin argamne:', err));
-                // 3. Gorsa Barnoota hunda saanduqa sarara muraasaan Dashboard irratti fiduuf
+        .catch(err => console.log('Seenaan hin argamne:', err));
+
+
+        // 3. Gorsa Barnootaa hunda saanduqa sarara muraasaan Dashboard irratti fiduuf
         fetch('data/education.json')
-            .then(response => response.json())
-                  .then(data => {
+        .then(response => response.json())
+        .then(data => {
             const container = document.getElementById('education-container');
             container.innerHTML = '';
 
             if (data.items && data.items.length > 0) {
                 const allItems = data.items.reverse();
-                // index dabalaniiru asirratti
                 allItems.forEach((item, index) => {
                     container.innerHTML += `
                     <a href="post.html?cat=education&id=${index}" style="text-decoration: none; color: inherit;">
@@ -267,11 +259,10 @@ input.email-input-pill {
                     </a>
                     `;
                 });
-        }
-                             
-            
-        }}.catch(err => console.log('Gorsi Barnootaa hin argamne:', err));
-
+            }
+        })
+        .catch(err => console.log('Gorsi Barnootaa hin argamne:', err));
+        
 
 
              // Hojii Search Bar: Saanduqa hundaa qoratee kan barbaadame qofa hambisa
