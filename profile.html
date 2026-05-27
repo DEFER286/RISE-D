@@ -428,15 +428,15 @@
             <div class="dashboard-section">
                 <div class="section-title">My Progress</div>
                 <div class="stats-grid">
-                    <div class="stat-box">
-                        <div class="stat-num">12</div>
-                        <div class="stat-name">Articles Read</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-num">5</div>
-                        <div class="stat-name">Saved Posts</div>
-                    </div>
-                </div>
+                <div class="stat-box">
+                <div class="stat-num" id="articles-read-count">0</div>
+                <div class="stat-name">Articles Read</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num" id="saved-posts-count">0</div>
+                <div class="stat-name">Saved Posts</div>
+            </div>
+                    
             </div>
 
             <!-- Actions -->
@@ -558,6 +558,17 @@ function handleLogout() {
     document.getElementById('auth-view').style.display = 'block';
     switchTab('login');
 }
+    // Dom banamee bifa haaraan lakkoofsa fiduuf
+    document.addEventListener("DOMContentLoaded", function() {
+        let readArticles = JSON.parse(localStorage.getItem('readArticlesList')) || [];
+        const readEl = document.getElementById('articles-read-count');
+        if (readEl) readEl.innerText = readArticles.length;
+
+        let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
+        const savedEl = document.getElementById('saved-posts-count');
+        if (savedEl) savedEl.innerText = savedArticles.length;
+    });
+        
 </script>
 </body>
 </html>
