@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KE3FRR2XHP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KE3FRR2XHP');
+    </script>
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISE.D - OL-KAA'AME</title>
+    <style>
+        /* --- Bottom Navigation Bar Style --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #120B24;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888888;
+            font-size: 12px;
+            gap: 4px;
+            transition: color 0.3s ease;
+            width: 25%;
+            text-align: center;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        .nav-item.active {
+            color: #FF9800; 
+        }
+
+        .nav-item:hover {
+            color: #ffffff;
+        }
+
+        @media (min-width: 768px) {
+            .bottom-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding-bottom: 90px !important;">
+
+    <div style="margin-top: 100px; text-align: center; padding: 20px;">
+        <h1 style="color: #FF9800; font-size: 2.2em; font-family: sans-serif;">🔖 Barruulee Ol-kaa'aman</h1>
+        <p style="color: #ddd; margin-bottom: 30px;">Barruulee booda dubbisuuf ol-kaayatte asitti argatta.</p>
+        
+        <div style="max-width: 500px; margin: 20px auto; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px dashed #444;">
+            <p style="color: #888; font-style: italic; margin: 0;">Ammaaf barruun ol-kaa'ame hin jiru.</p>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <span class="nav-icon">🎛️</span>
+            <span class="nav-label">Jalqaba</span>
+        </a>
+        <a href="home.html#dashboard-search" class="nav-item">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">Barbaadi</span>
+        </a>
+        <a href="saved.html" class="nav-item active">
+            <span class="nav-icon">🔖</span>
+            <span class="nav-label">Ol-kaa'ame</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profaayilii</span>
+        </a>
+    </div>
+
+</body>
+</html>
