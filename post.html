@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise-d Barruu Guutuu</title>
+    <style>
+        body { background-color: #1A0D2E; color: white; font-family: Arial, sans-serif; padding: 20px; }
+        .post-container { max-width: 800px; margin: auto; }
+        h1 { color: #ff9800; }
+        .date { color: #888; font-size: 14px; }
+        .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
+        img { max-width: 100%; border-radius: 8px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="post-container">
+        <a href="home.html" style="color: #ff9800; text-decoration: none;">← Gara Dashboarditti Deebi'i</a>
+        <h1 id="post-title">Loading...</h1>
+        <p class="date" id="post-date"></p>
+        <div id="post-image-container"></div>
+        <div class="content" id="post-content"></div>
+    </div>
+
+    <script>
+        // URL irraa index fi category (motivation, stories, education) dubbisuu
+        const urlParams = new URLSearchParams(window.location.search);
+        const postIndex = urlParams.get('id');
+        const category = urlParams.get('cat');
+
+        if (postIndex !== null && category !== null) {
+            // Faayila JSON sirrii ta'e irraa data fiduu
+            let jsonFile = `data/${category}.json`;
+            
+            fetch(jsonFile)
+                .then(res => res.json())
+                .then(data => {
+                    // Tarree keessaa post isa sirrii index isaatiin fudhachuu
+                    const post = data.items[postIndex]; 
+                    
+                    if(post) {
+                        document.title = post.title;
+                        document.getElementById('post-title').innerText = post.title;
+                        document.getElementById('post-date').innerText = new Date(post.date).toLocaleDateString();
+                        document.getElementById('post-content').innerText = post.body;
+                        
+                        if(post.image) {
+                            document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}">`;
+                        }
+                    } else {
+                        document.getElementById('post-title').innerText = "Barruun hin argamne!";
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('post-title').innerText = "Dogoggorri uumameera!";
+                });
+        }
+    </script>
+</body>
+</html>
+
