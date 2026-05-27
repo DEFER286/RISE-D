@@ -109,7 +109,7 @@
                 allItems.forEach(item => {
                     container.innerHTML += `
                         <a href="motivation.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block; margin-bottom: 20px;">
-                            <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #ff9800; transition: 0.3s;">
+                            <div style="background-color: #251D3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 25px; text-align: left; transition: all 0.3s ease;">
                                 <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
                                 <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.body.substring(0, 120)}...</p>
                                 <span style="color: #ff9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
@@ -134,7 +134,7 @@
                 allItems.forEach(item => {
                     container.innerHTML += `
                         <a href="stories.html#${item.title.split(' ')[0]}" style="text-decoration: none; color: inherit; display: block; margin-bottom: 20px;">
-                            <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #00BCD4; transition: 0.3s;">
+                            <div style="background-color: #251D3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 25px; text-align: left; transition: all 0.3s ease;">
                                 <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
                                 <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.body.substring(0, 120)}...</p>
                                 <span style="color: #00BCD4; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
@@ -158,7 +158,7 @@
                         
                         container.innerHTML += `
                             <a href="education.html#${itemID}" style="text-decoration: none; color: inherit;">
-                                <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,152,0,0.2); margin-bottom: 15px;">
+                                <div style="background-color: #251D3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 25px; text-align: left; transition: all 0.3s ease;">
                                     <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
                                     <p style="color: #ddd; margin-bottom: 10px; line-height: 1.5;">${item.description || (item.body ? item.body.substring(0, 100) + '...' : '')}</p>
                                     <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
