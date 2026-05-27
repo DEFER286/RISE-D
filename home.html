@@ -13,7 +13,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RISE.D - DASHBOARD</title>
-     <meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />   
+     <meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />  
+            <!-- Koodii CSS Search Bar fi Subscribe Card Miidhagsu -->
+    <style>
+        /* --- Saanduqa Barbaachaa (Search Pill) --- */
+        #dashboard-search {
+            background-color: white !important;
+            color: #333 !important;
+            border: 1px solid #ddd !important;
+            border-radius: 50px !important;
+            padding: 15px 25px !important;
+            width: 80% !important;
+            max-width: 450px;
+            display: block;
+            margin: 30px auto !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        #dashboard-search:focus {
+            border-color: #FF9800 !important;
+            outline: none;
+        }
+
+        /* --- Kutaa Subscribe Card --- */
+        .subscribe-card {
+            background-color: #1F1A3A;
+            border-top: 5px solid white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .subscribe-card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .subscribe-card-title {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .subscribe-card-text {
+            color: #ddd;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* --- Kutaa Email Input Group --- */
+        .email-input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        input.email-input-pill {
+            background-color: white !important;
+            color: #333 !important;
+            border: 1px solid #ddd !important;
+            border-radius: 50px !important;
+            padding: 12px 20px !important;
+            flex-grow: 1;
+            font-size: 16px;
+        }
+
+        .email-subscribe-button {
+            background-color: #FF9800 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 50px !important;
+            padding: 12px 25px !important;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+
+        .email-subscribe-button:hover {
+            background-color: #e08700 !important;
+        }
+    </style>
+</head>
+        
 </head>
 <body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding: 0; font-family: sans-serif; color: #ffffff;">
 
@@ -42,11 +135,12 @@
         <h1<!-- Koodii Mata-duree Haaraa -->
 <h1 style="color: #ff9800; font-size: 2.5em; text-align: center; margin-top: 80px;">RISE.D DASHBOARD</h1>
 <p style="text-align: center; color: #ddd; margin-bottom: 30px;">
-    Baga nagaan gara fuula RISE-D DASHBOARD dhufte! Barruulee jajjabeessoo asitti argatta!
+    Baga nagaan Dhufte!🙏
 </p>
-        <div style="max-width: 500px; margin: 20px auto; padding: 0 10px;">
-        <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Mata-duree ykn jecha barbaadi..." style="width: 100%; padding: 12px 15px; border-radius: 25px; border: 2px solid #ff9800; background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 15px; outline: none; transition: 0.3s;">
-    </div>
+        <!-- Koodii Search Bar Haaraa (Fakkii 2ffaa Irratti Argamu) -->
+<div style="text-align: center; width: 100%;">
+    <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Barbaadi...">
+</div>
     
     <div <!-- Kutaa Preview Barruulee Haaraa -->
 <div style="margin-top: 30px;">
