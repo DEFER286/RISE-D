@@ -11,25 +11,25 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RISE.D - PROFILE</title>
+    <title>RISE.D - PROFILE DASHBOARD</title>
     <style>
         body {
             background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A);
             background-attachment: fixed;
             margin: 0;
-            padding-bottom: 90px !important;
+            padding-bottom: 100px !important;
             font-family: sans-serif;
             color: white;
-            text-align: center;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         /* --- Auth Card & Form Styles --- */
-        .auth-container {
-            max-width: 400px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
         .tab-group {
             display: flex;
             background-color: #1A112C;
@@ -62,6 +62,7 @@
             padding: 25px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
         }
 
         .input-group {
@@ -136,7 +137,7 @@
             content: "";
             position: absolute;
             top: 50%;
-            width: 40%;
+            width: 35%;
             height: 1px;
             background-color: #333;
         }
@@ -158,28 +159,137 @@
             gap: 10px;
         }
 
-        /* --- Logged In Profile Card --- */
+        /* --- Full Professional Dashboard UI --- */
         #profile-dashboard {
             display: none;
-            background-color: #1A112C;
-            border-radius: 15px;
-            padding: 30px;
+            text-align: left;
+        }
+
+        .profile-header {
+            background: linear-gradient(180deg, #2A1A4A 0%, #1A112C 100%);
+            border-radius: 20px;
+            padding: 30px 20px;
             text-align: center;
-            border: 1px solid #FF9800;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
         }
 
         .user-avatar {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             background-color: #FF9800;
             color: #110A1C;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
+            font-size: 40px;
             font-weight: bold;
             margin: 0 auto 15px auto;
+            box-shadow: 0 0 15px rgba(255, 152, 0, 0.4);
+        }
+
+        .profile-header h2 {
+            margin: 5px 0;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .profile-header p {
+            margin: 0;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .brand-badge {
+            display: inline-block;
+            background: rgba(255, 152, 0, 0.1);
+            color: #FF9800;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dashboard-section {
+            background-color: #1A112C;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: #FF9800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label { color: #888; }
+        .info-value { color: #fff; font-weight: 500; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-box {
+            background-color: #120B24;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .stat-num {
+            font-size: 22px;
+            font-weight: bold;
+            color: #FF9800;
+            margin-bottom: 5px;
+        }
+
+        .stat-name {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 14px;
+            background-color: transparent;
+            color: #ff5252;
+            border: 1px solid rgba(255, 82, 82, 0.3);
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-logout:hover {
+            background-color: rgba(255, 82, 82, 0.1);
         }
 
         /* --- Bottom Navigation Bar Style --- */
@@ -220,19 +330,16 @@
 </head>
 <body>
 
-    <div class="auth-container">
+    <div class="container">
         
         <!-- Auth View (Login / Signup Forms) -->
         <div id="auth-view">
-            <!-- Tabs -->
             <div class="tab-group">
                 <button class="tab-btn" id="tab-login" onclick="switchTab('login')">Log In</button>
                 <button class="tab-btn active" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
             </div>
 
-            <!-- Card Container -->
             <div class="auth-card">
-                
                 <!-- Sign Up Form -->
                 <form id="form-signup" onsubmit="handleSignup(event)">
                     <div class="input-group">
@@ -242,7 +349,7 @@
                         </div>
                     </div>
                     <div class="input-group">
-                        <label>Email</label>
+                        <label>Email Address</label>
                         <div class="input-wrapper">
                             <input type="email" id="reg-email" placeholder="email@example.com" required>
                         </div>
@@ -267,7 +374,7 @@
                 <!-- Log In Form -->
                 <form id="form-login" style="display: none;" onsubmit="handleLogin(event)">
                     <div class="input-group">
-                        <label>Email</label>
+                        <label>Email Address</label>
                         <div class="input-wrapper">
                             <input type="email" id="login-email" placeholder="email@example.com" required>
                         </div>
@@ -289,13 +396,51 @@
             </div>
         </div>
 
-        <!-- Logged In Profile Dashboard -->
+        <!-- FULL PROFESSIONAL DASHBOARD VIEW -->
         <div id="profile-dashboard">
-            <div class="user-avatar" id="display-initial">R</div>
-            <h2 id="display-name" style="margin-bottom: 5px;">Welcome!</h2>
-            <p id="display-email" style="color: #888; margin-top: 0; margin-bottom: 30px;">user@example.com</p>
             
-            <button class="btn-primary" style="background-color: transparent; border: 1px solid #FF9800; color: #FF9800;" onclick="handleLogout()">Log Out</button>
+            <!-- Header Card -->
+            <div class="profile-header">
+                <div class="user-avatar" id="display-initial">U</div>
+                <h2 id="display-name">User Name</h2>
+                <p id="display-email">user@example.com</p>
+                <div class="brand-badge">Rise Up. Design Your Future</div>
+            </div>
+
+            <!-- Account Details Section -->
+            <div class="dashboard-section">
+                <div class="section-title">Account Details</div>
+                <div class="info-row">
+                    <span class="info-label">Account Status</span>
+                    <span class="info-value" style="color: #4caf50;">● Active Member</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Role</span>
+                    <span class="info-value">Developer / Student</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Joined Date</span>
+                    <span class="info-value">May 2026</span>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="dashboard-section">
+                <div class="section-title">My Progress</div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-num">12</div>
+                        <div class="stat-name">Articles Read</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-num">5</div>
+                        <div class="stat-name">Saved Posts</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <button class="btn-logout" onclick="handleLogout()">Log Out Account</button>
         </div>
 
     </div>
@@ -314,15 +459,14 @@
             <span class="nav-icon">🔖</span>
             <span class="nav-label">Ol-kaa'ame</span>
         </a>
-        <a href="profile.html" class="nav-item active"> <!-- Asitti Active Ta'a -->
+        <a href="profile.html" class="nav-item active">
             <span class="nav-icon">👤</span>
             <span class="nav-label">Profile</span>
         </a>
     </div>
 
-    <!-- JavaScript For Account Functionality -->
+    <!-- JavaScript For Full Dashboard Functionality -->
     <script>
-        // Check if user is already logged in on page load
         window.onload = function() {
             const loggedInUser = localStorage.getItem('riseLoggedInUser');
             if (loggedInUser) {
@@ -330,7 +474,6 @@
             }
         };
 
-        // Switch between Log In and Sign Up tabs
         function switchTab(tab) {
             document.getElementById('tab-login').classList.remove('active');
             document.getElementById('tab-signup').classList.remove('active');
@@ -346,17 +489,11 @@
             }
         }
 
-        // Toggle Password Visibility
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
-            if (input.type === "password") {
-                input.type = "text";
-            } else {
-                input.type = "password";
-            }
+            input.type = input.type === "password" ? "text" : "password";
         }
 
-        // Handle Sign Up
         function handleSignup(e) {
             e.preventDefault();
             const name = document.getElementById('reg-name').value;
@@ -369,16 +506,14 @@
                 return;
             }
 
-            // Save user to LocalStorage
             const userData = { name: name, email: email, password: pass };
             localStorage.setItem('riseUserData', JSON.stringify(userData));
             
-            alert("Account Created Successfully! Please Log In.");
+            alert("Account Created Successfully! Switching to Log In.");
             document.getElementById('form-signup').reset();
             switchTab('login');
         }
 
-        // Handle Log In
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
@@ -389,37 +524,32 @@
             if (savedDataStr) {
                 const savedData = JSON.parse(savedDataStr);
                 if (savedData.email === email && savedData.password === pass) {
-                    // Success Login
                     localStorage.setItem('riseLoggedInUser', JSON.stringify(savedData));
                     showProfileDashboard(savedData);
                 } else {
                     alert("Incorrect Email or Password.");
                 }
             } else {
-                alert("No account found with this email. Please Sign Up.");
+                alert("No account found. Please Sign Up first.");
             }
         }
 
-        // Show Profile Dashboard
         function showProfileDashboard(user) {
             document.getElementById('auth-view').style.display = 'none';
             document.getElementById('profile-dashboard').style.display = 'block';
             
-            document.getElementById('display-name').innerText = "Hello, " + user.name + "!";
+            document.getElementById('display-name').innerText = user.name;
             document.getElementById('display-email').innerText = user.email;
             document.getElementById('display-initial').innerText = user.name.charAt(0).toUpperCase();
         }
 
-        // Handle Log Out
         function handleLogout() {
             localStorage.removeItem('riseLoggedInUser');
             document.getElementById('form-login').reset();
-            
             document.getElementById('profile-dashboard').style.display = 'none';
             document.getElementById('auth-view').style.display = 'block';
             switchTab('login');
         }
     </script>
 </body>
-              </html>
-  
+</html>
