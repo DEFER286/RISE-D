@@ -85,12 +85,11 @@ document.getElementById('post-content').innerHTML = parsedBody;
                             let emojiHTML = `
         <div style="margin: 40px 0 20px 0; padding-top: 20px; border-top: 1px solid #333; text-align: center;">
             <p style="color: #888; font-size: 14px; margin-bottom: 15px;">What do you think?</p>
-            <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">👍</button>
-            <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">❤️</button>
-            <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">😂</button>
-            
+            <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;">👍<span id="like-${itemID}">0</span></button>
+            <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;">❤️ <span id="love-${itemID}">0</span></button>
+            <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;"> 😂 <span id="funny-${itemID}">0</span></button>
             <!-- Batanii Ol-kaahi asitti dabalame -->
-            <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background: #222; border: 1px solid #444; color: #FF9800; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 5px;">🔖 Ol-kaahi</button>
+            <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background: #222; border: 1px solid #444; color: #FF9800; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 5px;">🔖 save</button>
         </div>`;
                         
         // Saanduqa emoji bifa haaraan uumuu odoo koodii duraanii hin diigin
@@ -102,7 +101,8 @@ document.getElementById('post-content').innerHTML = parsedBody;
         updateSaveButtonVisual(itemID);
 
         if (post.image) {
-            document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}" style="max-width:100%; border-radius:12px;">`;
+            document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}" style="width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 12px; display: block; margin: 0 auto;">`;
+    
         }
     } else {
         document.getElementById('post-title').innerText = "Barruun hin argamne!";
@@ -159,11 +159,11 @@ function updateSaveButtonVisual(id) {
     const isSaved = savedArticles.some(article => article.id === id);
     
     if (isSaved) {
-        btn.innerHTML = "❤️ Ol-kaa'ameera";
+        btn.innerHTML = "❤️ saved";
         btn.style.background = "#FF9800";
         btn.style.color = "#110A1C";
     } else {
-        btn.innerHTML = "🔖 Ol-kaahi";
+        btn.innerHTML = "🔖 save";
         btn.style.background = "#222";
         btn.style.color = "#FF9800";
     }
