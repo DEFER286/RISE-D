@@ -70,7 +70,20 @@
                         document.title = post.title;
                         document.getElementById('post-title').innerText = post.title;
                         document.getElementById('post-date').innerText = new Date(post.date).toLocaleDateString();
-                        document.getElementById('post-content').innerText = post.body;
+                                            // Bakka buusi sarara 74:
+                    document.getElementById('post-content').innerText = post.body;
+
+                    // Itti dabali koodii kana:
+                    let itemID = category + "-" + postIndex;
+                    let emojiHTML = `
+                    <div style="margin: 40px 0 20px 0; padding-top: 20px; border-top: 1px solid #333; text-align: center;">
+                        <p style="color: #888; font-size: 14px; margin-bottom: 15px;">What do you think?</p>
+                        <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">👍 <span id="like-${itemID}">0</span></button>
+                        <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">❤️ <span id="love-${itemID}">0</span></button>
+                        <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">😂 <span id="funny-${itemID}">0</span></button>
+                    </div>`;
+                    document.getElementById('post-content').innerHTML += emojiHTML;
+                    loadReactions(itemID);                      
                         
                         if(post.image) {
                             document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}">`;
@@ -83,6 +96,22 @@
                     document.getElementById('post-title').innerText = "Dogoggorri uumameera!";
                 });
         }
+            function handleReaction(id, type) {
+        let key = 'reaction_' + id + '_' + type;
+        let count = parseInt(localStorage.getItem(key)) || 0;
+        count++;
+        localStorage.setItem(key, count);
+        document.getElementById(type + '-' + id).innerText = count;
+    }
+
+    function loadReactions(id) {
+        ['like', 'love', 'funny'].forEach(type => {
+            let count = localStorage.getItem('reaction_' + id + '_' + type) || 0;
+            let el = document.getElementById(type + '-' + id);
+            if(el) el.innerText = count;
+        });
+    }
+        
     </script>
 </body>
 </html>
