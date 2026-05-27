@@ -99,6 +99,13 @@ document.getElementById('post-content').innerHTML = parsedBody;
         
         loadReactions(itemID);
         updateSaveButtonVisual(itemID);
+                       // Barruun kun dubbifamuu isaa galmeessuuf
+        let readArticles = JSON.parse(localStorage.getItem('readArticlesList')) || [];
+        if (!readArticles.includes(itemID)) {
+            readArticles.push(itemID);
+            localStorage.setItem('readArticlesList', JSON.stringify(readArticles));
+        }
+                        
 
         if (post.image) {
             document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}" style="width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 12px; display: block; margin: 0 auto;">`;
