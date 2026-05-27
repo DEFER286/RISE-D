@@ -82,16 +82,20 @@ document.getElementById('post-content').innerHTML = parsedBody;
 
                     // Itti dabali koodii kana:
                     let itemID = category + "-" + postIndex;
-                    let emojiHTML = `
-                    <div style="margin: 40px 0 20px 0; padding-top: 20px; border-top: 1px solid #333; text-align: center;">
-                        <p style="color: #888; font-size: 14px; margin-bottom: 15px;">What do you think?</p>
-                        <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">👍 <span id="like-${itemID}">0</span></button>
-                        <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">❤️ <span id="love-${itemID}">0</span></button>
-                        <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">😂 <span id="funny-${itemID}">0</span></button>
-                    </div>`;
+                            let emojiHTML = `
+        <div style="margin: 40px 0 20px 0; padding-top: 20px; border-top: 1px solid #333; text-align: center;">
+            <p style="color: #888; font-size: 14px; margin-bottom: 15px;">What do you think?</p>
+            <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">👍</button>
+            <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">❤️</button>
+            <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;">😂</button>
+            
+            <!-- Batanii Ol-kaahi asitti dabalame -->
+            <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background: #222; border: 1px solid #444; color: #FF9800; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 5px;">🔖 Ol-kaahi</button>
+        </div>`;
+                        
                     document.getElementById('post-content').innerHTML += emojiHTML;
                     loadReactions(itemID);                      
-                        
+                    updateSaveButtonVisual(itemID);
                         if(post.image) {
                             document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}">`;
                         }
@@ -118,7 +122,47 @@ document.getElementById('post-content').innerHTML = parsedBody;
             if(el) el.innerText = count;
         });
     }
-        
+    function toggleSaveArticle(id) {
+    let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
+    const currentUrl = window.location.pathname + window.location.search; 
+    
+    let title = "Rise-d Article";
+    const titleElement = document.getElementById('post-title');
+    if (titleElement) title = titleElement.innerText;
+    
+    const index = savedArticles.findIndex(article => article.id === id);
+    
+    if (index === -1) {
+        savedArticles.push({ id: id, title: title, url: currentUrl });
+        localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
+        alert("Barruun '" + title + "' Ol-kaa'ameera! 🔖");
+    } else {
+        savedArticles.splice(index, 1);
+        localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
+        alert("Barruun '" + title + "' Ol-kaa'amee keessaa haqameera! ❌");
+    }
+    updateSaveButtonVisual(id);
+}
+
+function updateSaveButtonVisual(id) {
+    let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
+    const btn = document.getElementById(`save-btn-${id}`);
+    
+    if (!btn) return;
+    
+    const isSaved = savedArticles.some(article => article.id === id);
+    
+    if (isSaved) {
+        btn.innerHTML = "❤️ Ol-kaa'ameera";
+        btn.style.background = "#FF9800";
+        btn.style.color = "#110A1C";
+    } else {
+        btn.innerHTML = "🔖 Ol-kaahi";
+        btn.style.background = "#222";
+        btn.style.color = "#FF9800";
+    }
+        }
+    
     </script>
 </body>
 </html>
