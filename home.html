@@ -107,12 +107,66 @@ input.email-input-pill {
         .email-subscribe-button:hover {
            ackground-color: #e08700 !important;
         }
+      /* --- Bottom Navigation Bar Style --- */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #120B24; /* Halluu weebsaayitiikee waliin kan wal-simu */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Akka kaardiiwwan duubatti hin hafneef */
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #888888; /* Halluu barruu isaa isa dhabamaa */
+    font-size: 12px;
+    gap: 4px;
+    transition: color 0.3s ease;
+    width: 25%;
+    text-align: center;
+}
+
+.nav-icon {
+    font-size: 20px;
+}
+
+/* Yeroo irra jiran ykn Active ta'u (Burtukaanii) */
+.nav-item.active {
+    color: #FF9800; 
+}
+
+.nav-item:hover {
+    color: #ffffff;
+}
+
+/* Weebsaayitiin kun Kompiuteraan yoo baname barri gadii kun akka badu gochuuf (Mobile Only) */
+@media (min-width: 768px) {
+    .bottom-nav {
+        display: none;
+    }
+}
+
+/* Kaardiiwwan gadii akka koodii kanaan hin haguugamneef body irratti margin dabalra */
+body {
+    padding-bottom: 70px !important;
+}
+            
     </style>
 </head>
         
 </head>
-<body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding: 0; font-family: sans-serif; color: #ffffff;">
-
+<body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding-bottom: 70px !important;">
+        
     <nav <!-- Hamburger Button -->
 <div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
 <!-- Koodii kana qofa galchi -->
@@ -312,6 +366,25 @@ input.email-input-pill {
             <button class="email-subscribe-button" type="submit">Subscribe</button>
         </form>
     </div>
+</div>
+  <!-- Barri Gadii (Bottom Navigation Bar) -->
+<div class="bottom-nav">
+    <a href="home.html" class="nav-item active">
+        <span class="nav-icon">🎛️</span>
+        <span class="nav-label">Jalqaba</span>
+    </a>
+    <a href="#dashboard-search" class="nav-item">
+        <span class="nav-icon">🔍</span>
+        <span class="nav-label">Barbaadi</span>
+    </a>
+    <a href="saved.html" class="nav-item">
+        <span class="nav-icon">🔖</span>
+        <span class="nav-label">Ol-kaa'ame</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Profaayilii</span>
+    </a>
 </div>
             
 </body>
