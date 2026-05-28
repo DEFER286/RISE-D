@@ -1,0 +1,10 @@
+# Google fi search engines hundi weebsaayitii kana akka dubbisan hayyami
+User-agent: *
+Allow: /
+
+# Kutaalee icciitii ykn dhuunfaa ta'an akka Google irratti hin baafne dhoorki
+Disallow: /admin/
+Disallow: /config/
+
+# Karaa itti sitemap kee dafanii argatan agarsiisi
+Sitemap: https://rise-d.vercel.app/sitemap.xml
