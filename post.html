@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rise-d Barruu Guutuu</title>
-        <style>
+    <style>
         body { background-color: #1A0D2E; color: white; font-family: Arial, sans-serif; padding: 20px; }
         .post-container { 
             max-width: 800px; 
@@ -23,10 +23,8 @@
             line-height: 1;
             transition: 0.2s;
         }
-        .close-btn:hover {
-            color: #ff9800;  
-        }
-                h1 { color: #ff9800; }
+        .close-btn:hover { color: #ff9800; }
+        h1 { color: #ff9800; }
         .date { color: #888; font-size: 14px; }
         .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
         img { 
@@ -38,8 +36,74 @@
             border-radius: 12px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
         }
+
+        /* === RELATED POSTS === */
+        .related-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #333;
+        }
+        .related-title {
+            color: #FF9800;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        @media (max-width: 600px) {
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .related-card {
+            background-color: #1F1A3A;
+            border-radius: 12px;
+            border-left: 5px solid #FF9800;
+            padding: 16px;
+            text-decoration: none;
+            color: white;
+            display: block;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .related-card:hover {
+            transform: translateY(-3px);
+            border-color: #ffb74d;
+        }
+        .related-card-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .related-card-desc {
+            font-size: 13px;
+            color: #aaa;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .related-card-link {
+            color: #FF9800;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
     </style>
-        
 </head>
 <body>
     <div class="post-container">
@@ -48,134 +112,157 @@
         <p class="date" id="post-date"></p>
         <div id="post-image-container"></div>
         <div class="content" id="post-content"></div>
+
+        <!-- Related Posts kutaa -->
+        <div class="related-section" id="related-section" style="display:none;">
+            <div class="related-title">📖 Barruulee Biroo Dubbisi</div>
+            <div class="related-grid" id="related-grid"></div>
+        </div>
     </div>
 
     <script>
-        // URL irraa index fi category (motivation, stories, education) dubbisuu
         const urlParams = new URLSearchParams(window.location.search);
-        const postIndex = urlParams.get('id');
+        const postIndex = parseInt(urlParams.get('id'));
         const category = urlParams.get('cat');
 
-        if (postIndex !== null && category !== null) {
-            // Faayila JSON sirrii ta'e irraa data fiduu
+        if (!isNaN(postIndex) && category !== null) {
             let jsonFile = `data/${category}.json`;
             
             fetch(jsonFile)
                 .then(res => res.json())
                 .then(data => {
-                    // Tarree keessaa post isa sirrii index isaatiin fudhachuu
                     const post = data.items[postIndex]; 
                     
-                    if(post) {
+                    if (post) {
                         document.title = post.title;
                         document.getElementById('post-title').innerText = post.title;
                         document.getElementById('post-date').innerText = new Date(post.date).toLocaleDateString();
-                                            // Bakka buusi sarara 74:
-                    // Markdown bold (**) gara HTML bold (<b>) tti jijjiiruu
-let parsedBody = post.body.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
 
-// Sarara haaraa (newline) gara HTML <br> tti jijjiiruu
-parsedBody = parsedBody.replace(/\n/g, '<br>');
+                        let parsedBody = post.body.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+                        parsedBody = parsedBody.replace(/\n/g, '<br>');
+                        document.getElementById('post-content').innerHTML = parsedBody;
 
-// Amma HTML bifa sirriin maxxansi
-document.getElementById('post-content').innerHTML = parsedBody;
-
-                    // Itti dabali koodii kana:
-                    let itemID = category + "-" + postIndex;
-                            let emojiHTML = `
-        <div style="margin: 40px 0 20px 0; padding-top: 20px; border-top: 1px solid #333; text-align: center;">
-            <p style="color: #888; font-size: 14px; margin-bottom: 15px;">What do you think?</p>
-            <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;">👍<span id="like-${itemID}">0</span></button>
-            <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;">❤️ <span id="love-${itemID}">0</span></button>
-            <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;"> 😂 <span id="funny-${itemID}">0</span></button>
-            <!-- Batanii Ol-kaahi asitti dabalame -->
-            <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background: #222; border: 1px solid #444; color: #FF9800; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 5px;">🔖 save</button>
-        </div>`;
+                        let itemID = category + "-" + postIndex;
+                        let emojiHTML = `
+                        <div style="margin: 40px 0 20px 0; padding-top: 20px; border-top: 1px solid #333; text-align: center;">
+                            <p style="color: #888; font-size: 14px; margin-bottom: 15px;">What do you think?</p>
+                            <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;">👍<span id="like-${itemID}">0</span></button>
+                            <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;">❤️ <span id="love-${itemID}">0</span></button>
+                            <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;"> 😂 <span id="funny-${itemID}">0</span></button>
+                            <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background: #222; border: 1px solid #444; color: #FF9800; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 5px;">🔖 save</button>
+                        </div>`;
                         
-        // Saanduqa emoji bifa haaraan uumuu odoo koodii duraanii hin diigin
-        const emojiContainer = document.createElement('div');
-        emojiContainer.innerHTML = emojiHTML;
-        document.getElementById('post-content').appendChild(emojiContainer);
-        
-        loadReactions(itemID);
-        updateSaveButtonVisual(itemID);
-                       // Barruun kun dubbifamuu isaa galmeessuuf
-        let readArticles = JSON.parse(localStorage.getItem('readArticlesList')) || [];
-        if (!readArticles.includes(itemID)) {
-            readArticles.push(itemID);
-            localStorage.setItem('readArticlesList', JSON.stringify(readArticles));
-        }
+                        const emojiContainer = document.createElement('div');
+                        emojiContainer.innerHTML = emojiHTML;
+                        document.getElementById('post-content').appendChild(emojiContainer);
                         
+                        loadReactions(itemID);
+                        updateSaveButtonVisual(itemID);
 
-        if (post.image) {
-            document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}" style="width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 12px; display: block; margin: 0 auto;">`;
-    
-        }
-    } else {
-        document.getElementById('post-title').innerText = "Barruun hin argamne!";
-         }
-                    
+                        let readArticles = JSON.parse(localStorage.getItem('readArticlesList')) || [];
+                        if (!readArticles.includes(itemID)) {
+                            readArticles.push(itemID);
+                            localStorage.setItem('readArticlesList', JSON.stringify(readArticles));
+                        }
+
+                        if (post.image) {
+                            document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}" style="width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 12px; display: block; margin: 0 auto;">`;
+                        }
+
+                        // === RELATED POSTS ===
+                        loadRelatedPosts(data.items, postIndex, category);
+
+                    } else {
+                        document.getElementById('post-title').innerText = "Barruun hin argamne!";
+                    }
                 })
                 .catch(err => {
                     document.getElementById('post-title').innerText = "Dogoggorri uumameera!";
                 });
         }
-            function handleReaction(id, type) {
-        let key = 'reaction_' + id + '_' + type;
-        let count = parseInt(localStorage.getItem(key)) || 0;
-        count++;
-        localStorage.setItem(key, count);
-        document.getElementById(type + '-' + id).innerText = count;
-    }
 
-    function loadReactions(id) {
-        ['like', 'love', 'funny'].forEach(type => {
-            let count = localStorage.getItem('reaction_' + id + '_' + type) || 0;
-            let el = document.getElementById(type + '-' + id);
-            if(el) el.innerText = count;
-        });
-    }
-    function toggleSaveArticle(id) {
-    let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-    const currentUrl = window.location.pathname + window.location.search; 
-    
-    let title = "Rise-d Article";
-    const titleElement = document.getElementById('post-title');
-    if (titleElement) title = titleElement.innerText;
-    
-    const index = savedArticles.findIndex(article => article.id === id);
-    
-    if (index === -1) {
-        savedArticles.push({ id: id, title: title, url: currentUrl });
-        localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
-        alert("Barruun '" + title + "' Ol-kaa'ameera! 🔖");
-    } else {
-        savedArticles.splice(index, 1);
-        localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
-        alert("Barruun '" + title + "' Ol-kaa'amee keessaa haqameera! ❌");
-    }
-    updateSaveButtonVisual(id);
-}
+        // Related Posts function
+        function loadRelatedPosts(allItems, currentIndex, cat) {
+            // Post amma baname hir'isuu
+            const others = allItems
+                .map((item, i) => ({ ...item, originalIndex: i }))
+                .filter(item => item.originalIndex !== currentIndex);
 
-function updateSaveButtonVisual(id) {
-    let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-    const btn = document.getElementById(`save-btn-${id}`);
-    
-    if (!btn) return;
-    
-    const isSaved = savedArticles.some(article => article.id === id);
-    
-    if (isSaved) {
-        btn.innerHTML = "❤️ saved";
-        btn.style.background = "#FF9800";
-        btn.style.color = "#110A1C";
-    } else {
-        btn.innerHTML = "🔖 save";
-        btn.style.background = "#222";
-        btn.style.color = "#FF9800";
-    }
+            if (others.length === 0) return;
+
+            // Shuffle — random 3 fudhachuuf
+            const shuffled = others.sort(() => Math.random() - 0.5);
+            const related = shuffled.slice(0, 3);
+
+            const grid = document.getElementById('related-grid');
+            grid.innerHTML = '';
+
+            related.forEach(item => {
+                const desc = item.description || (item.body ? item.body.replace(/\*\*(.*?)\*\*/g, '$1').substring(0, 80) + '...' : '');
+                const card = document.createElement('a');
+                card.href = `post.html?cat=${cat}&id=${item.originalIndex}`;
+                card.className = 'related-card';
+                card.innerHTML = `
+                    <div class="related-card-title">${item.title}</div>
+                    <div class="related-card-desc">${desc}</div>
+                    <span class="related-card-link">Dubbisi ➔</span>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('related-section').style.display = 'block';
         }
-    
+
+        function handleReaction(id, type) {
+            let key = 'reaction_' + id + '_' + type;
+            let count = parseInt(localStorage.getItem(key)) || 0;
+            count++;
+            localStorage.setItem(key, count);
+            document.getElementById(type + '-' + id).innerText = count;
+        }
+
+        function loadReactions(id) {
+            ['like', 'love', 'funny'].forEach(type => {
+                let count = localStorage.getItem('reaction_' + id + '_' + type) || 0;
+                let el = document.getElementById(type + '-' + id);
+                if (el) el.innerText = count;
+            });
+        }
+
+        function toggleSaveArticle(id) {
+            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
+            const currentUrl = window.location.pathname + window.location.search; 
+            let title = "Rise-d Article";
+            const titleElement = document.getElementById('post-title');
+            if (titleElement) title = titleElement.innerText;
+            const index = savedArticles.findIndex(article => article.id === id);
+            if (index === -1) {
+                savedArticles.push({ id: id, title: title, url: currentUrl });
+                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
+                alert("Barruun '" + title + "' Ol-kaa'ameera! 🔖");
+            } else {
+                savedArticles.splice(index, 1);
+                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
+                alert("Barruun '" + title + "' Ol-kaa'amee keessaa haqameera! ❌");
+            }
+            updateSaveButtonVisual(id);
+        }
+
+        function updateSaveButtonVisual(id) {
+            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
+            const btn = document.getElementById(`save-btn-${id}`);
+            if (!btn) return;
+            const isSaved = savedArticles.some(article => article.id === id);
+            if (isSaved) {
+                btn.innerHTML = "❤️ saved";
+                btn.style.background = "#FF9800";
+                btn.style.color = "#110A1C";
+            } else {
+                btn.innerHTML = "🔖 save";
+                btn.style.background = "#222";
+                btn.style.color = "#FF9800";
+            }
+        }
     </script>
 </body>
 </html>
