@@ -6,103 +6,25 @@
     <title>Rise-d Barruu Guutuu</title>
     <style>
         body { background-color: #1A0D2E; color: white; font-family: Arial, sans-serif; padding: 20px; }
-        .post-container { 
-            max-width: 800px; 
-            margin: auto; 
-            position: relative; 
-            padding-top: 40px; 
-        }
-        .close-btn {
-            position: absolute;
-            top: 0px;        
-            right: 5px;      
-            font-size: 35px; 
-            color: #ffffff;  
-            text-decoration: none;
-            font-weight: bold;
-            line-height: 1;
-            transition: 0.2s;
-        }
+        .post-container { max-width: 800px; margin: auto; position: relative; padding-top: 40px; }
+        .close-btn { position: absolute; top: 0px; right: 5px; font-size: 35px; color: #ffffff; text-decoration: none; font-weight: bold; line-height: 1; transition: 0.2s; }
         .close-btn:hover { color: #ff9800; }
         h1 { color: #ff9800; }
         .date { color: #888; font-size: 14px; }
         .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
-        img { 
-            display: block;
-            max-width: 100%; 
-            max-height: 400px;    
-            width: auto;          
-            margin: 0 auto 20px auto; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
-        }
+        img { display: block; max-width: 100%; max-height: 400px; width: auto; margin: 0 auto 20px auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
         /* === RELATED POSTS === */
-        .related-section {
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 2px solid #333;
-        }
-        .related-title {
-            color: #FF9800;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-        }
-        @media (max-width: 600px) {
-            .related-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .related-card {
-            background-color: #1F1A3A;
-            border-radius: 12px;
-            border-left: 5px solid #FF9800;
-            padding: 16px;
-            text-decoration: none;
-            color: white;
-            display: block;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-        .related-card:hover {
-            transform: translateY(-3px);
-            border-color: #ffb74d;
-        }
-        .related-card-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 8px;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .related-card-desc {
-            font-size: 13px;
-            color: #aaa;
-            line-height: 1.5;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .related-card-link {
-            color: #FF9800;
-            font-size: 13px;
-            font-weight: bold;
-            margin-top: 10px;
-            display: inline-block;
-        }
+        .related-section { margin-top: 50px; padding-top: 30px; border-top: 2px solid #333; }
+        .related-title { color: #FF9800; font-size: 20px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        @media (max-width: 600px) { .related-grid { grid-template-columns: 1fr; } }
+        .related-card { background-color: #1F1A3A; border-radius: 12px; border-left: 5px solid #FF9800; padding: 16px; text-decoration: none; color: white; display: block; transition: transform 0.2s, border-color 0.2s; }
+        .related-card:hover { transform: translateY(-3px); border-color: #ffb74d; }
+        .related-card-badge { font-size: 11px; color: #888; margin-bottom: 6px; }
+        .related-card-title { font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .related-card-desc { font-size: 13px; color: #aaa; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .related-card-link { color: #FF9800; font-size: 13px; font-weight: bold; margin-top: 10px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -113,7 +35,7 @@
         <div id="post-image-container"></div>
         <div class="content" id="post-content"></div>
 
-        <!-- Related Posts kutaa -->
+        <!-- Related Posts -->
         <div class="related-section" id="related-section" style="display:none;">
             <div class="related-title">📖 Barruulee Biroo Dubbisi</div>
             <div class="related-grid" id="related-grid"></div>
@@ -125,14 +47,18 @@
         const postIndex = parseInt(urlParams.get('id'));
         const category = urlParams.get('cat');
 
+        // Kutaa fi emoji badge
+        const catLabels = {
+            motivation: '🔥 Motivation',
+            stories:    '📚 Seenaa',
+            education:  '🎓 Gorsa'
+        };
+
         if (!isNaN(postIndex) && category !== null) {
-            let jsonFile = `data/${category}.json`;
-            
-            fetch(jsonFile)
+            fetch(`data/${category}.json`)
                 .then(res => res.json())
                 .then(data => {
-                    const post = data.items[postIndex]; 
-                    
+                    const post = data.items[postIndex];
                     if (post) {
                         document.title = post.title;
                         document.getElementById('post-title').innerText = post.title;
@@ -143,19 +69,17 @@
                         document.getElementById('post-content').innerHTML = parsedBody;
 
                         let itemID = category + "-" + postIndex;
-                        let emojiHTML = `
-                        <div style="margin: 40px 0 20px 0; padding-top: 20px; border-top: 1px solid #333; text-align: center;">
-                            <p style="color: #888; font-size: 14px; margin-bottom: 15px;">What do you think?</p>
-                            <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;">👍<span id="like-${itemID}">0</span></button>
-                            <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;">❤️ <span id="love-${itemID}">0</span></button>
-                            <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: #fff; padding: 8px 16px; margin: 5px; border-radius: 20px; cursor: pointer;"> 😂 <span id="funny-${itemID}">0</span></button>
-                            <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background: #222; border: 1px solid #444; color: #FF9800; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 5px;">🔖 save</button>
-                        </div>`;
-                        
                         const emojiContainer = document.createElement('div');
-                        emojiContainer.innerHTML = emojiHTML;
+                        emojiContainer.innerHTML = `
+                        <div style="margin:40px 0 20px 0;padding-top:20px;border-top:1px solid #333;text-align:center;">
+                            <p style="color:#888;font-size:14px;margin-bottom:15px;">What do you think?</p>
+                            <button onclick="handleReaction('${itemID}','like')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">👍<span id="like-${itemID}">0</span></button>
+                            <button onclick="handleReaction('${itemID}','love')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">❤️ <span id="love-${itemID}">0</span></button>
+                            <button onclick="handleReaction('${itemID}','funny')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">😂 <span id="funny-${itemID}">0</span></button>
+                            <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background:#222;border:1px solid #444;color:#FF9800;padding:8px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-left:5px;">🔖 save</button>
+                        </div>`;
                         document.getElementById('post-content').appendChild(emojiContainer);
-                        
+
                         loadReactions(itemID);
                         updateSaveButtonVisual(itemID);
 
@@ -166,50 +90,71 @@
                         }
 
                         if (post.image) {
-                            document.getElementById('post-image-container').innerHTML = `<img src="${post.image}" alt="${post.title}" style="width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 12px; display: block; margin: 0 auto;">`;
+                            document.getElementById('post-image-container').innerHTML =
+                                `<img src="${post.image}" alt="${post.title}" style="width:100%;height:auto;max-height:400px;object-fit:cover;border-radius:12px;display:block;margin:0 auto;">`;
                         }
 
-                        // === RELATED POSTS ===
+                        // Related posts load
                         loadRelatedPosts(data.items, postIndex, category);
 
                     } else {
                         document.getElementById('post-title').innerText = "Barruun hin argamne!";
                     }
                 })
-                .catch(err => {
-                    document.getElementById('post-title').innerText = "Dogoggorri uumameera!";
-                });
+                .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
         }
 
-        // Related Posts function
-        function loadRelatedPosts(allItems, currentIndex, cat) {
-            // Post amma baname hir'isuu
-            const others = allItems
-                .map((item, i) => ({ ...item, originalIndex: i }))
-                .filter(item => item.originalIndex !== currentIndex);
+        // =============================================
+        // RELATED POSTS — kutaa biraa irraa guuta 3
+        // =============================================
+        function loadRelatedPosts(currentItems, currentIndex, currentCat) {
+            // Kutaa amma baname keessaa barruulee haftuu
+            const fromSame = currentItems
+                .map((item, i) => ({ ...item, originalIndex: i, cat: currentCat }))
+                .filter(item => item.originalIndex !== currentIndex)
+                .sort(() => Math.random() - 0.5);
 
-            if (others.length === 0) return;
+            if (fromSame.length >= 3) {
+                // Ga'aa dha — kutaa walfakkaataa irraa 3 agarsiisi
+                displayRelated(fromSame.slice(0, 3));
+                return;
+            }
 
-            // Shuffle — random 3 fudhachuuf
-            const shuffled = others.sort(() => Math.random() - 0.5);
-            const related = shuffled.slice(0, 3);
+            // Ga'aa miti — kutaalee biroo irraa guutuu barbaachisa
+            const needed = 3 - fromSame.length;
+            const otherCats = ['motivation', 'stories', 'education'].filter(c => c !== currentCat);
 
+            const promises = otherCats.map(cat =>
+                fetch(`data/${cat}.json`)
+                    .then(r => r.json())
+                    .then(d => (d.items || []).map((item, i) => ({ ...item, originalIndex: i, cat })))
+                    .catch(() => [])
+            );
+
+            Promise.all(promises).then(results => {
+                const fromOthers = results.flat().sort(() => Math.random() - 0.5).slice(0, needed);
+                displayRelated([...fromSame, ...fromOthers]);
+            });
+        }
+
+        function displayRelated(items) {
+            if (items.length === 0) return;
             const grid = document.getElementById('related-grid');
             grid.innerHTML = '';
-
-            related.forEach(item => {
-                const desc = item.description || (item.body ? item.body.replace(/\*\*(.*?)\*\*/g, '$1').substring(0, 80) + '...' : '');
+            items.forEach(item => {
+                const desc = item.description ||
+                    (item.body ? item.body.replace(/\*\*(.*?)\*\*/g, '$1').substring(0, 80) + '...' : '');
+                const badge = catLabels[item.cat] || '';
                 const card = document.createElement('a');
-                card.href = `post.html?cat=${cat}&id=${item.originalIndex}`;
+                card.href = `post.html?cat=${item.cat}&id=${item.originalIndex}`;
                 card.className = 'related-card';
                 card.innerHTML = `
+                    <div class="related-card-badge">${badge}</div>
                     <div class="related-card-title">${item.title}</div>
                     <div class="related-card-desc">${desc}</div>
-                    <span class="related-card-link">Dubbisi ➔</span>
-                `;
+                    <span class="related-card-link">Dubbisi ➔</span>`;
                 grid.appendChild(card);
             });
-
             document.getElementById('related-section').style.display = 'block';
         }
 
@@ -220,24 +165,20 @@
             localStorage.setItem(key, count);
             document.getElementById(type + '-' + id).innerText = count;
         }
-
         function loadReactions(id) {
-            ['like', 'love', 'funny'].forEach(type => {
+            ['like','love','funny'].forEach(type => {
                 let count = localStorage.getItem('reaction_' + id + '_' + type) || 0;
                 let el = document.getElementById(type + '-' + id);
                 if (el) el.innerText = count;
             });
         }
-
         function toggleSaveArticle(id) {
             let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-            const currentUrl = window.location.pathname + window.location.search; 
-            let title = "Rise-d Article";
-            const titleElement = document.getElementById('post-title');
-            if (titleElement) title = titleElement.innerText;
-            const index = savedArticles.findIndex(article => article.id === id);
+            const currentUrl = window.location.pathname + window.location.search;
+            let title = document.getElementById('post-title')?.innerText || "Rise-d Article";
+            const index = savedArticles.findIndex(a => a.id === id);
             if (index === -1) {
-                savedArticles.push({ id: id, title: title, url: currentUrl });
+                savedArticles.push({ id, title, url: currentUrl });
                 localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
                 alert("Barruun '" + title + "' Ol-kaa'ameera! 🔖");
             } else {
@@ -247,23 +188,14 @@
             }
             updateSaveButtonVisual(id);
         }
-
         function updateSaveButtonVisual(id) {
             let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
             const btn = document.getElementById(`save-btn-${id}`);
             if (!btn) return;
-            const isSaved = savedArticles.some(article => article.id === id);
-            if (isSaved) {
-                btn.innerHTML = "❤️ saved";
-                btn.style.background = "#FF9800";
-                btn.style.color = "#110A1C";
-            } else {
-                btn.innerHTML = "🔖 save";
-                btn.style.background = "#222";
-                btn.style.color = "#FF9800";
-            }
+            const isSaved = savedArticles.some(a => a.id === id);
+            if (isSaved) { btn.innerHTML = "❤️ saved"; btn.style.background = "#FF9800"; btn.style.color = "#110A1C"; }
+            else { btn.innerHTML = "🔖 save"; btn.style.background = "#222"; btn.style.color = "#FF9800"; }
         }
     </script>
 </body>
 </html>
-
