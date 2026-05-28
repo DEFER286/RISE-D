@@ -263,7 +263,7 @@ body {
                 <a href="post.html?cat=motivation&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
                     <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 20px;">
                         <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                        <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || ''}</p>
+                        <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || (item.body ? item.body.substring(0, 100) + '...' : '')}</p>
                         <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi ➔</span>
                     </div>
                 </a>
