@@ -14,13 +14,63 @@
         .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
         img { display: block; max-width: 100%; max-height: 400px; width: auto; margin: 0 auto 20px auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
+        /* === SUBSCRIBE — photo irratti argamu style === */
+        .subscribe-inline {
+            margin-top: 50px;
+            padding-top: 28px;
+            border-top: 1px solid #444;
+            text-align: center;
+        }
+        .subscribe-inline-heading {
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .subscribe-inline-text {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+        .subscribe-input {
+            flex: 1;
+            background-color: #2a1e4a !important;
+            color: white !important;
+            border: 1px solid #555 !important;
+            border-radius: 6px !important;
+            padding: 10px 14px !important;
+            font-size: 14px;
+            outline: none;
+        }
+        .subscribe-input::placeholder { color: #777; }
+        .subscribe-input:focus { border-color: #FF9800 !important; }
+        .subscribe-btn {
+            background-color: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .subscribe-btn:hover { background-color: #e08700; }
+
         /* === RELATED POSTS === */
-        .related-section { margin-top: 50px; padding-top: 30px; border-top: 2px solid #333; }
+        .related-section { margin-top: 40px; padding-top: 30px; border-top: 2px solid #333; }
         .related-title { color: #FF9800; font-size: 20px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
         .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 600px) { .related-grid { grid-template-columns: 1fr; } }
-        .related-card { background-color: #1F1A3A; border-radius: 12px; border-left: 5px solid #FF9800; padding: 16px; text-decoration: none; color: white; display: block; transition: transform 0.2s, border-color 0.2s; }
-        .related-card:hover { transform: translateY(-3px); border-color: #ffb74d; }
+        .related-card { background-color: #1F1A3A; border-radius: 12px; border-left: 5px solid #FF9800; padding: 16px; text-decoration: none; color: white; display: block; transition: transform 0.2s; }
+        .related-card:hover { transform: translateY(-3px); }
         .related-card-badge { font-size: 11px; color: #888; margin-bottom: 6px; }
         .related-card-title { font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .related-card-desc { font-size: 13px; color: #aaa; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -35,6 +85,16 @@
         <div id="post-image-container"></div>
         <div class="content" id="post-content"></div>
 
+        <!-- Subscribe — photo style -->
+        <div class="subscribe-inline">
+            <div class="subscribe-inline-heading">Discover more from RISE.D</div>
+            <p class="subscribe-inline-text">Subscribe to get the latest posts sent to your email.</p>
+            <form action="https://formspree.io/f/xbdbaolp" method="POST" class="subscribe-form">
+                <input type="email" name="email" class="subscribe-input" placeholder="Type your email…" required>
+                <button class="subscribe-btn" type="submit">Subscribe</button>
+            </form>
+        </div>
+
         <!-- Related Posts -->
         <div class="related-section" id="related-section" style="display:none;">
             <div class="related-title">📖 Barruulee Biroo Dubbisi</div>
@@ -46,13 +106,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const postIndex = parseInt(urlParams.get('id'));
         const category = urlParams.get('cat');
-
-        // Kutaa fi emoji badge
-        const catLabels = {
-            motivation: '🔥 Motivation',
-            stories:    '📚 Seenaa',
-            education:  '🎓 Gorsa'
-        };
+        const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
 
         if (!isNaN(postIndex) && category !== null) {
             fetch(`data/${category}.json`)
@@ -94,9 +148,7 @@
                                 `<img src="${post.image}" alt="${post.title}" style="width:100%;height:auto;max-height:400px;object-fit:cover;border-radius:12px;display:block;margin:0 auto;">`;
                         }
 
-                        // Related posts load
                         loadRelatedPosts(data.items, postIndex, category);
-
                     } else {
                         document.getElementById('post-title').innerText = "Barruun hin argamne!";
                     }
@@ -104,34 +156,21 @@
                 .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
         }
 
-        // =============================================
-        // RELATED POSTS — kutaa biraa irraa guuta 3
-        // =============================================
         function loadRelatedPosts(currentItems, currentIndex, currentCat) {
-            // Kutaa amma baname keessaa barruulee haftuu
             const fromSame = currentItems
                 .map((item, i) => ({ ...item, originalIndex: i, cat: currentCat }))
                 .filter(item => item.originalIndex !== currentIndex)
                 .sort(() => Math.random() - 0.5);
 
-            if (fromSame.length >= 3) {
-                // Ga'aa dha — kutaa walfakkaataa irraa 3 agarsiisi
-                displayRelated(fromSame.slice(0, 3));
-                return;
-            }
+            if (fromSame.length >= 3) { displayRelated(fromSame.slice(0, 3)); return; }
 
-            // Ga'aa miti — kutaalee biroo irraa guutuu barbaachisa
             const needed = 3 - fromSame.length;
             const otherCats = ['motivation', 'stories', 'education'].filter(c => c !== currentCat);
-
-            const promises = otherCats.map(cat =>
-                fetch(`data/${cat}.json`)
-                    .then(r => r.json())
+            Promise.all(otherCats.map(cat =>
+                fetch(`data/${cat}.json`).then(r => r.json())
                     .then(d => (d.items || []).map((item, i) => ({ ...item, originalIndex: i, cat })))
                     .catch(() => [])
-            );
-
-            Promise.all(promises).then(results => {
+            )).then(results => {
                 const fromOthers = results.flat().sort(() => Math.random() - 0.5).slice(0, needed);
                 displayRelated([...fromSame, ...fromOthers]);
             });
@@ -142,14 +181,12 @@
             const grid = document.getElementById('related-grid');
             grid.innerHTML = '';
             items.forEach(item => {
-                const desc = item.description ||
-                    (item.body ? item.body.replace(/\*\*(.*?)\*\*/g, '$1').substring(0, 80) + '...' : '');
-                const badge = catLabels[item.cat] || '';
+                const desc = item.description || (item.body ? item.body.replace(/\*\*(.*?)\*\*/g, '$1').substring(0, 80) + '...' : '');
                 const card = document.createElement('a');
                 card.href = `post.html?cat=${item.cat}&id=${item.originalIndex}`;
                 card.className = 'related-card';
                 card.innerHTML = `
-                    <div class="related-card-badge">${badge}</div>
+                    <div class="related-card-badge">${catLabels[item.cat] || ''}</div>
                     <div class="related-card-title">${item.title}</div>
                     <div class="related-card-desc">${desc}</div>
                     <span class="related-card-link">Dubbisi ➔</span>`;
