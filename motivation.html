@@ -110,30 +110,12 @@
                             
                             <!-- Batanii Ol-kaahi asitti sirriitti dabalame -->
                             <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background: #222; border: 1px solid #444; color: #FF9800; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 5px;">🔖 Ol-kaahi</button>
-                        </div>
-                        
-                        
+                        </div>      
             
 
-                        <!-- Saanduqa Utterances (Comments) -->
-                        <div class="comment-box" id="utterances-${itemID}"></div>
-                    </div>
                 `;
             });
-
-            // B. Barruu hunda jalatti Utterances fe'uu
-            data.items.forEach((speech) => {
-                const itemID = speech.title.replace(/\s+/g, '-').toLowerCase();
                 
-                const script = document.createElement('script');
-                script.src = 'https://utteranc.es/client.js';
-                script.setAttribute('repo', 'DEFER286/RISE-D'); 
-                script.setAttribute('issue-term', itemID); 
-                script.setAttribute('theme', 'github-dark'); 
-                script.setAttribute('crossorigin', 'anonymous');
-                script.async = true;
-
-                document.getElementById('utterances-' + itemID).appendChild(script);
                 
                 // Emoji kuusaa keessaa fiduu
                 loadReactions(itemID);
