@@ -111,16 +111,14 @@
                             <!-- Batanii Ol-kaahi asitti sirriitti dabalame -->
                             <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background: #222; border: 1px solid #444; color: #FF9800; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 5px;">🔖 Ol-kaahi</button>
                         </div>      
+                    `;
+
+        loadReactions(itemID);
+        updateSaveButtonVisual(itemID);
+    });
+});
             
 
-                `;
-            });
-                
-                
-                // Emoji kuusaa keessaa fiduu
-                loadReactions(itemID);
-                 updateSaveButtonVisual(itemID);        
-            });
             // C. KOODII AUTO-SCROLL (Amguddaan fi Kan Hin Maqne)
             if (window.location.hash) {
                 const hashValue = decodeURIComponent(window.location.hash.substring(1)).toLowerCase().trim();
