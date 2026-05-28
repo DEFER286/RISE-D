@@ -138,8 +138,25 @@ fetch('data/education.json')
                     
             `;
         
+         });
 
-            }
+            // B. Barruu hunda jalatti Utterances Comment Box fe'uu
+            data.items.forEach((story) => {
+                const itemID = story.title.replace(/\s+/g, '-').toLowerCase();
+                
+                const script = document.createElement('script');
+                script.src = 'https://utteranc.es/client.js';
+                script.setAttribute('repo', 'DEFER286/RISE-D'); // Maqaa repo kee isa sirrii
+                script.setAttribute('issue-term', itemID); // Barruu hundaaf comment gargar baasa
+                script.setAttribute('theme', 'github-dark'); 
+                script.setAttribute('crossorigin', 'anonymous');
+                script.async = true;
+
+                const targetBox = document.getElementById('utterances-' + itemID);
+                if (targetBox) {
+                    targetBox.appendChild(script);
+                }
+            
             // Emoji kuusaa keessaa fiduu
             loadReactions(itemID);
         });
