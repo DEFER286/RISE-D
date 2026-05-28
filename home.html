@@ -254,18 +254,22 @@ body {
             const container = document.getElementById('latest-motivation');
             container.innerHTML = '';
 
-            const allItems = data.items.reverse();
-            allItems.forEach((item, index) => {
-                container.innerHTML += `
-                <a href="post.html?cat=motivation&id=${index}" style="text-decoration: none; color: inherit;">
+                    // Index dhuugaa kuusaa keessa jiru osoo hin garagalchin dura itti fiduuf
+        const itemsWithIndex = data.items.map((item, originalIndex) => ({ ...item, originalIndex }));
+        const allItems = itemsWithIndex.reverse();
+
+        allItems.forEach((item) => {
+            container.innerHTML += `
+                <a href="post.html?cat=motivation&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
                     <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 20px;">
                         <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                        <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || (item.body ? item.body.substring(0, 100) + '...' : '')}</p>
-                        <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
+                        <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || ''}</p>
+                        <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi ➔</span>
                     </div>
                 </a>
-                `;
-            });
+            `;
+        });
+        
         })
         .catch(err => console.log('Motivation hin argamne:', err));
 
@@ -277,18 +281,22 @@ body {
             const container = document.getElementById('latest-stories');
             container.innerHTML = '';
 
-            const allItems = data.items.reverse();
-            allItems.forEach((item, index) => {
-                container.innerHTML += `
-                <a href="post.html?cat=stories&id=${index}" style="text-decoration: none; color: inherit;">
+                    // Index dhuugaa kuusaa keessa jiru osoo hin garagalchin dura itti fiduuf
+        const itemsWithIndex = data.items.map((item, originalIndex) => ({ ...item, originalIndex }));
+        const allItems = itemsWithIndex.reverse();
+
+        allItems.forEach((item) => {
+            container.innerHTML += `
+                <a href="post.html?cat=stories&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
                     <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 20px;">
                         <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
                         <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.body ? item.body.substring(0, 100) + '...' : ''}</p>
-                        <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
+                        <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi ➔</span>
                     </div>
                 </a>
-                `;
-            });
+            `;
+        });
+        
         })
         .catch(err => console.log('Seenaan hin argamne:', err));
 
@@ -300,20 +308,24 @@ body {
             const container = document.getElementById('education-container');
             container.innerHTML = '';
 
-            if (data.items && data.items.length > 0) {
-                const allItems = data.items.reverse();
-                allItems.forEach((item, index) => {
-                    container.innerHTML += `
-                    <a href="post.html?cat=education&id=${index}" style="text-decoration: none; color: inherit;">
+                    if (data.items && data.items.length > 0) {
+            // Index dhuugaa kuusaa keessa jiru osoo hin garagalchin dura itti fiduuf
+            const itemsWithIndex = data.items.map((item, originalIndex) => ({ ...item, originalIndex }));
+            const allItems = itemsWithIndex.reverse();
+
+            allItems.forEach((item) => {
+                container.innerHTML += `
+                    <a href="post.html?cat=education&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
                         <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 20px;">
                             <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                            <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || (item.body ? item.body.substring(0, 100) + '...' : '')}</p>
-                            <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi →</span>
+                            <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || ''}</p>
+                            <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi ➔</span>
                         </div>
                     </a>
-                    `;
-                });
-            }
+                `;
+            });
+        }
+        
         })
         .catch(err => console.log('Gorsi Barnootaa hin argamne:', err));
         
