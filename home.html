@@ -6,15 +6,14 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-KE3FRR2XHP');
     </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RISE.D - DASHBOARD</title>
-     <meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />  
-            <!-- Koodii CSS Search Bar fi Subscribe Card Miidhagsu -->
+    <meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />  
+
     <style>
         /* --- Saanduqa Barbaachaa (Search Pill) --- */
         #dashboard-search {
@@ -62,7 +61,7 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 5px;
-    }
+        }
 
         .subscribe-card-text {
             color: #ddd;
@@ -70,334 +69,330 @@
             margin-bottom: 20px;
         }
 
-        /* --- Kutaa Email Input Group (Sirreeffama Haaraa) --- */
-.email-input-group {
-    display: flex;
-    gap: 10px;
-    width: 90%; /* Saanduqa guddichaa keessaa 90% qofa haa fudhatu */
-    max-width: 320px; /* Caalaatti akka gabaabatuuf */
-    margin: 0 auto; /* Gidduutti fiduuf */
-    justify-content: center;
-    align-items: center;
-}
+        /* --- Kutaa Email Input Group --- */
+        .email-input-group {
+            display: flex;
+            gap: 10px;
+            width: 90%;
+            max-width: 320px;
+            margin: 0 auto;
+            justify-content: center;
+            align-items: center;
+        }
 
-input.email-input-pill {
-    background-color: white !important;
-    color: #333 !important;
-    border: 1px solid #ddd !important;
-    border-radius: 50px !important;
-    padding: 10px 15px !important; /* Xiqqo dhiphisneera */
-    width: 60%; /* Saanduqicha keessaa harka caalu qabata */
-    font-size: 14px;
-}
+        input.email-input-pill {
+            background-color: white !important;
+            color: #333 !important;
+            border: 1px solid #ddd !important;
+            border-radius: 50px !important;
+            padding: 10px 15px !important;
+            width: 60%;
+            font-size: 14px;
+        }
 
-.email-subscribe-button {
-    background-color: #FF9800 !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 50px !important;
-    padding: 10px 18px !important; /* Xiqqo dhiphisneera */
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-    white-space: nowrap; /* Barreeffamni batanii keessaa akka gadi hin fashalaasne */
-} 
+        .email-subscribe-button {
+            background-color: #FF9800 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 50px !important;
+            padding: 10px 18px !important;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+        } 
 
         .email-subscribe-button:hover {
-           ackground-color: #e08700 !important;
+            background-color: #e08700 !important;
         }
-      /* --- Bottom Navigation Bar Style --- */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #120B24; /* Halluu weebsaayitiikee waliin kan wal-simu */
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-    z-index: 1000; /* Akka kaardiiwwan duubatti hin hafneef */
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
 
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #888888; /* Halluu barruu isaa isa dhabamaa */
-    font-size: 12px;
-    gap: 4px;
-    transition: color 0.3s ease;
-    width: 25%;
-    text-align: center;
-}
+        /* --- Bottom Navigation Bar Style --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #120B24;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
 
-.nav-icon {
-    font-size: 20px;
-}
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888888;
+            font-size: 12px;
+            gap: 4px;
+            transition: color 0.3s ease;
+            width: 25%;
+            text-align: center;
+        }
 
-/* Yeroo irra jiran ykn Active ta'u (Burtukaanii) */
-.nav-item.active {
-    color: #FF9800; 
-}
+        .nav-icon {
+            font-size: 20px;
+        }
 
-.nav-item:hover {
-    color: #ffffff;
-}
+        .nav-item.active {
+            color: #FF9800; 
+        }
 
-/* Weebsaayitiin kun Kompiuteraan yoo baname barri gadii kun akka badu gochuuf (Mobile Only) */
-@media (min-width: 768px) {
-    .bottom-nav {
-        display: none;
-    }
-}
+        .nav-item:hover {
+            color: #ffffff;
+        }
 
-/* Kaardiiwwan gadii akka koodii kanaan hin haguugamneef body irratti margin dabalra */
-body {
-    padding-bottom: 70px !important;
-}
-            
+        @media (min-width: 768px) {
+            .bottom-nav {
+                display: none;
+            }
+        }
+
+        body {
+            padding-bottom: 70px !important;
+        }
+
+        /* =============================================
+           JIJJIIRAMA HAARAA: Sections Grid Layout
+           ============================================= */
+        .sections-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+            margin-top: 30px;
+        }
+
+        /* Mobile irratti tokko tokko taa'u */
+        @media (max-width: 768px) {
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tablet irratti lama lama taa'u */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .sections-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
     </style>
 </head>
         
-</head>
 <body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding-bottom: 70px !important;">
         
-    <nav <!-- Hamburger Button -->
-<div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
-<!-- Koodii kana qofa galchi -->
-<div id="side-menu" style="display: none; background-color: #1A0D2E; position: fixed; top: 50px; left: 0; width: 100%; padding: 20px 0;">
-
-  <a href="index.html" style="display: block; width: 100%; color: white; text-decoration: none; font-size: 18px; padding: 15px 0 15px 25px; box-sizing: border-box;">Portfolio</a>
-
-  <a href="about.html" style="display: block; width: 100%; color: white; text-decoration: none; font-size: 18px; padding: 15px 0 15px 25px; box-sizing: border-box;">About</a>
-
-  <a href="#" id="home-dropdown-btn" style="display: block; width: 100%; color: #ff9800; text-decoration: none; font-size: 18px; padding: 15px 0 15px 25px; box-sizing: border-box;">Home ▼</a>
-
-  <div id="home-sub-menu" style="display: none; background-color: #2A1D3E; margin: 10px auto 0 auto; padding: 15px; border-radius: 8px; width: 90%;">
-      <a href="motivation.html" style="display: block; color: white; padding: 12px 0; text-decoration: none; font-size: 15px; padding-left: 15px;">Motivation Speech</a>
-      <a href="stories.html" style="display: block; color: white; padding: 12px 0; text-decoration: none; font-size: 15px; padding-left: 15px;">Instructive Stories</a>
-      <a href="education.html" style="display: block; color: white; padding: 12px 0; text-decoration: none; font-size: 15px; padding-left: 15px;">Education Advice</a>
-  </div>
-
-</div>
-
-         
-</nav>
-
-    <div style="margin-top: 100px; text-align: center; padding: 20px;">
-        <h1<!-- Koodii Mata-duree Haaraa -->
-<h1 style="color: #ff9800; font-size: 2.5em; text-align: center; margin-top: 80px;">RISE.D DASHBOARD</h1>
-<p style="text-align: center; color: #ddd; margin-bottom: 30px;">
-    Baga nagaan Dhufte!🙏
-</p>
-        <!-- Koodii Search Bar Haaraa (Fakkii 2ffaa Irratti Argamu) -->
-<div style="text-align: center; width: 100%;">
-    <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Barbaadi...">
-</div>
-    
-    <div <!-- Kutaa Preview Barruulee Haaraa -->
-<div style="margin-top: 30px;">
-    <!-- Kutaa Motivation -->
-    <h2 style="color: #FF9800; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">🔥 Motivation Haaraa</h2>
-    <div id="latest-motivation"></div> 
-    <div style="text-align: right; margin-bottom: 30px;">
-        <a href="motivation.html" style="color: #FF9800; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi ➔</a>
-    </div>
-
-    <!-- Kutaa Seenaawwan Barsiisoo -->
-    <h2 style="color: #00BCD4; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">📚 Seenaawwan Haaraa</h2>
-    <div id="latest-stories"></div>
-    <div style="text-align: right; margin-bottom: 30px;">
-        <a href="stories.html" style="color: #00BCD4; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi ➔</a>
-    </div>
-            <!-- 🎓 Gorsa Barnoota Haaraa -->
-        <div style="margin-top: 30px;">
-            <h2 style="color: #FF9800; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">🎓 Gorsa Barnoota Haaraa</h2>
-            <div id="education-container"></div>
-            <div style="text-align: right; margin-bottom: 30px;">
-                <a href="education.html" style="color: #FF9800; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi →</a>
+    <nav>
+        <!-- Hamburger Button -->
+        <div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
+        <div id="side-menu" style="display: none; background-color: #1A0D2E; position: fixed; top: 50px; left: 0; width: 100%; padding: 20px 0;">
+            <a href="index.html" style="display: block; width: 100%; color: white; text-decoration: none; font-size: 18px; padding: 15px 0 15px 25px; box-sizing: border-box;">Portfolio</a>
+            <a href="about.html" style="display: block; width: 100%; color: white; text-decoration: none; font-size: 18px; padding: 15px 0 15px 25px; box-sizing: border-box;">About</a>
+            <a href="#" id="home-dropdown-btn" style="display: block; width: 100%; color: #ff9800; text-decoration: none; font-size: 18px; padding: 15px 0 15px 25px; box-sizing: border-box;">Home ▼</a>
+            <div id="home-sub-menu" style="display: none; background-color: #2A1D3E; margin: 10px auto 0 auto; padding: 15px; border-radius: 8px; width: 90%;">
+                <a href="motivation.html" style="display: block; color: white; padding: 12px 0; text-decoration: none; font-size: 15px; padding-left: 15px;">Motivation Speech</a>
+                <a href="stories.html" style="display: block; color: white; padding: 12px 0; text-decoration: none; font-size: 15px; padding-left: 15px;">Instructive Stories</a>
+                <a href="education.html" style="display: block; color: white; padding: 12px 0; text-decoration: none; font-size: 15px; padding-left: 15px;">Education Advice</a>
             </div>
         </div>
+    </nav>
+
+    <div style="margin-top: 100px; text-align: center; padding: 20px;">
+        <!-- Koodii Mata-duree Haaraa -->
+        <h1 style="color: #ff9800; font-size: 2.5em; text-align: center; margin-top: 80px;">RISE.D DASHBOARD</h1>
+        <p style="text-align: center; color: #ddd; margin-bottom: 30px;">
+            Baga nagaan Dhufte!🙏
+        </p>
+
+        <!-- Search Bar -->
+        <div style="text-align: center; width: 100%;">
+            <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Barbaadi...">
+        </div>
     
-</div>
+        <!-- =============================================
+             JIJJIIRAMA HAARAA: Kutaalee Sadeen Grid keessa
+             ============================================= -->
+        <div class="sections-grid">
+
+            <!-- Kutaa 1: Motivation -->
+            <div>
+                <h2 style="color: #FF9800; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">🔥 Motivation Haaraa</h2>
+                <div id="latest-motivation"></div>
+                <div style="text-align: right; margin-bottom: 30px;">
+                    <a href="motivation.html" style="color: #FF9800; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi ➔</a>
+                </div>
+            </div>
+
+            <!-- Kutaa 2: Seenaawwan -->
+            <div>
+                <h2 style="color: #00BCD4; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">📚 Seenaawwan Haaraa</h2>
+                <div id="latest-stories"></div>
+                <div style="text-align: right; margin-bottom: 30px;">
+                    <a href="stories.html" style="color: #00BCD4; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi ➔</a>
+                </div>
+            </div>
+
+            <!-- Kutaa 3: Gorsa Barnoota -->
+            <div>
+                <h2 style="color: #FF9800; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">🎓 Gorsa Barnoota Haaraa</h2>
+                <div id="education-container"></div>
+                <div style="text-align: right; margin-bottom: 30px;">
+                    <a href="education.html" style="color: #FF9800; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi →</a>
+                </div>
+            </div>
+
+        </div>
+        <!-- /sections-grid -->
         
-<!-- Koodii JavaScript Menu Hojjechiisuuf -->
-<script>
-    const menuBtn = document.getElementById('menu-btn');
-    const sideMenu = document.getElementById('side-menu');
-    menuBtn.addEventListener('click', () => {
-        sideMenu.style.display = sideMenu.style.display === 'none' ? 'block' : 'none';
-    });
+    </div>
+        
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const sideMenu = document.getElementById('side-menu');
+        menuBtn.addEventListener('click', () => {
+            sideMenu.style.display = sideMenu.style.display === 'none' ? 'block' : 'none';
+        });
 
-    const homeBtn = document.getElementById('home-dropdown-btn');
-    const homeSubMenu = document.getElementById('home-sub-menu');
-    homeBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (homeSubMenu.style.display === 'none') {
-            homeSubMenu.style.display = 'block';
-            homeBtn.innerHTML = 'Home ▲';
-        } else {
-            homeSubMenu.style.display = 'none';
-            homeBtn.innerHTML = 'Home ▼';
-        }
-    });
+        const homeBtn = document.getElementById('home-dropdown-btn');
+        const homeSubMenu = document.getElementById('home-sub-menu');
+        homeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (homeSubMenu.style.display === 'none') {
+                homeSubMenu.style.display = 'block';
+                homeBtn.innerHTML = 'Home ▲';
+            } else {
+                homeSubMenu.style.display = 'none';
+                homeBtn.innerHTML = 'Home ▼';
+            }
+        });
 
-            // 1. Motivation hunda saanduqa sarara muraasaan Dashboard irratti fiduuf
+        // 1. Motivation
         fetch('data/motivation.json')
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('latest-motivation');
             container.innerHTML = '';
-
-                    // Index dhuugaa kuusaa keessa jiru osoo hin garagalchin dura itti fiduuf
-        const itemsWithIndex = data.items.map((item, originalIndex) => ({ ...item, originalIndex }));
-        const allItems = itemsWithIndex.reverse();
-
-        allItems.forEach((item) => {
-            container.innerHTML += `
-                <a href="post.html?cat=motivation&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
-                    <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 20px;">
-                        <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                        <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || (item.body ? item.body.substring(0, 100) + '...' : '')}</p>
-                        <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi ➔</span>
-                    </div>
-                </a>
-            `;
-        });
-        
-        })
-        .catch(err => console.log('Motivation hin argamne:', err));
-
-
-        // 2. Seenaawwan hunda saanduqa sarara muraasaan Dashboard irratti fiduuf
-        fetch('data/stories.json')
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById('latest-stories');
-            container.innerHTML = '';
-
-                    // Index dhuugaa kuusaa keessa jiru osoo hin garagalchin dura itti fiduuf
-        const itemsWithIndex = data.items.map((item, originalIndex) => ({ ...item, originalIndex }));
-        const allItems = itemsWithIndex.reverse();
-
-        allItems.forEach((item) => {
-            container.innerHTML += `
-                <a href="post.html?cat=stories&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
-                    <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 20px;">
-                        <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                        <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.body ? item.body.substring(0, 100) + '...' : ''}</p>
-                        <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi ➔</span>
-                    </div>
-                </a>
-            `;
-        });
-        
-        })
-        .catch(err => console.log('Seenaan hin argamne:', err));
-
-
-        // 3. Gorsa Barnootaa hunda saanduqa sarara muraasaan Dashboard irratti fiduuf
-        fetch('data/education.json')
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById('education-container');
-            container.innerHTML = '';
-
-                    if (data.items && data.items.length > 0) {
-            // Index dhuugaa kuusaa keessa jiru osoo hin garagalchin dura itti fiduuf
             const itemsWithIndex = data.items.map((item, originalIndex) => ({ ...item, originalIndex }));
             const allItems = itemsWithIndex.reverse();
-
             allItems.forEach((item) => {
                 container.innerHTML += `
-                    <a href="post.html?cat=education&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
+                    <a href="post.html?cat=motivation&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
                         <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 20px;">
                             <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
-                            <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || ''}</p>
+                            <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || (item.body ? item.body.substring(0, 100) + '...' : '')}</p>
                             <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi ➔</span>
                         </div>
                     </a>
                 `;
             });
-        }
-        
+        })
+        .catch(err => console.log('Motivation hin argamne:', err));
+
+        // 2. Seenaa
+        fetch('data/stories.json')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('latest-stories');
+            container.innerHTML = '';
+            const itemsWithIndex = data.items.map((item, originalIndex) => ({ ...item, originalIndex }));
+            const allItems = itemsWithIndex.reverse();
+            allItems.forEach((item) => {
+                container.innerHTML += `
+                    <a href="post.html?cat=stories&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
+                        <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 20px;">
+                            <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
+                            <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.body ? item.body.substring(0, 100) + '...' : ''}</p>
+                            <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi ➔</span>
+                        </div>
+                    </a>
+                `;
+            });
+        })
+        .catch(err => console.log('Seenaan hin argamne:', err));
+
+        // 3. Gorsa Barnoota
+        fetch('data/education.json')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('education-container');
+            container.innerHTML = '';
+            if (data.items && data.items.length > 0) {
+                const itemsWithIndex = data.items.map((item, originalIndex) => ({ ...item, originalIndex }));
+                const allItems = itemsWithIndex.reverse();
+                allItems.forEach((item) => {
+                    container.innerHTML += `
+                        <a href="post.html?cat=education&id=${item.originalIndex}" style="text-decoration: none; color: inherit;">
+                            <div style="background-color: #1F1A3A; padding: 25px 20px; border-radius: 12px; border-left: 6px solid #FF9800; margin-bottom: 20px;">
+                                <h3 style="color: #fff; margin-top: 0; font-size: 18px;">${item.title}</h3>
+                                <p style="color: #ddd; font-size: 14px; margin-bottom: 10px; line-height: 1.5;">${item.description || ''}</p>
+                                <span style="color: #FF9800; font-size: 14px; font-weight: bold; display: inline-block;">Guutuu Dubbisi ➔</span>
+                            </div>
+                        </a>
+                    `;
+                });
+            }
         })
         .catch(err => console.log('Gorsi Barnootaa hin argamne:', err));
-        
 
-
-             // Hojii Search Bar: Saanduqa hundaa qoratee kan barbaadame qofa hambisa
+        // Search Bar
         function searchDashboard() {
             const input = document.getElementById('dashboard-search').value.toLowerCase();
             
-            // Saanduqa Motivation hunda qorachuuf
             const motivationContainer = document.getElementById('latest-motivation');
             const motivationBoxes = motivationContainer.getElementsByTagName('a');
-            
             for (let i = 0; i < motivationBoxes.length; i++) {
                 let text = motivationBoxes[i].textContent || motivationBoxes[i].innerText;
-                if (text.toLowerCase().indexOf(input) > -1) {
-                    motivationBoxes[i].style.display = "";
-                } else {
-                    motivationBoxes[i].style.display = "none";
-                }
+                motivationBoxes[i].style.display = text.toLowerCase().indexOf(input) > -1 ? "" : "none";
             }
             
-            // Saanduqa Stories hunda qorachuuf
             const storiesContainer = document.getElementById('latest-stories');
             const storiesBoxes = storiesContainer.getElementsByTagName('a');
-            
             for (let i = 0; i < storiesBoxes.length; i++) {
                 let text = storiesBoxes[i].textContent || storiesBoxes[i].innerText;
-                if (text.toLowerCase().indexOf(input) > -1) {
-                    storiesBoxes[i].style.display = "";
-                } else {
-                    storiesBoxes[i].style.display = "none";
-                }
+                storiesBoxes[i].style.display = text.toLowerCase().indexOf(input) > -1 ? "" : "none";
             }
         }
-       
-</script>
+    </script>
    
-      <!-- Kutaa Subscribe Haaraa (Fakkii 2ffaa Irratti Argamu) -->
-<div class="subscribe-card">
-    <div class="subscribe-card-content">
-        <div class="subscribe-card-title">
-            <span style="font-size: 24px;">📩</span> Subscribe
+    <!-- Subscribe Card -->
+    <div class="subscribe-card">
+        <div class="subscribe-card-content">
+            <div class="subscribe-card-title">
+                <span style="font-size: 24px;">📩</span> Subscribe
+            </div>
+            <p class="subscribe-card-text">Email kee galchi</p>
+            <form action="https://formspree.io/f/xbdbaolp" method="POST" class="email-input-group" style="width: 100%;">
+                <input type="email" name="email" class="email-input-pill" placeholder="email..." required>
+                <button class="email-subscribe-button" type="submit">Subscribe</button>
+            </form>
         </div>
-        <p class="subscribe-card-text">Email kee galchi</p>
-        
-        <!-- Formspree fi Dizaayinii Pill Haaraa -->
-        <form action="https://formspree.io/f/xbdbaolp" method="POST" class="email-input-group" style="width: 100%;">
-            <input type="email" name="email" class="email-input-pill" placeholder="email..." required>
-            <button class="email-subscribe-button" type="submit">Subscribe</button>
-        </form>
     </div>
-</div>
-  <!-- Barri Gadii (Bottom Navigation Bar) -->
-<div class="bottom-nav">
-    <a href="home.html" class="nav-item active">
-        <span class="nav-icon">🎛️</span>
-        <span class="nav-label">Jalqaba</span>
-    </a>
-    <a href="#dashboard-search" class="nav-item">
-        <span class="nav-icon">🔍</span>
-        <span class="nav-label">Barbaadi</span>
-    </a>
-    <a href="saved.html" class="nav-item">
-        <span class="nav-icon">🔖</span>
-        <span class="nav-label">Ol-kaa'ame</span>
-    </a>
-    <a href="profile.html" class="nav-item">
-        <span class="nav-icon">👤</span>
-        <span class="nav-label">Profaayilii</span>
-    </a>
-</div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item active">
+            <span class="nav-icon">🎛️</span>
+            <span class="nav-label">Jalqaba</span>
+        </a>
+        <a href="#dashboard-search" class="nav-item">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">Barbaadi</span>
+        </a>
+        <a href="saved.html" class="nav-item">
+            <span class="nav-icon">🔖</span>
+            <span class="nav-label">Ol-kaa'ame</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profaayilii</span>
+        </a>
+    </div>
             
 </body>
 </html>
+                    
