@@ -1,0 +1,32 @@
+name: Auto Update Sitemap
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/motivation.json'
+      - 'data/stories.json'
+      - 'data/education.json'
+
+jobs:
+  update-sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate sitemap
+        run: node generate-sitemap.js
+
+      - name: Commit sitemap
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml
+          git diff --staged --quiet || git commit -m "🗺️ Auto-update sitemap.xml"
+          git push
