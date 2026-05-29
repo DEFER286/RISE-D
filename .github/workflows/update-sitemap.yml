@@ -8,9 +8,13 @@ on:
       - 'data/stories.json'
       - 'data/education.json'
 
+permissions:
+  contents: write   # 🔥 THIS IS THE FIX
+
 jobs:
   update-sitemap:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
