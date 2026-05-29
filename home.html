@@ -11,9 +11,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RISE.D - DASHBOARD</title>
-    <meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />  
+    <meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />
 
     <style>
+        /* === DESKTOP TOP NAV (mobile irratti hidden) === */
+        .desktop-nav {
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: #120B24;
+                padding: 14px 40px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                box-sizing: border-box;
+                z-index: 1000;
+                border-bottom: 1px solid rgba(255,255,255,0.08);
+                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            }
+            .desktop-nav-logo {
+                color: #FF9800;
+                font-size: 20px;
+                font-weight: bold;
+                text-decoration: none;
+                letter-spacing: 1px;
+            }
+            .desktop-nav-links {
+                display: flex;
+                gap: 28px;
+                align-items: center;
+            }
+            .desktop-nav-links a {
+                color: #ccc;
+                text-decoration: none;
+                font-size: 15px;
+                transition: color 0.2s;
+            }
+            .desktop-nav-links a:hover {
+                color: #FF9800;
+            }
+            .desktop-nav-links a.active {
+                color: #FF9800;
+                font-weight: bold;
+            }
+            .desktop-nav-profile {
+                background-color: rgba(255,152,0,0.15);
+                border: 1px solid #FF9800;
+                color: #FF9800 !important;
+                border-radius: 50px;
+                padding: 6px 18px !important;
+                font-weight: bold !important;
+            }
+            .desktop-nav-profile:hover {
+                background-color: #FF9800 !important;
+                color: #111 !important;
+            }
+        }
+
+        /* === MOBILE HAMBURGER (desktop irratti hidden) === */
+        .mobile-menu-btn {
+            display: block;
+        }
+        @media (min-width: 768px) {
+            .mobile-menu-btn { display: none; }
+            #side-menu { display: none !important; }
+        }
+
+        /* === SEARCH BAR === */
         #dashboard-search {
             background-color: white !important;
             color: #333 !important;
@@ -33,6 +102,7 @@
             outline: none;
         }
 
+        /* === SUBSCRIBE CARD === */
         .subscribe-card {
             background-color: #1F1A3A;
             border-top: 5px solid white;
@@ -49,14 +119,6 @@
         .email-subscribe-button { background-color: #FF9800 !important; color: white !important; border: none !important; border-radius: 50px !important; padding: 10px 18px !important; font-weight: bold; cursor: pointer; font-size: 14px; transition: background-color 0.3s ease; white-space: nowrap; }
         .email-subscribe-button:hover { background-color: #e08700 !important; }
 
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #120B24; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.3); z-index: 1000; border-top: 1px solid rgba(255,255,255,0.05); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #888888; font-size: 12px; gap: 4px; transition: color 0.3s ease; width: 25%; text-align: center; }
-        .nav-icon { font-size: 20px; }
-        .nav-item.active { color: #FF9800; }
-        .nav-item:hover { color: #ffffff; }
-        @media (min-width: 768px) { .bottom-nav { display: none; } }
-        body { padding-bottom: 70px !important; }
-
         /* === SECTIONS GRID === */
         .sections-grid {
             display: grid;
@@ -65,8 +127,6 @@
             align-items: start;
             margin-top: 30px;
         }
-
-        /* === MOBILE === */
         @media (max-width: 768px) {
             .sections-grid {
                 grid-template-columns: repeat(3, 88vw);
@@ -84,10 +144,8 @@
             .sections-grid > div { scroll-snap-align: center; min-width: 88vw; }
         }
 
-        /* === ARROW NAV (mobile qofa) === */
-        .carousel-nav {
-            display: none;
-        }
+        /* === CAROUSEL ARROWS (mobile qofa) === */
+        .carousel-nav { display: none; }
         @media (max-width: 768px) {
             .carousel-nav {
                 display: flex;
@@ -97,7 +155,7 @@
                 margin: 10px auto 4px auto;
             }
             .carousel-nav-btn {
-                background: rgba(255, 152, 0, 0.15);
+                background: rgba(255,152,0,0.15);
                 border: 2px solid #FF9800;
                 color: #FF9800;
                 border-radius: 50px;
@@ -106,97 +164,109 @@
                 font-weight: bold;
                 cursor: pointer;
                 transition: background 0.2s;
-                line-height: 1;
             }
-            .carousel-nav-btn:active {
-                background: rgba(255, 152, 0, 0.35);
-            }
-            .carousel-page-label {
-                color: #aaa;
-                font-size: 13px;
-                min-width: 60px;
-                text-align: center;
-            }
+            .carousel-nav-btn:active { background: rgba(255,152,0,0.35); }
+            .carousel-page-label { color: #aaa; font-size: 13px; min-width: 60px; text-align: center; }
         }
 
         /* === DOTS (mobile qofa) === */
         .swipe-dots { display: none; }
         @media (max-width: 768px) {
-            .swipe-dots {
-                display: flex;
-                justify-content: center;
-                gap: 8px;
-                margin-top: 12px;
-            }
-            .swipe-dot {
-                width: 8px; height: 8px;
-                border-radius: 50%;
-                background-color: #444;
-                transition: background-color 0.3s;
-            }
+            .swipe-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+            .swipe-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #444; transition: background-color 0.3s; }
             .swipe-dot.active { background-color: #FF9800; }
         }
+
+        /* === BOTTOM NAV (mobile qofa) === */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: #120B24;
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #888888; font-size: 12px; gap: 4px; transition: color 0.3s ease; width: 25%; text-align: center; }
+        .nav-icon { font-size: 20px; }
+        .nav-item.active { color: #FF9800; }
+        .nav-item:hover { color: #ffffff; }
+        @media (min-width: 768px) { .bottom-nav { display: none; } }
+
+        body { padding-bottom: 70px !important; }
+        @media (min-width: 768px) { body { padding-bottom: 0 !important; padding-top: 65px !important; } }
     </style>
 </head>
-        
-<body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding-bottom: 70px !important;">
-        
-    <nav>
-        <div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
-        <div id="side-menu" style="display: none; background-color: #1A0D2E; position: fixed; top: 50px; left: 0; width: 100%; padding: 20px 0;">
-            <a href="index.html" style="display: block; width: 100%; color: white; text-decoration: none; font-size: 18px; padding: 15px 0 15px 25px; box-sizing: border-box;">Portfolio</a>
-            <a href="about.html" style="display: block; width: 100%; color: white; text-decoration: none; font-size: 18px; padding: 15px 0 15px 25px; box-sizing: border-box;">About</a>
-            <a href="#" id="home-dropdown-btn" style="display: block; width: 100%; color: #ff9800; text-decoration: none; font-size: 18px; padding: 15px 0 15px 25px; box-sizing: border-box;">Home ▼</a>
-            <div id="home-sub-menu" style="display: none; background-color: #2A1D3E; margin: 10px auto 0 auto; padding: 15px; border-radius: 8px; width: 90%;">
-                <a href="motivation.html" style="display: block; color: white; padding: 12px 0; text-decoration: none; font-size: 15px; padding-left: 15px;">Motivation Speech</a>
-                <a href="stories.html" style="display: block; color: white; padding: 12px 0; text-decoration: none; font-size: 15px; padding-left: 15px;">Instructive Stories</a>
-                <a href="education.html" style="display: block; color: white; padding: 12px 0; text-decoration: none; font-size: 15px; padding-left: 15px;">Education Advice</a>
-            </div>
+
+<body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0;">
+
+    <!-- DESKTOP TOP NAV -->
+    <nav class="desktop-nav">
+        <a href="home.html" class="desktop-nav-logo">⚡ RISE.D</a>
+        <div class="desktop-nav-links">
+            <a href="home.html" class="active">Home</a>
+            <a href="motivation.html">Motivation</a>
+            <a href="stories.html">Seenaa</a>
+            <a href="education.html">Gorsa</a>
+            <a href="saved.html">🔖 Ol-kaa'ame</a>
+            <a href="profile.html" class="desktop-nav-profile">👤 Profile</a>
         </div>
     </nav>
 
-    <div style="margin-top: 100px; text-align: center; padding: 20px;">
-        <h1 style="color: #ff9800; font-size: 2.5em; text-align: center; margin-top: 80px;">RISE.D DASHBOARD</h1>
-        <p style="text-align: center; color: #ddd; margin-bottom: 30px;">Baga nagaan Dhufte!🙏</p>
+    <!-- MOBILE HAMBURGER -->
+    <div class="mobile-menu-btn">
+        <div id="menu-btn" style="cursor:pointer;font-size:24px;color:#ff9800;padding:15px;">☰</div>
+        <div id="side-menu" style="display:none;background-color:#1A0D2E;position:fixed;top:50px;left:0;width:100%;padding:20px 0;z-index:999;">
+            <a href="index.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:15px 25px;">Portfolio</a>
+            <a href="about.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:15px 25px;">About</a>
+            <a href="#" id="home-dropdown-btn" style="display:block;color:#ff9800;text-decoration:none;font-size:18px;padding:15px 25px;">Home ▼</a>
+            <div id="home-sub-menu" style="display:none;background-color:#2A1D3E;margin:10px auto 0;padding:15px;border-radius:8px;width:90%;">
+                <a href="motivation.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Motivation Speech</a>
+                <a href="stories.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Instructive Stories</a>
+                <a href="education.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Education Advice</a>
+            </div>
+            <a href="profile.html" style="display:block;color:#FF9800;text-decoration:none;font-size:18px;padding:15px 25px;">👤 Profaayilii</a>
+        </div>
+    </div>
 
-        <div style="text-align: center; width: 100%;">
+    <div style="margin-top:100px;text-align:center;padding:20px;">
+        <h1 style="color:#ff9800;font-size:2.5em;text-align:center;margin-top:80px;">RISE.D DASHBOARD</h1>
+        <p style="text-align:center;color:#ddd;margin-bottom:30px;">Baga nagaan Dhufte!🙏</p>
+
+        <div style="text-align:center;width:100%;">
             <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Barbaadi...">
         </div>
 
-        <!-- ARROW NAV — search bar jalatti, kutaa olitti -->
+        <!-- Carousel arrows (mobile) -->
         <div class="carousel-nav">
             <button class="carousel-nav-btn" id="btn-prev">❮</button>
             <span class="carousel-page-label" id="page-label">1 / 3</span>
             <button class="carousel-nav-btn" id="btn-next">❯</button>
         </div>
-    
+
         <!-- Sections Grid -->
         <div class="sections-grid" id="sections-grid">
-
             <div>
-                <h2 style="color: #FF9800; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">🔥 Motivation Haaraa</h2>
+                <h2 style="color:#FF9800;border-bottom:1px solid #444;padding-bottom:5px;font-size:20px;">🔥 Motivation Haaraa</h2>
                 <div id="latest-motivation"></div>
-                <div style="text-align: right; margin-bottom: 30px;">
-                    <a href="motivation.html" style="color: #FF9800; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi ➔</a>
+                <div style="text-align:right;margin-bottom:30px;">
+                    <a href="motivation.html" style="color:#FF9800;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi ➔</a>
                 </div>
             </div>
-
             <div>
-                <h2 style="color: #00BCD4; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">📚 Seenaawwan Haaraa</h2>
+                <h2 style="color:#00BCD4;border-bottom:1px solid #444;padding-bottom:5px;font-size:20px;">📚 Seenaawwan Haaraa</h2>
                 <div id="latest-stories"></div>
-                <div style="text-align: right; margin-bottom: 30px;">
-                    <a href="stories.html" style="color: #00BCD4; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi ➔</a>
+                <div style="text-align:right;margin-bottom:30px;">
+                    <a href="stories.html" style="color:#00BCD4;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi ➔</a>
                 </div>
             </div>
-
             <div>
-                <h2 style="color: #FF9800; border-bottom: 1px solid #444; padding-bottom: 5px; font-size: 20px;">🎓 Gorsa Barnoota Haaraa</h2>
+                <h2 style="color:#FF9800;border-bottom:1px solid #444;padding-bottom:5px;font-size:20px;">🎓 Gorsa Barnoota Haaraa</h2>
                 <div id="education-container"></div>
-                <div style="text-align: right; margin-bottom: 30px;">
-                    <a href="education.html" style="color: #FF9800; text-decoration: none; font-size: 14px; font-weight: bold;">Guutuu Dubbisi →</a>
+                <div style="text-align:right;margin-bottom:30px;">
+                    <a href="education.html" style="color:#FF9800;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi →</a>
                 </div>
             </div>
-
         </div>
 
         <!-- Dots -->
@@ -205,11 +275,10 @@
             <div class="swipe-dot" id="dot-1"></div>
             <div class="swipe-dot" id="dot-2"></div>
         </div>
-
     </div>
-        
+
     <script>
-        // Menu
+        // Mobile menu
         document.getElementById('menu-btn').addEventListener('click', () => {
             const m = document.getElementById('side-menu');
             m.style.display = m.style.display === 'none' ? 'block' : 'none';
@@ -218,54 +287,32 @@
             e.preventDefault();
             const sub = document.getElementById('home-sub-menu');
             const btn = document.getElementById('home-dropdown-btn');
-            if (sub.style.display === 'none') {
-                sub.style.display = 'block'; btn.innerHTML = 'Home ▲';
-            } else {
-                sub.style.display = 'none'; btn.innerHTML = 'Home ▼';
-            }
+            sub.style.display = sub.style.display === 'none' ? 'block' : 'none';
+            btn.innerHTML = sub.style.display === 'block' ? 'Home ▲' : 'Home ▼';
         });
 
-        // Carousel logic
+        // Carousel
         const grid = document.getElementById('sections-grid');
         let currentIndex = 0;
-        const totalSections = 3;
-
         function updateUI(index) {
             currentIndex = index;
-            // dots
-            document.querySelectorAll('.swipe-dot').forEach((d, i) => {
-                d.classList.toggle('active', i === index);
-            });
-            // label
-            document.getElementById('page-label').textContent = (index + 1) + ' / ' + totalSections;
+            document.querySelectorAll('.swipe-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+            document.getElementById('page-label').textContent = (index + 1) + ' / 3';
         }
-
         function scrollToIndex(index) {
-            if (index < 0) index = 0;
-            if (index >= totalSections) index = totalSections - 1;
-            const sectionWidth = grid.offsetWidth;
-            grid.scrollTo({ left: index * sectionWidth, behavior: 'smooth' });
+            index = Math.max(0, Math.min(2, index));
+            grid.scrollTo({ left: index * grid.offsetWidth, behavior: 'smooth' });
             updateUI(index);
         }
-
-        document.getElementById('btn-prev').addEventListener('click', () => {
-            scrollToIndex(currentIndex - 1);
-        });
-        document.getElementById('btn-next').addEventListener('click', () => {
-            scrollToIndex(currentIndex + 1);
-        });
-
-        // Sync dots & label when user swipes manually
+        document.getElementById('btn-prev').addEventListener('click', () => scrollToIndex(currentIndex - 1));
+        document.getElementById('btn-next').addEventListener('click', () => scrollToIndex(currentIndex + 1));
         grid.addEventListener('scroll', () => {
-            const sectionWidth = grid.offsetWidth;
-            const index = Math.round(grid.scrollLeft / sectionWidth);
+            const index = Math.round(grid.scrollLeft / grid.offsetWidth);
             if (index !== currentIndex) updateUI(index);
         });
 
         // Data fetch
-        fetch('data/motivation.json')
-        .then(r => r.json())
-        .then(data => {
+        fetch('data/motivation.json').then(r => r.json()).then(data => {
             const container = document.getElementById('latest-motivation');
             container.innerHTML = '';
             data.items.map((item, i) => ({ ...item, originalIndex: i })).reverse().forEach(item => {
@@ -273,9 +320,7 @@
             });
         }).catch(err => console.log('Motivation hin argamne:', err));
 
-        fetch('data/stories.json')
-        .then(r => r.json())
-        .then(data => {
+        fetch('data/stories.json').then(r => r.json()).then(data => {
             const container = document.getElementById('latest-stories');
             container.innerHTML = '';
             data.items.map((item, i) => ({ ...item, originalIndex: i })).reverse().forEach(item => {
@@ -283,9 +328,7 @@
             });
         }).catch(err => console.log('Seenaan hin argamne:', err));
 
-        fetch('data/education.json')
-        .then(r => r.json())
-        .then(data => {
+        fetch('data/education.json').then(r => r.json()).then(data => {
             const container = document.getElementById('education-container');
             container.innerHTML = '';
             if (data.items && data.items.length > 0) {
@@ -300,13 +343,13 @@
             ['latest-motivation','latest-stories'].forEach(id => {
                 const boxes = document.getElementById(id).getElementsByTagName('a');
                 for (let i = 0; i < boxes.length; i++) {
-                    const text = boxes[i].textContent || boxes[i].innerText;
-                    boxes[i].style.display = text.toLowerCase().indexOf(input) > -1 ? "" : "none";
+                    boxes[i].style.display = (boxes[i].textContent||boxes[i].innerText).toLowerCase().indexOf(input) > -1 ? "" : "none";
                 }
             });
         }
     </script>
-   
+
+    <!-- Subscribe -->
     <div class="subscribe-card">
         <div class="subscribe-card-content">
             <div class="subscribe-card-title"><span style="font-size:24px;">📩</span> Subscribe</div>
@@ -318,13 +361,14 @@
         </div>
     </div>
 
+    <!-- Mobile Bottom Nav -->
     <div class="bottom-nav">
-        <a href="home.html" class="nav-item active"><span class="nav-icon">🎛️</span><span class="nav-label">Jalqaba</span></a>
-        <a href="#dashboard-search" class="nav-item"><span class="nav-icon">🔍</span><span class="nav-label">Barbaadi</span></a>
-        <a href="saved.html" class="nav-item"><span class="nav-icon">🔖</span><span class="nav-label">Ol-kaa'ame</span></a>
-        <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-label">Profaayilii</span></a>
+        <a href="home.html" class="nav-item active"><span class="nav-icon">🎛️</span><span>Jalqaba</span></a>
+        <a href="#dashboard-search" class="nav-item"><span class="nav-icon">🔍</span><span>Barbaadi</span></a>
+        <a href="saved.html" class="nav-item"><span class="nav-icon">🔖</span><span>Ol-kaa'ame</span></a>
+        <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span>Profaayilii</span></a>
     </div>
-            
+
 </body>
 </html>
-        
+                    
