@@ -5,8 +5,8 @@ const today = new Date().toISOString().split('T')[0];
 
 const categories = [
   { cat: 'motivation', file: './data/motivation.json' },
-  { cat: 'stories',    file: './data/stories.json' },
-  { cat: 'education',  file: './data/education.json' },
+  { cat: 'stories', file: './data/stories.json' },
+  { cat: 'education', file: './data/education.json' },
 ];
 
 let urls = [
@@ -14,7 +14,7 @@ let urls = [
   makeUrl(`${BASE_URL}/motivation.html`, '0.80'),
   makeUrl(`${BASE_URL}/stories.html`, '0.80'),
   makeUrl(`${BASE_URL}/education.html`, '0.80'),
-  makeUrl(`${BASE_URL}/about.html`, '0.60'), by
+  makeUrl(`${BASE_URL}/about.html`, '0.60'),
 ];
 
 for (const { cat, file } of categories) {
@@ -50,7 +50,7 @@ for (const { cat, file } of categories) {
 
     console.log(`✅ ${cat}: posts ${items.length}`);
   } catch (err) {
-    console.error(`❌ JSON error in ${file}:`, err.message);
+    console.error(`❌ JSON error in ${file}: ${err.message}`);
   }
 }
 
