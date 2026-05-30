@@ -2,26 +2,77 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rise-d.vercel.app/</loc>
-    <lastmod>2026-05-27</lastmod>
+    <lastmod>2026-05-30</lastmod>
     <priority>1.00</priority>
   </url>
-  
   <url>
-    <loc>https://rise-d.vercel.app/stories</loc>
-    <lastmod>2026-05-27</lastmod>
+    <loc>https://rise-d.vercel.app/motivation.html</loc>
+    <lastmod>2026-05-30</lastmod>
     <priority>0.80</priority>
   </url>
-
   <url>
-    <loc>https://rise-d.vercel.app/motivation</loc>
-    <lastmod>2026-05-27</lastmod>
+    <loc>https://rise-d.vercel.app/stories.html</loc>
+    <lastmod>2026-05-30</lastmod>
     <priority>0.80</priority>
   </url>
-
   <url>
-    <loc>https://rise-d.vercel.app/education</loc>
-    <lastmod>2026-05-27</lastmod>
+    <loc>https://rise-d.vercel.app/education.html</loc>
+    <lastmod>2026-05-30</lastmod>
     <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/about.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=1</loc>
+    <lastmod>2026-05-24</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=2</loc>
+    <lastmod>2026-05-25</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=3</loc>
+    <lastmod>2026-05-26</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=4</loc>
+    <lastmod>2026-05-29</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=5</loc>
+    <lastmod>2026-05-29</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=stories&amp;id=1</loc>
+    <lastmod>2026-05-24</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=stories&amp;id=2</loc>
+    <lastmod>2026-05-24</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=stories&amp;id=3</loc>
+    <lastmod>2026-05-25</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=education&amp;id=1</loc>
+    <lastmod>2026-05-26</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/post.html?cat=education&amp;id=2</loc>
+    <lastmod>2026-05-29</lastmod>
+    <priority>0.70</priority>
   </url>
 </urlset>
-
