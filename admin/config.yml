@@ -20,6 +20,7 @@ collections:
             widget: "list"
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "slug", from_field: "title", hint: "Mata-duree irraa ofumaan uumama, yoo barbaadde sirreessi" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
               - { label: "Photo", name: "image", widget: "image", required: false }
@@ -37,6 +38,7 @@ collections:
             widget: "list"
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "slug", from_field: "title", hint: "Mata-duree irraa ofumaan uumama, yoo barbaadde sirreessi" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
               - { label: "Photo", name: "image", widget: "image", required: false }
@@ -54,6 +56,8 @@ collections:
             widget: "list"
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "slug", from_field: "title", hint: "Mata-duree irraa ofumaan uumama, yoo barbaadde sirreessi" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Qabiyyee Barruu", name: "body", widget: "markdown" }
               - { label: "Photo", name: "image", widget: "image", required: false }
+              
