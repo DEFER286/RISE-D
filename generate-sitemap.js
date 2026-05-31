@@ -33,15 +33,21 @@ for (const { cat, file } of categories) {
       ? data.items
       : [];
 
-    items.forEach((item, index) => {
-      const id = index + 1;
+    items.forEach((item) => {
+      // 'id' bakka bu'uun 'slug' JSON irraa fudhanna
+      const slug = item.slug;
+      
+      // Yoo barruun tokko slug hin qabu ta'e ni irra darba (dogoggora hanbisuuf)
+      if (!slug) return; 
+
       const date = item?.date
         ? item.date.split('T')[0]
         : today;
 
+      // URL haaraa bifa /category/slug ta'een sitemap irratti dabalama
       urls.push(
         makeUrl(
-          `${BASE_URL}/post.html?cat=${cat}&id=${id}`,
+          `${BASE_URL}/${cat}/${slug}`,
           '0.70',
           date
         )
