@@ -126,32 +126,30 @@
 
 <body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0;">
 
-    <!-- DESKTOP TOP NAV -->
     <nav class="desktop-nav">
-        <a href="home.html" class="desktop-nav-logo">⚡ RISE.D</a>
+        <a href="/home.html" class="desktop-nav-logo">⚡ RISE.D</a>
         <div class="desktop-nav-links">
-            <a href="home.html" class="active">Home</a>
-            <a href="motivation.html">Motivation</a>
-            <a href="stories.html">Seenaa</a>
-            <a href="education.html">Gorsa</a>
-            <a href="saved.html">🔖 Ol-kaa'ame</a>
-            <a href="profile.html" class="desktop-nav-profile">👤 Profile</a>
+            <a href="/home.html" class="active">Home</a>
+            <a href="/motivation.html">Motivation</a>
+            <a href="/stories.html">Seenaa</a>
+            <a href="/education.html">Gorsa</a>
+            <a href="/saved.html">🔖 Ol-kaa'ame</a>
+            <a href="/profile.html" class="desktop-nav-profile">👤 Profile</a>
         </div>
     </nav>
 
-    <!-- MOBILE HAMBURGER -->
     <div class="mobile-menu-btn">
         <div id="menu-btn" style="cursor:pointer;font-size:24px;color:#ff9800;padding:15px;">☰</div>
         <div id="side-menu" style="display:none;background-color:#1A0D2E;position:fixed;top:50px;left:0;width:100%;padding:20px 0;z-index:999;">
-            <a href="index.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:15px 25px;">Portfolio</a>
-            <a href="about.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:15px 25px;">About</a>
+            <a href="/index.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:15px 25px;">Portfolio</a>
+            <a href="/about.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:15px 25px;">About</a>
             <a href="#" id="home-dropdown-btn" style="display:block;color:#ff9800;text-decoration:none;font-size:18px;padding:15px 25px;">Home ▼</a>
             <div id="home-sub-menu" style="display:none;background-color:#2A1D3E;margin:10px auto 0;padding:15px;border-radius:8px;width:90%;">
-                <a href="motivation.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Motivation Speech</a>
-                <a href="stories.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Instructive Stories</a>
-                <a href="education.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Education Advice</a>
+                <a href="/motivation.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Motivation Speech</a>
+                <a href="/stories.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Instructive Stories</a>
+                <a href="/education.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Education Advice</a>
             </div>
-            <a href="profile.html" style="display:block;color:#FF9800;text-decoration:none;font-size:18px;padding:15px 25px;">👤 Profaayilii</a>
+            <a href="/profile.html" style="display:block;color:#FF9800;text-decoration:none;font-size:18px;padding:15px 25px;">👤 Profaayilii</a>
         </div>
     </div>
 
@@ -174,21 +172,21 @@
                 <h2 style="color:#FF9800;border-bottom:1px solid #444;padding-bottom:5px;font-size:20px;">🔥 Motivation Haaraa</h2>
                 <div id="latest-motivation"></div>
                 <div style="text-align:right;margin-bottom:30px;">
-                    <a href="motivation.html" style="color:#FF9800;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi ➔</a>
+                    <a href="/motivation.html" style="color:#FF9800;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi ➔</a>
                 </div>
             </div>
             <div>
                 <h2 style="color:#00BCD4;border-bottom:1px solid #444;padding-bottom:5px;font-size:20px;">📚 Seenaawwan Haaraa</h2>
                 <div id="latest-stories"></div>
                 <div style="text-align:right;margin-bottom:30px;">
-                    <a href="stories.html" style="color:#00BCD4;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi ➔</a>
+                    <a href="/stories.html" style="color:#00BCD4;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi ➔</a>
                 </div>
             </div>
             <div>
                 <h2 style="color:#FF9800;border-bottom:1px solid #444;padding-bottom:5px;font-size:20px;">🎓 Gorsa Barnoota Haaraa</h2>
                 <div id="education-container"></div>
                 <div style="text-align:right;margin-bottom:30px;">
-                    <a href="education.html" style="color:#FF9800;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi →</a>
+                    <a href="/education.html" style="color:#FF9800;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi →</a>
                 </div>
             </div>
         </div>
@@ -234,14 +232,16 @@
             if (index !== currentIndex) updateUI(index);
         });
 
-        // Card template — suuraa thumbnail waliin
+        // Card template — suuraa thumbnail waliin (JIJJIIRAMA GUDDAAN ASITTI GODHAME)
         function buildCard(item, cat, borderColor) {
             const desc = item.description || (item.body ? item.body.substring(0, 100) + '...' : '');
             const imgHTML = item.image
                 ? `<img src="${item.image}" class="post-card-img" alt="${item.title}" loading="lazy">`
                 : '';
+            
+            // Linkiin akka /category/slug ta'uuf asitti sirreeffameera
             return `
-                <a href="post.html?cat=${cat}&id=${item.originalIndex}" style="text-decoration:none;color:inherit;">
+                <a href="/${cat}/${item.slug}" style="text-decoration:none;color:inherit;">
                     <div class="post-card" style="border-left-color:${borderColor};">
                         ${imgHTML}
                         <div class="post-card-body">
@@ -254,7 +254,7 @@
         }
 
         // 1. Motivation
-        fetch('data/motivation.json').then(r => r.json()).then(data => {
+        fetch('/data/motivation.json').then(r => r.json()).then(data => {
             const container = document.getElementById('latest-motivation');
             container.innerHTML = '';
             data.items.map((item, i) => ({ ...item, originalIndex: i })).reverse()
@@ -262,7 +262,7 @@
         }).catch(err => console.log('Motivation hin argamne:', err));
 
         // 2. Seenaa
-        fetch('data/stories.json').then(r => r.json()).then(data => {
+        fetch('/data/stories.json').then(r => r.json()).then(data => {
             const container = document.getElementById('latest-stories');
             container.innerHTML = '';
             data.items.map((item, i) => ({ ...item, originalIndex: i })).reverse()
@@ -270,7 +270,7 @@
         }).catch(err => console.log('Seenaan hin argamne:', err));
 
         // 3. Gorsa
-        fetch('data/education.json').then(r => r.json()).then(data => {
+        fetch('/data/education.json').then(r => r.json()).then(data => {
             const container = document.getElementById('education-container');
             container.innerHTML = '';
             if (data.items && data.items.length > 0) {
@@ -303,12 +303,11 @@
     </div>
 
     <div class="bottom-nav">
-        <a href="home.html" class="nav-item active"><span class="nav-icon">🎛️</span><span>Jalqaba</span></a>
+        <a href="/home.html" class="nav-item active"><span class="nav-icon">🎛️</span><span>Jalqaba</span></a>
         <a href="#dashboard-search" class="nav-item"><span class="nav-icon">🔍</span><span>Barbaadi</span></a>
-        <a href="saved.html" class="nav-item"><span class="nav-icon">🔖</span><span>Ol-kaa'ame</span></a>
-        <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span>Profaayilii</span></a>
+        <a href="/saved.html" class="nav-item"><span class="nav-icon">🔖</span><span>Ol-kaa'ame</span></a>
+        <a href="/profile.html" class="nav-item"><span class="nav-icon">👤</span><span>Profaayilii</span></a>
     </div>
 
 </body>
 </html>
-    
