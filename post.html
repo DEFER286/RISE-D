@@ -79,13 +79,12 @@
 </head>
 <body>
     <div class="post-container">
-        <a href="home.html" class="close-btn" title="Gara Dashboarditti Deebi'i">&times;</a>
+        <a href="/home.html" class="close-btn" title="Gara Dashboarditti Deebi'i">&times;</a>
         <h1 id="post-title">Loading...</h1>
         <p class="date" id="post-date"></p>
         <div id="post-image-container"></div>
         <div class="content" id="post-content"></div>
 
-        <!-- Subscribe — photo style -->
         <div class="subscribe-inline">
             <div class="subscribe-inline-heading">Discover more from RISE.D</div>
             <p class="subscribe-inline-text">Subscribe to get the latest posts sent to your email.</p>
@@ -95,7 +94,6 @@
             </form>
         </div>
 
-        <!-- Related Posts -->
         <div class="related-section" id="related-section" style="display:none;">
             <div class="related-title">📖 Barruulee Biroo Dubbisi</div>
             <div class="related-grid" id="related-grid"></div>
@@ -104,15 +102,19 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const postIndex = parseInt(urlParams.get('id'));
+        // 'id' bakka 'slug' fayyadamna
+        const slug = urlParams.get('slug'); 
         const category = urlParams.get('cat');
         const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
 
-        if (!isNaN(postIndex) && category !== null) {
-            fetch(`data/${category}.json`)
+        if (slug && category !== null) {
+            // Path JSON sirreeffameera (root '/' irraa akka barbaaduuf)
+            fetch(`/data/${category}.json`)
                 .then(res => res.json())
                 .then(data => {
-                    const post = data.items[postIndex];
+                    // JSON keessaa barruu 'slug' isaa walsimu barbaaduu
+                    const post = data.items.find(item => item.slug === slug);
+                    
                     if (post) {
                         document.title = post.title;
                         document.getElementById('post-title').innerText = post.title;
@@ -122,7 +124,8 @@
                         parsedBody = parsedBody.replace(/\n/g, '<br>');
                         document.getElementById('post-content').innerHTML = parsedBody;
 
-                        let itemID = category + "-" + postIndex;
+                        // ID addaa 'slug' fayyadamuun uumuu
+                        let itemID = category + "-" + slug;
                         const emojiContainer = document.createElement('div');
                         emojiContainer.innerHTML = `
                         <div style="margin:40px 0 20px 0;padding-top:20px;border-top:1px solid #333;text-align:center;">
@@ -148,7 +151,7 @@
                                 `<img src="${post.image}" alt="${post.title}" style="width:100%;height:auto;max-height:400px;object-fit:cover;border-radius:12px;display:block;margin:0 auto;">`;
                         }
 
-                        loadRelatedPosts(data.items, postIndex, category);
+                        loadRelatedPosts(data.items, slug, category);
                     } else {
                         document.getElementById('post-title').innerText = "Barruun hin argamne!";
                     }
@@ -156,10 +159,11 @@
                 .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
         }
 
-        function loadRelatedPosts(currentItems, currentIndex, currentCat) {
+        // loadRelatedPosts slug fayyadamuun sirreeffameera
+        function loadRelatedPosts(currentItems, currentSlug, currentCat) {
             const fromSame = currentItems
-                .map((item, i) => ({ ...item, originalIndex: i, cat: currentCat }))
-                .filter(item => item.originalIndex !== currentIndex)
+                .map(item => ({ ...item, cat: currentCat }))
+                .filter(item => item.slug !== currentSlug) // Barruu ammaa dubbifamaa jiru keessaa baasuu
                 .sort(() => Math.random() - 0.5);
 
             if (fromSame.length >= 3) { displayRelated(fromSame.slice(0, 3)); return; }
@@ -167,8 +171,8 @@
             const needed = 3 - fromSame.length;
             const otherCats = ['motivation', 'stories', 'education'].filter(c => c !== currentCat);
             Promise.all(otherCats.map(cat =>
-                fetch(`data/${cat}.json`).then(r => r.json())
-                    .then(d => (d.items || []).map((item, i) => ({ ...item, originalIndex: i, cat })))
+                fetch(`/data/${cat}.json`).then(r => r.json())
+                    .then(d => (d.items || []).map(item => ({ ...item, cat })))
                     .catch(() => [])
             )).then(results => {
                 const fromOthers = results.flat().sort(() => Math.random() - 0.5).slice(0, needed);
@@ -183,7 +187,10 @@
             items.forEach(item => {
                 const desc = item.description || (item.body ? item.body.replace(/\*\*(.*?)\*\*/g, '$1').substring(0, 80) + '...' : '');
                 const card = document.createElement('a');
-                card.href = `post.html?cat=${item.cat}&id=${item.originalIndex}`;
+                
+                // Linkiin gara format haaraatti jijjiirameera (fkn /motivation/harka-hin-kennini)
+                card.href = `/${item.cat}/${item.slug}`; 
+                
                 card.className = 'related-card';
                 card.innerHTML = `
                     <div class="related-card-badge">${catLabels[item.cat] || ''}</div>
@@ -211,7 +218,7 @@
         }
         function toggleSaveArticle(id) {
             let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-            const currentUrl = window.location.pathname + window.location.search;
+            const currentUrl = window.location.pathname; // URL qulqulluu fi sirrii ta'e qofa fudhata
             let title = document.getElementById('post-title')?.innerText || "Rise-d Article";
             const index = savedArticles.findIndex(a => a.id === id);
             if (index === -1) {
@@ -236,3 +243,4 @@
     </script>
 </body>
 </html>
+
