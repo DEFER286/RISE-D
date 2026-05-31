@@ -102,11 +102,20 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        // 'id' bakka 'slug' fayyadamna
-        const slug = urlParams.get('slug'); 
-        const category = urlParams.get('cat');
-        const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
+let slug = urlParams.get('slug'); 
+let category = urlParams.get('cat');
 
+// Yoo URL miidhagaan qulqulluun (/stories/gatii-kee-beeki) dhufe irraa addaan baasuu
+if (!slug || !category) {
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    if (pathParts.length >= 2 && pathParts[0] !== 'post.html') {
+        category = pathParts[0]; // Fakkeenyaf: 'stories'
+        slug = pathParts[1];     // Fakkeenyaf: 'gatii-kee-beeki'
+    }
+}
+
+const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
+        
         if (slug && category !== null) {
             // Path JSON sirreeffameera (root '/' irraa akka barbaaduuf)
             fetch(`/data/${category}.json`)
