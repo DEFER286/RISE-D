@@ -1,78 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Fuulaalee Guddoo -->
   <url>
     <loc>https://rise-d.vercel.app/</loc>
     <lastmod>2026-05-31</lastmod>
     <priority>1.00</priority>
   </url>
+
   <url>
-    <loc>https://rise-d.vercel.app/motivation.html</loc>
+    <loc>https://rise-d.vercel.app/stories</loc>
     <lastmod>2026-05-31</lastmod>
     <priority>0.80</priority>
   </url>
+
   <url>
-    <loc>https://rise-d.vercel.app/stories.html</loc>
+    <loc>https://rise-d.vercel.app/motivational</loc>
     <lastmod>2026-05-31</lastmod>
     <priority>0.80</priority>
   </url>
+
   <url>
-    <loc>https://rise-d.vercel.app/education.html</loc>
+    <loc>https://rise-d.vercel.app/educational</loc>
     <lastmod>2026-05-31</lastmod>
     <priority>0.80</priority>
   </url>
+
+  <!-- Barruulee Motivation -->
   <url>
-    <loc>https://rise-d.vercel.app/about.html</loc>
-    <lastmod>2026-05-31</lastmod>
-    <priority>0.60</priority>
-  </url>
-  <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=1</loc>
+    <loc>https://rise-d.vercel.app/motivation/hojii-fi-maallaqqa</loc>
     <lastmod>2026-05-24</lastmod>
     <priority>0.70</priority>
   </url>
+
   <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=2</loc>
+    <loc>https://rise-d.vercel.app/motivation/addunyaa-tun-waan-ati-uumteedha</loc>
     <lastmod>2026-05-25</lastmod>
     <priority>0.70</priority>
   </url>
+
   <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=3</loc>
+    <loc>https://rise-d.vercel.app/motivation/jireenyi-salpha-miti</loc>
     <lastmod>2026-05-26</lastmod>
     <priority>0.70</priority>
   </url>
+
   <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=4</loc>
+    <loc>https://rise-d.vercel.app/motivation/harka-hin-kennini</loc>
     <lastmod>2026-05-28</lastmod>
     <priority>0.70</priority>
   </url>
+
   <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=motivation&amp;id=5</loc>
+    <loc>https://rise-d.vercel.app/motivation/nannoo-kee-ilaali</loc>
     <lastmod>2026-05-28</lastmod>
     <priority>0.70</priority>
   </url>
+
+  <!-- Barruulee Education -->
   <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=stories&amp;id=1</loc>
+    <loc>https://rise-d.vercel.app/education/qormaataa-fi-milkaainan-qophaauufi</loc>
+    <lastmod>2026-05-26</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://rise-d.vercel.app/education/qabxiilee-gurguddoo-passage</loc>
     <lastmod>2026-05-30</lastmod>
     <priority>0.70</priority>
   </url>
+
+  <!-- Barruulee Stories -->
   <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=stories&amp;id=2</loc>
+    <loc>https://rise-d.vercel.app/stories/gatii-jireenya-gatii-yeroo</loc>
+    <lastmod>2026-05-30</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://rise-d.vercel.app/stories/nikoolaas-tesilaa</loc>
     <lastmod>2026-05-24</lastmod>
     <priority>0.70</priority>
   </url>
+
   <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=stories&amp;id=3</loc>
+    <loc>https://rise-d.vercel.app/stories/gatii-kee-beeki</loc>
     <lastmod>2026-05-25</lastmod>
     <priority>0.70</priority>
   </url>
-  <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=education&amp;id=1</loc>
-    <lastmod>2026-05-26</lastmod>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://rise-d.vercel.app/post.html?cat=education&amp;id=2</loc>
-    <lastmod>2026-05-30</lastmod>
-    <priority>0.70</priority>
-  </url>
+
 </urlset>
