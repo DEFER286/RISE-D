@@ -20,7 +20,7 @@ collections:
             widget: "list"
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
-              - { label: "Slug", name: "slug", widget: "slug", from_field: "title", hint: "Mata-duree irraa ofumaan uumama, yoo barbaadde sirreessi" }
+              - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: naannoo-kee-ilaali (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
               - { label: "Photo", name: "image", widget: "image", required: false }
@@ -38,7 +38,7 @@ collections:
             widget: "list"
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
-              - { label: "Slug", name: "slug", widget: "slug", from_field: "title", hint: "Mata-duree irraa ofumaan uumama, yoo barbaadde sirreessi" }
+              - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gatii-kee-beeki (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
               - { label: "Photo", name: "image", widget: "image", required: false }
@@ -56,7 +56,7 @@ collections:
             widget: "list"
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
-              - { label: "Slug", name: "slug", widget: "slug", from_field: "title", hint: "Mata-duree irraa ofumaan uumama, yoo barbaadde sirreessi" }
+              - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gorsa-barnootaa (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Qabiyyee Barruu", name: "body", widget: "markdown" }
               - { label: "Photo", name: "image", widget: "image", required: false }
