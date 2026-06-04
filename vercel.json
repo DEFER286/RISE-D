@@ -1,4 +1,14 @@
 {
+  "builds": [
+    {
+      "src": "api/telegram.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "**",
+      "use": "@vercel/static"
+    }
+  ],
   "rewrites": [
     {
       "source": "/motivation/:slug",
