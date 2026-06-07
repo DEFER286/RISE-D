@@ -2,33 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rise-d.vercel.app/</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-06-07</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
     <loc>https://rise-d.vercel.app/motivation.html</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-06-07</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://rise-d.vercel.app/stories.html</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-06-07</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://rise-d.vercel.app/education.html</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-06-07</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://rise-d.vercel.app/about.html</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-06-07</lastmod>
     <priority>0.60</priority>
-  </url>
-  <url>
-    <loc>https://rise-d.vercel.app/motivation/hojii-fi-maallaqqa</loc>
-    <lastmod>2026-05-24</lastmod>
-    <priority>0.70</priority>
   </url>
   <url>
     <loc>https://rise-d.vercel.app/motivation/addunyaa-tun-waan-ati-uumteedha</loc>
@@ -38,6 +33,11 @@
   <url>
     <loc>https://rise-d.vercel.app/motivation/jireenyi-salpha-miti</loc>
     <lastmod>2026-05-31</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/motivation/hojii-fi-maallaqqa</loc>
+    <lastmod>2026-05-24</lastmod>
     <priority>0.70</priority>
   </url>
   <url>
@@ -58,6 +58,11 @@
   <url>
     <loc>https://rise-d.vercel.app/motivation/yeroo-kee-itti-fayyadmi</loc>
     <lastmod>2026-06-03</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/motivation/nama-kamu-hawwatuu</loc>
+    <lastmod>2026-06-07</lastmod>
     <priority>0.70</priority>
   </url>
   <url>
