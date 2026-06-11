@@ -151,19 +151,28 @@
     </nav>
 
     <div class="mobile-menu-btn">
-        <div id="menu-btn" style="cursor:pointer;font-size:24px;color:#ff9800;padding:15px;">☰</div>
-        <div id="side-menu" style="display:none;background-color:#1A0D2E;position:fixed;top:50px;left:0;width:100%;padding:20px 0;z-index:999;">
-            <a href="/index.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:15px 25px;">Portfolio</a>
-            <a href="/about.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:15px 25px;">About</a>
-            <a href="#" id="home-dropdown-btn" style="display:block;color:#ff9800;text-decoration:none;font-size:18px;padding:15px 25px;">Home ▼</a>
-            <div id="home-sub-menu" style="display:none;background-color:#2A1D3E;margin:10px auto 0;padding:15px;border-radius:8px;width:90%;">
-                <a href="/motivation.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Motivation Speech</a>
-                <a href="/stories.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Instructive Stories</a>
-                <a href="/education.html" style="display:block;color:white;padding:12px 15px;text-decoration:none;font-size:15px;">Education Advice</a>
-            </div>
-            <a href="/profile.html" style="display:block;color:#FF9800;text-decoration:none;font-size:18px;padding:15px 25px;">👤 Profaayilii</a>
-        </div>
-    </div>
+        <!-- Hamburger Button -->
+<div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px; position: fixed; top: 10px; left: 10px; z-index: 10000;">☰</div>
+
+<!-- Side Menu -->
+<div id="side-menu" style="display: none; background-color: #0D0D0D; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; padding-top: 60px;">
+
+  <!-- X Close Button (ol-mirgatti) -->
+  <div id="close-btn" style="position: absolute; top: 15px; right: 20px; font-size: 28px; color: white; cursor: pointer;">✕</div>
+
+  <a href="index.html" style="display: block; color: white; text-decoration: none; font-size: 18px; padding: 16px 25px; border-bottom: 1px solid #2a2a2a;">Portfolio</a>
+
+  <a href="about.html" style="display: block; color: white; text-decoration: none; font-size: 18px; padding: 16px 25px; border-bottom: 1px solid #2a2a2a;">About</a>
+
+  <a href="#" id="home-dropdown-btn" style="display: block; color: #ff9800; text-decoration: none; font-size: 18px; padding: 16px 25px; border-bottom: 1px solid #2a2a2a;">Home ▼</a>
+
+  <div id="home-sub-menu" style="display: none; background-color: #1a1a1a;">
+      <a href="motivation.html" style="display: block; color: white; padding: 13px 45px; text-decoration: none; font-size: 15px; border-bottom: 1px solid #2a2a2a;">Motivation Speech</a>
+      <a href="stories.html" style="display: block; color: white; padding: 13px 45px; text-decoration: none; font-size: 15px; border-bottom: 1px solid #2a2a2a;">Instructive Stories</a>
+      <a href="education.html" style="display: block; color: white; padding: 13px 45px; text-decoration: none; font-size: 15px; border-bottom: 1px solid #2a2a2a;">Education Advice</a>
+  </div>
+
+</div>
 
     <div style="margin-top:100px;text-align:center;padding:20px;">
         <h1 style="color:#ff9800; font-size:2em; text-align:center; margin-top:30px; margin-bottom:10px; font-family: 'Poppins', sans-serif; font-weight: 800;">JIREENYA SIMACHUUFI 🫂</h1>
@@ -212,18 +221,31 @@
     </div>
 
     <script>
-        // Mobile menu
-        document.getElementById('menu-btn').addEventListener('click', () => {
-            const m = document.getElementById('side-menu');
-            m.style.display = m.style.display === 'none' ? 'block' : 'none';
-        });
-        document.getElementById('home-dropdown-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            const sub = document.getElementById('home-sub-menu');
-            const btn = document.getElementById('home-dropdown-btn');
-            sub.style.display = sub.style.display === 'none' ? 'block' : 'none';
-            btn.innerHTML = sub.style.display === 'block' ? 'Home ▲' : 'Home ▼';
-        });
+        // Mobile menu - KANA BAKKA BUUSI (line 215 hanga 226)
+const menuBtn = document.getElementById('menu-btn');
+const sideMenu = document.getElementById('side-menu');
+const closeBtn = document.getElementById('close-btn');
+
+menuBtn.addEventListener('click', () => {
+    sideMenu.style.display = 'block';
+});
+
+closeBtn.addEventListener('click', () => {
+    sideMenu.style.display = 'none';
+});
+
+const homeBtn = document.getElementById('home-dropdown-btn');
+const homeSubMenu = document.getElementById('home-sub-menu');
+homeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (homeSubMenu.style.display === 'none') {
+        homeSubMenu.style.display = 'block';
+        homeBtn.innerHTML = 'Home ▲';
+    } else {
+        homeSubMenu.style.display = 'none';
+        homeBtn.innerHTML = 'Home ▼';
+    }
+});
 
         // Carousel
         const grid = document.getElementById('sections-grid');
