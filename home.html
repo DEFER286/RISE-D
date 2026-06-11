@@ -229,31 +229,37 @@
     </div>
 
     <script>
-        // Mobile menu - KANA BAKKA BUUSI (line 215 hanga 226)
-const menuBtn = document.getElementById('menu-btn');
+        const menuBtn = document.getElementById('menu-btn');
 const sideMenu = document.getElementById('side-menu');
 const closeBtn = document.getElementById('close-btn');
 
-menuBtn.addEventListener('click', () => {
-    sideMenu.style.display = 'block';
-});
+if (menuBtn && sideMenu) {
+    menuBtn.addEventListener('click', () => {
+        sideMenu.style.display = 'block';
+    });
+}
 
-closeBtn.addEventListener('click', () => {
-    sideMenu.style.display = 'none';
-});
+if (closeBtn && sideMenu) {
+    closeBtn.addEventListener('click', () => {
+        sideMenu.style.display = 'none';
+    });
+}
 
 const homeBtn = document.getElementById('home-dropdown-btn');
 const homeSubMenu = document.getElementById('home-sub-menu');
-homeBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (homeSubMenu.style.display === 'none') {
-        homeSubMenu.style.display = 'block';
-        homeBtn.innerHTML = 'Home ▲';
-    } else {
-        homeSubMenu.style.display = 'none';
-        homeBtn.innerHTML = 'Home ▼';
-    }
-});
+
+if (homeBtn && homeSubMenu) {
+    homeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (homeSubMenu.style.display === 'none') {
+            homeSubMenu.style.display = 'block';
+            homeBtn.innerHTML = 'Home ▲';
+        } else {
+            homeSubMenu.style.display = 'none';
+            homeBtn.innerHTML = 'Home ▼';
+        }
+    });
+}
 
         // Carousel
         const grid = document.getElementById('sections-grid');
