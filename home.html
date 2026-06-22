@@ -88,34 +88,57 @@
         .email-subscribe-button { background-color: #FF9800 !important; color: white !important; border: none !important; border-radius: 50px !important; padding: 10px 18px !important; font-weight: bold; cursor: pointer; font-size: 14px; white-space: nowrap; }
         .email-subscribe-button:hover { background-color: #e08700 !important; }
 
-        /* === SECTIONS GRID === */
-        .sections-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; align-items: start; margin-top: 30px; }
-        @media (max-width: 768px) {
-            .sections-grid {
-                grid-template-columns: repeat(3, 88vw);
-                overflow-x: auto; scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                gap: 16px; padding: 0 6vw 16px 6vw;
-                margin-left: -20px; margin-right: -20px;
-                scrollbar-width: none; -ms-overflow-style: none;
-            }
-            .sections-grid::-webkit-scrollbar { display: none; }
-            .sections-grid > div { scroll-snap-align: center; min-width: 88vw; }
+        /* === CATEGORY TABS === */
+        .cat-tabs { display: flex; justify-content: center; gap: 10px; margin: 24px auto 18px; flex-wrap: wrap; }
+        .cat-tab { background: rgba(255,152,0,0.1); border: 1.5px solid #FF9800; color: #FF9800; border-radius: 50px; padding: 7px 20px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .cat-tab:hover, .cat-tab.active { background: #FF9800; color: #111; }
+        .cat-tab[data-cat="motivation"].active { background: #FF9800; border-color: #FF9800; color: #111; }
+        .cat-tab[data-cat="stories"].active { background: #00BCD4; border-color: #00BCD4; color: #111; }
+        .cat-tab[data-cat="education"].active { background: #8BC34A; border-color: #8BC34A; color: #111; }
+        .cat-tab[data-cat="stories"] { border-color: #00BCD4; color: #00BCD4; background: rgba(0,188,212,0.1); }
+        .cat-tab[data-cat="education"] { border-color: #8BC34A; color: #8BC34A; background: rgba(139,195,74,0.1); }
+
+        /* === UNIFIED POSTS GRID === */
+        .unified-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 14px; 
+            margin-top: 10px; 
+            padding: 0 4px;
+        }
+        @media (min-width: 768px) {
+            .unified-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
         }
 
-        /* === CAROUSEL (mobile) === */
-        .carousel-nav { display: none; }
-        @media (max-width: 768px) {
-            .carousel-nav { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 10px auto 4px; }
-            .carousel-nav-btn { background: rgba(255,152,0,0.15); border: 2px solid #FF9800; color: #FF9800; border-radius: 50px; padding: 6px 20px; font-size: 18px; font-weight: bold; cursor: pointer; }
-            .carousel-page-label { color: #aaa; font-size: 13px; min-width: 60px; text-align: center; }
+        /* === CATEGORY BADGE === */
+        .cat-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 3px 10px;
+            margin-bottom: 6px;
         }
-        .swipe-dots { display: none; }
-        @media (max-width: 768px) {
-            .swipe-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
-            .swipe-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #444; transition: background-color 0.3s; }
-            .swipe-dot.active { background-color: #FF9800; }
+        .badge-motivation { background: rgba(255,152,0,0.2); color: #FF9800; }
+        .badge-stories { background: rgba(0,188,212,0.2); color: #00BCD4; }
+        .badge-education { background: rgba(139,195,74,0.2); color: #8BC34A; }
+
+        /* === MINI CARD === */
+        .mini-card {
+            background-color: #1F1A3A;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
+        .mini-card:hover { transform: translateY(-3px); }
+        .mini-card-img { width: 100%; height: 110px; object-fit: cover; display: block; }
+        .mini-card-body { padding: 10px 12px 12px; }
+        .mini-card-title { color: #fff; font-size: 13px; font-weight: bold; line-height: 1.4; margin: 0 0 6px; }
+        .mini-card-desc { color: #bbb; font-size: 12px; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .mini-card-link { font-size: 12px; font-weight: bold; }
 
         /* === BOTTOM NAV (mobile) === */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #120B24; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.3); z-index: 1000; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -181,41 +204,16 @@
             <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Barbaadi...">
         </div>
 
-        <div class="carousel-nav">
-            <button class="carousel-nav-btn" id="btn-prev">❮</button>
-            <span class="carousel-page-label" id="page-label">1 / 3</span>
-            <button class="carousel-nav-btn" id="btn-next">❯</button>
+        <!-- Category Tabs -->
+        <div class="cat-tabs">
+            <button class="cat-tab active" data-cat="all">✨ Hundaa</button>
+            <button class="cat-tab" data-cat="motivation">🔥 Motivation</button>
+            <button class="cat-tab" data-cat="stories">📚 Seenaa</button>
+            <button class="cat-tab" data-cat="education">🎓 Gorsa</button>
         </div>
 
-        <div class="sections-grid" id="sections-grid">
-            <div>
-                <h2 style="color:#FF9800;border-bottom:1px solid #444;padding-bottom:5px;font-size:20px;">🔥 Motivation Haaraa</h2>
-                <div id="latest-motivation"></div>
-                <div style="text-align:right;margin-bottom:30px;">
-                    <a href="/motivation.html" style="color:#FF9800;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi ➔</a>
-                </div>
-            </div>
-            <div>
-                <h2 style="color:#00BCD4;border-bottom:1px solid #444;padding-bottom:5px;font-size:20px;">📚 Seenaawwan Haaraa</h2>
-                <div id="latest-stories"></div>
-                <div style="text-align:right;margin-bottom:30px;">
-                    <a href="/stories.html" style="color:#00BCD4;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi ➔</a>
-                </div>
-            </div>
-            <div>
-                <h2 style="color:#FF9800;border-bottom:1px solid #444;padding-bottom:5px;font-size:20px;">🎓 Gorsa Barnoota Haaraa</h2>
-                <div id="education-container"></div>
-                <div style="text-align:right;margin-bottom:30px;">
-                    <a href="/education.html" style="color:#FF9800;text-decoration:none;font-size:14px;font-weight:bold;">Guutuu Dubbisi →</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="swipe-dots">
-            <div class="swipe-dot active" id="dot-0"></div>
-            <div class="swipe-dot" id="dot-1"></div>
-            <div class="swipe-dot" id="dot-2"></div>
-        </div>
+        <!-- Unified Posts Grid -->
+        <div class="unified-grid" id="unified-grid"></div>
     </div>
 
     <script>
@@ -224,107 +222,86 @@
         const closeBtn = document.getElementById('close-btn');
 
         if (menuBtn && sideMenu) {
-            menuBtn.addEventListener('click', () => {
-                sideMenu.style.display = 'block';
-            });
+            menuBtn.addEventListener('click', () => { sideMenu.style.display = 'block'; });
         }
-
         if (closeBtn && sideMenu) {
-            closeBtn.addEventListener('click', () => {
-                sideMenu.style.display = 'none';
-            });
+            closeBtn.addEventListener('click', () => { sideMenu.style.display = 'none'; });
         }
 
         const homeBtn = document.getElementById('home-dropdown-btn');
         const homeSubMenu = document.getElementById('home-sub-menu');
-
         if (homeBtn && homeSubMenu) {
             homeBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                if (homeSubMenu.style.display === 'none') {
-                    homeSubMenu.style.display = 'block';
-                    homeBtn.innerHTML = 'Home ▲';
-                } else {
-                    homeSubMenu.style.display = 'none';
-                    homeBtn.innerHTML = 'Home ▼';
-                }
+                homeSubMenu.style.display = homeSubMenu.style.display === 'none' ? 'block' : 'none';
+                homeBtn.innerHTML = homeSubMenu.style.display === 'block' ? 'Home ▲' : 'Home ▼';
             });
         }
 
-        // Carousel
-        const grid = document.getElementById('sections-grid');
-        let currentIndex = 0;
-        function updateUI(index) {
-            currentIndex = index;
-            document.querySelectorAll('.swipe-dot').forEach((d, i) => d.classList.toggle('active', i === index));
-            document.getElementById('page-label').textContent = (index + 1) + ' / 3';
-        }
-        function scrollToIndex(index) {
-            index = Math.max(0, Math.min(2, index));
-            grid.scrollTo({ left: index * grid.offsetWidth, behavior: 'smooth' });
-            updateUI(index);
-        }
-        document.getElementById('btn-prev').addEventListener('click', () => scrollToIndex(currentIndex - 1));
-        document.getElementById('btn-next').addEventListener('click', () => scrollToIndex(currentIndex + 1));
-        grid.addEventListener('scroll', () => {
-            const index = Math.round(grid.scrollLeft / grid.offsetWidth);
-            if (index !== currentIndex) updateUI(index);
-        });
+        // All posts store
+        let allPosts = [];
 
-        // Card template
-        function buildCard(item, cat, borderColor) {
-            const desc = item.description || (item.body ? item.body.substring(0, 100) + '...' : '');
+        function buildMiniCard(item, cat) {
+            const desc = item.description || (item.body ? item.body.substring(0, 80) + '...' : '');
             const imgHTML = item.image
-                ? `<img src="${item.image}" class="post-card-img" alt="${item.title}" loading="lazy">`
+                ? `<img src="${item.image}" class="mini-card-img" alt="${item.title}" loading="lazy">`
                 : '';
-            
+            const badgeClass = cat === 'motivation' ? 'badge-motivation' : cat === 'stories' ? 'badge-stories' : 'badge-education';
+            const badgeLabel = cat === 'motivation' ? '🔥 Motivation' : cat === 'stories' ? '📚 Seenaa' : '🎓 Gorsa';
+            const linkColor = cat === 'motivation' ? '#FF9800' : cat === 'stories' ? '#00BCD4' : '#8BC34A';
             return `
-                <a href="/${cat}/${item.slug}" style="text-decoration:none;color:inherit;">
-                    <div class="post-card" style="border-left-color:${borderColor};">
-                        ${imgHTML}
-                        <div class="post-card-body">
-                            <h3 class="post-card-title">${item.title}</h3>
-                            <p class="post-card-desc">${desc}</p>
-                            <span class="post-card-link" style="color:${borderColor};">Guutuu Dubbisi ➔</span>
-                        </div>
+                <a href="/${cat}/${item.slug}" class="mini-card" data-cat="${cat}">
+                    ${imgHTML}
+                    <div class="mini-card-body">
+                        <span class="cat-badge ${badgeClass}">${badgeLabel}</span>
+                        <h3 class="mini-card-title">${item.title}</h3>
+                        <p class="mini-card-desc">${desc}</p>
+                        <span class="mini-card-link" style="color:${linkColor};">Dubbisi ➔</span>
                     </div>
                 </a>`;
         }
 
-        // 1. Motivation
+        function renderGrid(filter) {
+            const grid = document.getElementById('unified-grid');
+            const filtered = filter === 'all' ? allPosts : allPosts.filter(p => p.cat === filter);
+            grid.innerHTML = filtered.map(p => buildMiniCard(p.item, p.cat)).join('');
+        }
+
+        // Category tabs
+        document.querySelectorAll('.cat-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderGrid(tab.dataset.cat);
+            });
+        });
+
+        // Fetch all 3 categories and merge
+        let loaded = 0;
+        function tryRender() { loaded++; if (loaded === 3) { allPosts.sort((a,b) => (b.idx + b.cat.length) - (a.idx + a.cat.length)); renderGrid('all'); } }
+
         fetch('/data/motivation.json').then(r => r.json()).then(data => {
-            const container = document.getElementById('latest-motivation');
-            container.innerHTML = '';
-            data.items.map((item, i) => ({ ...item, originalIndex: i })).reverse()
-                .forEach(item => { container.innerHTML += buildCard(item, 'motivation', '#FF9800'); });
-        }).catch(err => console.log('Motivation hin argamne:', err));
+            data.items.forEach((item, i) => allPosts.push({ cat: 'motivation', item, idx: i }));
+            tryRender();
+        }).catch(() => tryRender());
 
-        // 2. Seenaa
         fetch('/data/stories.json').then(r => r.json()).then(data => {
-            const container = document.getElementById('latest-stories');
-            container.innerHTML = '';
-            data.items.map((item, i) => ({ ...item, originalIndex: i })).reverse()
-                .forEach(item => { container.innerHTML += buildCard(item, 'stories', '#FF9800'); });
-        }).catch(err => console.log('Seenaan hin argamne:', err));
+            data.items.forEach((item, i) => allPosts.push({ cat: 'stories', item, idx: i }));
+            tryRender();
+        }).catch(() => tryRender());
 
-        // 3. Gorsa
         fetch('/data/education.json').then(r => r.json()).then(data => {
-            const container = document.getElementById('education-container');
-            container.innerHTML = '';
-            if (data.items && data.items.length > 0) {
-                data.items.map((item, i) => ({ ...item, originalIndex: i })).reverse()
-                    .forEach(item => { container.innerHTML += buildCard(item, 'education', '#FF9800'); });
-            }
-        }).catch(err => console.log('Gorsi Barnootaa hin argamne:', err));
+            if (data.items) data.items.forEach((item, i) => allPosts.push({ cat: 'education', item, idx: i }));
+            tryRender();
+        }).catch(() => tryRender());
+
+        // Newest first: higher index = newer post
 
         // Search
         function searchDashboard() {
             const input = document.getElementById('dashboard-search').value.toLowerCase();
-            ['latest-motivation','latest-stories'].forEach(id => {
-                const boxes = document.getElementById(id).getElementsByTagName('a');
-                for (let i = 0; i < boxes.length; i++) {
-                    boxes[i].style.display = (boxes[i].textContent||boxes[i].innerText).toLowerCase().indexOf(input) > -1 ? "" : "none";
-                }
+            document.querySelectorAll('.mini-card').forEach(card => {
+                card.style.display = card.textContent.toLowerCase().includes(input) ? '' : 'none';
             });
         }
     </script>
