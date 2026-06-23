@@ -286,7 +286,17 @@
 
         // Fetch all 3 categories and merge
         let loaded = 0;
-        function tryRender() { loaded++; if (loaded === 3) { allPosts.sort((a,b) => (b.idx + b.cat.length) - (a.idx + a.cat.length)); renderGrid('all'); } }
+        function tryRender() { 
+            loaded++; 
+            if (loaded === 3) { 
+                allPosts.sort((a,b) => {
+                    const dateA = new Date(a.item.date || 0);
+                    const dateB = new Date(b.item.date || 0);
+                    return dateB - dateA;
+                });
+                renderGrid('all'); 
+            } 
+        }
 
         fetch('/data/motivation.json').then(r => r.json()).then(data => {
             data.items.forEach((item, i) => allPosts.push({ cat: 'motivation', item, idx: i }));
@@ -302,8 +312,6 @@
             if (data.items) data.items.forEach((item, i) => allPosts.push({ cat: 'education', item, idx: i }));
             tryRender();
         }).catch(() => tryRender());
-
-        // Newest first: higher index = newer post
 
         // Search
         function searchDashboard() {
@@ -336,4 +344,4 @@
 </html>
 
 
-    
+            
