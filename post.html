@@ -171,22 +171,26 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
 
         // loadRelatedPosts slug fayyadamuun sirreeffameera
         function loadRelatedPosts(currentItems, currentSlug, currentCat) {
-            const fromSame = currentItems
-                .map(item => ({ ...item, cat: currentCat }))
-                .filter(item => item.slug !== currentSlug) // Barruu ammaa dubbifamaa jiru keessaa baasuu
-                .sort(() => Math.random() - 0.5);
-
-            if (fromSame.length >= 3) { displayRelated(fromSame.slice(0, 3)); return; }
-
-            const needed = 3 - fromSame.length;
             const otherCats = ['motivation', 'stories', 'education'].filter(c => c !== currentCat);
+            
             Promise.all(otherCats.map(cat =>
                 fetch(`/data/${cat}.json`).then(r => r.json())
                     .then(d => (d.items || []).map(item => ({ ...item, cat })))
                     .catch(() => [])
             )).then(results => {
-                const fromOthers = results.flat().sort(() => Math.random() - 0.5).slice(0, needed);
-                displayRelated([...fromSame, ...fromOthers]);
+                const fromOthers = results.flat().sort(() => Math.random() - 0.5);
+                const fromSame = currentItems
+                    .map(item => ({ ...item, cat: currentCat }))
+                    .filter(item => item.slug !== currentSlug)
+                    .sort(() => Math.random() - 0.5);
+                
+                // 1 same category + 2 other categories (mixed)
+                const related = [
+                    ...fromSame.slice(0, 1),
+                    ...fromOthers.slice(0, 2)
+                ].sort(() => Math.random() - 0.5);
+                
+                displayRelated(related.slice(0, 3));
             });
         }
 
@@ -234,7 +238,7 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
             if (index === -1) {
                 savedArticles.push({ id, title, url: currentUrl });
                 localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
-                alert("Barruun '" + title + "' Ol-kaa'ameera! 🔖");
+                alert("Barruun '" + title + "' saved! 🔖");
             } else {
                 savedArticles.splice(index, 1);
                 localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
