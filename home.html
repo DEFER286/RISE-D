@@ -239,7 +239,8 @@
         let allPosts = [];
 
         function buildMiniCard(item, cat) {
-            const desc = item.description || (item.body ? item.body.substring(0, 80) + '...' : '');
+            const rawDesc = item.description || item.body || '';
+            const plainDesc = rawDesc.replace(/#{1,6}\s*/g, '').replace(/\*{1,2}([^*]*)\*{1,2}/g,'$1').replace(/[-•*]\s+/g,' ').replace(/\n+/g,' ').trim().substring(0, 80) + '...';
             const emoji = cat === 'motivation' ? '🔥' : cat === 'stories' ? '📚' : '🎓';
             const imgHTML = item.image
                 ? `<img src="${item.image}" class="mini-card-img" alt="${item.title}" loading="lazy" onerror="this.className='mini-card-placeholder';this.outerHTML='<div class=mini-card-placeholder>${emoji}</div>'">`
@@ -253,7 +254,7 @@
                     <div class="mini-card-body">
                         <span class="cat-badge ${badgeClass}">${badgeLabel}</span>
                         <h3 class="mini-card-title">${item.title}</h3>
-                        <p class="mini-card-desc">${desc}</p>
+                        <p class="mini-card-desc">${plainDesc}</p>
                         <span class="mini-card-link" style="color:${linkColor};">Dubbisi ➔</span>
                     </div>
                 </a>`;
@@ -326,5 +327,3 @@
 </html>
 
     
-
-                
