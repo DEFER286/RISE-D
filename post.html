@@ -128,7 +128,9 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
                     if (post) {
                         document.title = post.title;
                         document.getElementById('post-title').innerText = post.title;
-                        document.getElementById('post-date').innerText = new Date(post.date).toLocaleDateString();
+                        const d = new Date(post.date);
+                        const formatted = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                        document.getElementById('post-date').innerText = formatted + ' · by Defera';
 
                         let parsedBody = post.body.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
                         parsedBody = parsedBody.replace(/\n/g, '<br>');
