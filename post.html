@@ -13,6 +13,9 @@
         .close-btn:hover { color: #ff9800; }
         h1 { color: #ff9800; }
         .date { color: #888; font-size: 14px; }
+        .author-section { display:flex; align-items:center; gap:10px; margin-bottom:1rem; }
+        .author-photo { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid #ff9800; flex-shrink:0; }
+        @media (max-width: 600px) { .author-photo { width:35px; height:35px; } .date { font-size:12px; } }
         .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
         img { display: block; max-width: 100%; height: 260px; width: 100%; object-fit: cover; margin: 0 auto 20px auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
@@ -83,13 +86,9 @@
     <div class="post-container">
         <a href="/home.html" class="close-btn" title="Gara Dashboarditti Deebi'i">&times;</a>
         <h1 id="post-title">Loading...</h1>
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:1rem;">
-          <img 
-            src="/images/Defera.jpg"
-            alt="Defera"
-            style="width:45px; height:45px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid #ff9800;"
-          />
-          <p class="date" id="post-date"></p>
+        <div class="author-section">
+          <img src="/images/Defera.jpg" alt="Defera" class="author-photo" />
+          <p class="date" id="post-date" style="margin:0;"></p>
         </div>
         <div id="post-image-container"></div>
         <div class="content" id="post-content"></div>
