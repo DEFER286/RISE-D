@@ -2,15 +2,15 @@
   "rewrites": [
     {
       "source": "/motivation/:slug",
-      "destination": "/api/share?category=motivation&slug=:slug"
+      "destination": "/post.html?cat=motivation&slug=:slug"
     },
     {
       "source": "/stories/:slug",
-      "destination": "/api/share?category=stories&slug=:slug"
+      "destination": "/post.html?cat=stories&slug=:slug"
     },
     {
       "source": "/education/:slug",
-      "destination": "/api/share?category=education&slug=:slug"
+      "destination": "/post.html?cat=education&slug=:slug"
     }
   ]
 }
