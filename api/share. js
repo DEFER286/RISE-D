@@ -1,0 +1,58 @@
+import fs from 'fs';
+import path from 'path';
+
+export default function handler(req, res) {
+  // 1. URL irraa category (motivation/education/stories) fi slug fudhachuu
+  const { category, slug } = req.query;
+
+  // Maqaa file JSON sirrii ta'e addaan baasuu
+  const allowedCategories = ['motivation', 'education', 'stories'];
+  if (!allowedCategories.includes(category)) {
+    return res.status(404).send('Category haala kanaan hin argamne');
+  }
+
+  try {
+    // 2. File JSON folder 'data' keessa jiru dubbisuu
+    const filePath = path.join(process.cwd(), 'data', `${category}.json`);
+    const fileData = fs.readFileSync(filePath, 'utf8');
+    const articles = JSON.parse(fileData);
+
+    // 3. Barruu slug kanaan wal fakkaatu barbaaduu
+    const article = articles.find(a => a.slug === slug);
+
+    if (!article) {
+      return res.status(404).send('Barruun hin argamne');
+    }
+
+    // 4. HTML Meta Tags automatically guutame Telegram'f deebisuu
+    const html = `
+      <!DOCTYPE html>
+      <html lang="om">
+      <head>
+        <meta charset="UTF-8">
+        <title>${article.title} - RiseToday</title>
+        <meta property="og:title" content="${article.title}" />
+        <meta property="og:description" content="${article.description || 'Barruulee babbaredoo dubbisi.'}" />
+        <meta property="og:image" content="${article.imageUrl}" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://risetoday.vercel.app/${category}/${slug}" />
+        
+        <!-- Gara fuula HTML kee isa sirriitti akka ofiin daddarbu (redirect) godha -->
+        <script>
+          window.location.href = "/${category}/index.html?slug=${slug}";
+        </script>
+      </head>
+      <body>
+        <h1>${article.title}</h1>
+        <p>Gara fuula barruutti si daddarsaa jira...</p>
+      </body>
+      </html>
+    `;
+
+    res.setHeader('Content-Type', 'text/html');
+    return res.status(200).send(html);
+
+  } catch (error) {
+    return res.status(500).send('Hojii irra error uumame');
+  }
+}
