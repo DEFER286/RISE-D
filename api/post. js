@@ -1,0 +1,57 @@
+const fs = require('fs');
+const path = require('path');
+
+export default async function handler(req, res) {
+    const { cat, slug } = req.query;
+
+    if (!cat || !slug) {
+        return res.status(400).send("Cat and Slug are required");
+    }
+
+    try {
+        // Data JSON dubbisuu
+        const jsonPath = path.join(process.cwd(), 'data', `${cat}.json`);
+        const fileContents = fs.readFileSync(jsonPath, 'utf8');
+        const data = JSON.parse(fileContents);
+        const post = data.items.find(item => item.slug === slug);
+
+        if (!post) {
+            return res.status(404).send("Barruun hin argamne");
+        }
+
+        // Ibsa gabaabaa uumuu
+        const cleanText = (post.body || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        const shortDesc = cleanText.substring(0, 150) + "...";
+        const postImage = post.image ? post.image : "/images/Defera.jpg";
+
+        // HTML static ta'e koodii haaraa kanaan bakka buusuu (Meta Tags Dura Ka'u)
+        const html = `
+        <!DOCTYPE html>
+        <html lang="om">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${post.title}</title>
+            <meta property="og:type" content="article" />
+            <meta property="og:title" content="${post.title}" />
+            <meta property="og:description" content="${shortDesc}" />
+            <meta property="og:image" content="https://risetoday.vercel.app${postImage}" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <script>
+                // Gara peejii koo isa duraatti redirec godha yoo namni browser fayyadame
+                window.location.href = "/post.html?cat=${cat}&slug=${slug}";
+            </script>
+        </head>
+        <body>
+            <h1>${post.title}</h1>
+            <p>${shortDesc}</p>
+        </body>
+        </html>
+        `;
+
+        res.setHeader('Content-Type', 'html');
+        return res.status(200).send(html);
+    } catch (error) {
+        return res.status(500).send("Server Error");
+    }
+}
