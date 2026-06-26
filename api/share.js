@@ -5,7 +5,6 @@ module.exports = function handler(req, res) {
   const { category, slug } = req.query;
 
   try {
-    // File JSON dubbisuu
     const filePath = path.join(process.cwd(), 'data', `${category}.json`);
     
     if (!fs.existsSync(filePath)) {
@@ -13,10 +12,25 @@ module.exports = function handler(req, res) {
     }
 
     const fileData = fs.readFileSync(filePath, 'utf8');
-    const articles = JSON.parse(fileData);
+    let articlesData = JSON.parse(fileData);
+    let articlesArray = [];
 
-    // Barruu slug kanaan barbaaduu
-    const article = articles.find(a => a.slug === slug);
+    // JSON sun Array yoo ta'e idileetti fudhata
+    if (Array.isArray(articlesData)) {
+      articlesArray = articlesData;
+    } else {
+      // JSON sun Object ({}) yoo ta'e, tarree keessa jiru ofiin barbaada
+      const key = Object.keys(articlesData).find(k => Array.isArray(articlesData[k]));
+      if (key) {
+        articlesArray = articlesData[key];
+      } else if (typeof articlesData === 'object' && articlesData !== null) {
+        // Yoo gosa biraa ta'e gara array'tti jijjiira
+        articlesArray = Object.values(articlesData);
+      }
+    }
+
+    // Amma `.find()` ulaagaa guutee hojjeta
+    const article = articlesArray.find(a => a && a.slug === slug);
 
     if (!article) {
       return res.status(404).send('Barruun kun hin argamne');
@@ -28,10 +42,10 @@ module.exports = function handler(req, res) {
       <html lang="om">
       <head>
         <meta charset="UTF-8">
-        <title>${article.title} - RiseToday</title>
-        <meta property="og:title" content="${article.title}" />
+        <title>${article.title || 'RiseToday'}</title>
+        <meta property="og:title" content="${article.title || ''}" />
         <meta property="og:description" content="${article.description || 'Barruulee babbaredoo dubbisi.'}" />
-        <meta property="og:image" content="${article.imageUrl}" />
+        <meta property="og:image" content="${article.imageUrl || ''}" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:type" content="article" />
@@ -42,7 +56,7 @@ module.exports = function handler(req, res) {
         </script>
       </head>
       <body>
-        <h1>${article.title}</h1>
+        <h1>${article.title || ''}</h1>
         <p>Gara fuula barruutti si daddarsaa jira...</p>
       </body>
       </html>
