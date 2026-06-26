@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RISE.D - About</title>
+    <title>RISE TODAY - About</title>
     <style>
         /* CSS Fuula About Miidhagsu */
         body {
@@ -34,56 +34,80 @@
             color: #ffffff;
             text-decoration: underline;
         }
+        
+        /* Qindeessa barruu afaanotaa */
+        .lang-section {
+            margin-bottom: 40px;
+            text-align: left; /* Dubbisuuf akka tolutti gara bitaatti qixxeessa */
+        }
+        .lang-title {
+            color: #ff9900;
+            font-size: 20px;
+            border-bottom: 1px solid rgba(255, 153, 0, 0.3);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-<nav<!-- Hamburger Button -->
-<div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
 
-<!-- Menu Gadi-ba'u (Hidden by default) -->
-<div id="side-menu" style="display: none; background-color: #1A0D2E; position: fixed; top: 50px; left: 0; width: 100%; text-align: center; padding: 20px;">
-    <a href="index.html" style="display: block; color: white; padding: 10px;">Portfolio</a>
-    <a href="about.html" style="display: block; color: white; padding: 10px;">About</a>
-    <a href="home.html" style="display: block; color: white; padding: 10px;">Home</a>
-</div>
+<nav>
+    <!-- Hamburger Button -->
+    <div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
+
+    <!-- Menu Gadi-ba'u (Hidden by default) -->
+    <div id="side-menu" style="display: none; background-color: #1A0D2E; position: fixed; top: 50px; left: 0; width: 100%; text-align: center; padding: 20px; z-index: 1000;">
+        <a href="index.html" style="display: block; color: white; padding: 10px;">Portfolio</a>
+        <a href="about.html" style="display: block; color: white; padding: 10px;">About</a>
+        <a href="home.html" style="display: block; color: white; padding: 10px;">Home</a>
+    </div>
 </nav>
 
-
-    <div style="padding: 60px 20px; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #ff9900; font-size: 35px; margin-bottom: 20px;">About RISE TODAY</h1>
-        <p style="font-size: 18px; line-height: 1.6;">
-         
-🌍 English
-
-RISE TODAY is a space built for growth.
-
-It shares simple ideas, real-life lessons, and daily motivation — designed to help you move forward, even when progress feels small.
-
-This platform is not about perfection.
-It is about becoming better, one step at a time.
-
-Here, every word is meant to inspire action, shift mindset, and remind you that change is possible — starting today.
-
----
-
-🌿 Afaan Oromo
-
-RISE TODAY bakka guddinaaf ijaarame dha.
-
-Yaada salphaa, barnoota jireenyaa fi kaka’umsa guyyaa guyyaan qooddachuun si fuulduratti tarkaanfachiisuuf hojjetama — yoo guddinni xiqqaa fakkaatus illee.
-
-Kun bakka guutuu ta’uu irratti hin xiyyeeffanne.
-Guddachuu irratti xiyyeeffata — tarkaanfii tokko tokkoon.
-
-Asitti, jechi hundi si kakaasuuf, yaada kee jijjiiruuf fi jijjiiramni akka danda’amu si yaadachiisuuf qophaa’e — har’a irraa jalqabee.
+<div style="padding: 40px 20px; max-width: 600px; margin: 0 auto;">
+    <h1 style="color: #ff9900; font-size: 35px; margin-bottom: 30px;">About RISE TODAY</h1>
+    
+    <!-- 🌍 KUTA ENGLISH -->
+    <div class="lang-section">
+        <div class="lang-title">🌍 English</div>
+        <p style="font-size: 17px; line-height: 1.7; margin-bottom: 15px;">
+            <strong>RISE TODAY</strong> is a space built for growth.
+        </p>
+        <p style="font-size: 17px; line-height: 1.7; margin-bottom: 15px;">
+            It shares simple ideas, real-life lessons, and daily motivation — designed to help you move forward, even when progress feels small.
+        </p>
+        <p style="font-size: 17px; line-height: 1.7; margin-bottom: 15px;">
+            This platform is not about perfection. It is about becoming better, one step at a time.
+        </p>
+        <p style="font-size: 17px; line-height: 1.7;">
+            Here, every word is meant to inspire action, shift mindset, and remind you that change is possible — starting today.
         </p>
     </div>
+
+    <!-- 🌿 KUTAA AFAAN OROMOO -->
+    <div class="lang-section">
+        <div class="lang-title">🌿 Afaan Oromoo</div>
+        <p style="font-size: 17px; line-height: 1.7; margin-bottom: 15px;">
+            <strong>RISE TODAY</strong> bakka guddinaaf ijaarame dha.
+        </p>
+        <p style="font-size: 17px; line-height: 1.7; margin-bottom: 15px;">
+            Yaada salphaa, barnoota jireenyaa fi kaka’umsa guyyaa guyyaan qooddachuun fuulduratti Tarkaanfadhu— yoo Jalqabni xiqqaa fakkaatus irra kee Guddaa Ta'a. 
+        </p>
+        <p style="font-size: 17px; line-height: 1.7; margin-bottom: 15px;">
+            Asitti Dirqama Guutuu Ta'uu Hin Barbaachisu. Guddachuu irratti xiyyeeffata — tarkaanfii tokko tokkoon.
+        </p>
+        <p style="font-size: 17px; line-height: 1.7;">
+            Asitti, jechi hundi si kakaasuuf, yaada kee jijjiiruuf fi jijjiiramni akka danda’amu si yaadachiisuuf qophaa’e — har’a irraa jijjiirama jalqabi. 
+        </p>
+    </div>
+</div>
+
 <script>
     const menuBtn = document.getElementById('menu-btn');
     const sideMenu = document.getElementById('side-menu');
 
     menuBtn.addEventListener('click', () => {
-        if (sideMenu.style.display === 'none') {
+        if (sideMenu.style.display === 'none' || sideMenu.style.display === '') {
             sideMenu.style.display = 'block';
         } else {
             sideMenu.style.display = 'none';
