@@ -1,16 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/motivation/:slug",
-      "destination": "/post.html?cat=motivation&slug=:slug"
-    },
-    {
-      "source": "/stories/:slug",
-      "destination": "/post.html?cat=stories&slug=:slug"
-    },
-    {
-      "source": "/education/:slug",
-      "destination": "/post.html?cat=education&slug=:slug"
+      "source": "/:cat/:slug",
+      "destination": "/api/post?cat=:cat&slug=:slug"
     }
   ]
 }
