@@ -5,7 +5,18 @@
     <meta name="robots" content="max-image-preview:large">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rise-d Barruu Guutuu</title>
+    <title>RiseToday - Barruu Guutuu</title>
+
+    <!-- ======================================================== -->
+    <!-- TELEGRAM & SOCIAL MEDIA PREVIEW TAGS (Duraan kan kufu) -->
+    <!-- ======================================================== -->
+    <meta property="og:type" content="article" />
+    <meta id="meta-og-title" property="og:title" content="RiseToday - Barruulee Onnachiisoo" />
+    <meta id="meta-og-desc" property="og:description" content="Barruulee, seenaawwan fi gorsa adda addaa dubbisaa." />
+    <meta id="meta-og-image" property="og:image" content="https://risetoday.vercel.app/images/Defera.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="telegram:channel" content="@imala_kaayoo">
+
     <style>
         body { background-color: #1A0D2E; color: white; font-family: Arial, sans-serif; padding: 20px; }
         .post-container { max-width: 800px; margin: auto; position: relative; padding-top: 40px; }
@@ -19,54 +30,15 @@
         .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
         img:not(.author-photo) { display: block; max-width: 100%; height: 260px; width: 100%; object-fit: cover; margin: 0 auto 20px auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
-        /* === SUBSCRIBE — photo irratti argamu style === */
-        .subscribe-inline {
-            margin-top: 50px;
-            padding-top: 28px;
-            border-top: 1px solid #444;
-            text-align: center;
-        }
-        .subscribe-inline-heading {
-            color: #ffffff;
-            font-size: 17px;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-        .subscribe-inline-text {
-            color: #999;
-            font-size: 14px;
-            margin-bottom: 18px;
-        }
-        .subscribe-form {
-            display: flex;
-            gap: 10px;
-            max-width: 380px;
-            margin: 0 auto;
-        }
-        .subscribe-input {
-            flex: 1;
-            background-color: #2a1e4a !important;
-            color: white !important;
-            border: 1px solid #555 !important;
-            border-radius: 6px !important;
-            padding: 10px 14px !important;
-            font-size: 14px;
-            outline: none;
-        }
+        /* === SUBSCRIBE style === */
+        .subscribe-inline { margin-top: 50px; padding-top: 28px; border-top: 1px solid #444; text-align: center; }
+        .subscribe-inline-heading { color: #ffffff; font-size: 17px; font-weight: bold; margin-bottom: 6px; }
+        .subscribe-inline-text { color: #999; font-size: 14px; margin-bottom: 18px; }
+        .subscribe-form { display: flex; gap: 10px; max-width: 380px; margin: 0 auto; }
+        .subscribe-input { flex: 1; background-color: #2a1e4a !important; color: white !important; border: 1px solid #555 !important; border-radius: 6px !important; padding: 10px 14px !important; font-size: 14px; outline: none; }
         .subscribe-input::placeholder { color: #777; }
         .subscribe-input:focus { border-color: #FF9800 !important; }
-        .subscribe-btn {
-            background-color: #FF9800;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-            white-space: nowrap;
-            transition: background 0.2s;
-        }
+        .subscribe-btn { background-color: #FF9800; color: white; border: none; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; font-size: 14px; white-space: nowrap; transition: background 0.2s; }
         .subscribe-btn:hover { background-color: #e08700; }
 
         /* === RELATED POSTS === */
@@ -83,15 +55,16 @@
     </style>
 </head>
 <body>
-    <div class="post-container">
+    <!-- schema.org uumameera Telegraam Bot akka gargaarutti -->
+    <div class="post-container" itemscope itemtype="http://schema.org/Article">
         <a href="/home.html" class="close-btn" title="Gara Dashboarditti Deebi'i">&times;</a>
-        <h1 id="post-title">Loading...</h1>
+        <h1 id="post-title" itemprop="headline">Loading...</h1>
         <div class="author-section">
           <img src="/images/Defera.jpg" alt="Defera" class="author-photo" />
           <p class="date" id="post-date" style="margin:0;"></p>
         </div>
         <div id="post-image-container"></div>
-        <div class="content" id="post-content"></div>
+        <div class="content" id="post-content" itemprop="articleBody"></div>
 
         <div class="subscribe-inline">
             <div class="subscribe-inline-heading">Discover more from RISE.D</div>
@@ -110,36 +83,45 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-let slug = urlParams.get('slug'); 
-let category = urlParams.get('cat');
+        let slug = urlParams.get('slug'); 
+        let category = urlParams.get('cat');
 
-// Yoo URL miidhagaan qulqulluun (/stories/gatii-kee-beeki) dhufe irraa addaan baasuu
-if (!slug || !category) {
-    const pathParts = window.location.pathname.split('/').filter(Boolean);
-    if (pathParts.length >= 2 && pathParts[0] !== 'post.html') {
-        category = pathParts[0]; // Fakkeenyaf: 'stories'
-        slug = pathParts[1];     // Fakkeenyaf: 'gatii-kee-beeki'
-    }
-}
+        if (!slug || !category) {
+            const pathParts = window.location.pathname.split('/').filter(Boolean);
+            if (pathParts.length >= 2 && pathParts[0] !== 'post.html') {
+                category = pathParts[0]; 
+                slug = pathParts[1];     
+            }
+        }
 
-const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
+        const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
         
         if (slug && category !== null) {
-            // Path JSON sirreeffameera (root '/' irraa akka barbaaduuf)
             fetch(`/data/${category}.json`)
                 .then(res => res.json())
                 .then(data => {
-                    // JSON keessaa barruu 'slug' isaa walsimu barbaaduu
                     const post = data.items.find(item => item.slug === slug);
                     
                     if (post) {
+                        // Meta tags dynamic ta'an asirratti kaana
                         document.title = post.title;
                         document.getElementById('post-title').innerText = post.title;
+                        
+                        // Ibsa gabaabaa uumuu (Jechoota jalqabaa 150)
+                        const cleanText = (post.body || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                        const shortDesc = cleanText.substring(0, 150) + "...";
+
+                        // Meta Tags Telegraamiif jiran asitti update gochuu
+                        document.getElementById('meta-og-title').setAttribute('content', post.title);
+                        document.getElementById('meta-og-desc').setAttribute('content', shortDesc);
+                        if (post.image) {
+                            document.getElementById('meta-og-image').setAttribute('content', window.location.origin + post.image);
+                        }
+
                         const d = new Date(post.date);
                         const formatted = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                        // Read time calculate
-                        const rawText = (post.body || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                        const wordCount = rawText.split(' ').filter(w => w.length > 0).length;
+                        
+                        const wordCount = cleanText.split(' ').filter(w => w.length > 0).length;
                         const minutes = Math.ceil(wordCount / 200);
                         document.getElementById('post-date').innerHTML = `<strong style="color:#fff;">by Defera</strong> · ${formatted} · ${minutes} min read`;
 
@@ -147,7 +129,6 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
                         parsedBody = parsedBody.replace(/\n/g, '<br>');
                         document.getElementById('post-content').innerHTML = parsedBody;
 
-                        // ID addaa 'slug' fayyadamuun uumuu
                         let itemID = category + "-" + slug;
                         const emojiContainer = document.createElement('div');
                         emojiContainer.innerHTML = `
@@ -171,7 +152,7 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
 
                         if (post.image) {
                             document.getElementById('post-image-container').innerHTML =
-                                `<img src="${post.image}" alt="${post.title}" style="width:100%;height:260px;object-fit:cover;border-radius:12px;display:block;margin:0 auto;">`;
+                                `<img src="${post.image}" alt="${post.title}" itemprop="image" style="width:100%;height:260px;object-fit:cover;border-radius:12px;display:block;margin:0 auto;">`;
                         }
 
                         loadRelatedPosts(data.items, slug, category);
@@ -182,7 +163,6 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
                 .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
         }
 
-        // loadRelatedPosts slug fayyadamuun sirreeffameera
         function loadRelatedPosts(currentItems, currentSlug, currentCat) {
             const otherCats = ['motivation', 'stories', 'education'].filter(c => c !== currentCat);
             
@@ -197,7 +177,6 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
                     .filter(item => item.slug !== currentSlug)
                     .sort(() => Math.random() - 0.5);
                 
-                // 1 same category + 2 other categories (mixed)
                 const related = [
                     ...fromSame.slice(0, 1),
                     ...fromOthers.slice(0, 2)
@@ -214,10 +193,7 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
             items.forEach(item => {
                 const desc = item.description || (item.body ? item.body.replace(/\*\*(.*?)\*\*/g, '$1').substring(0, 80) + '...' : '');
                 const card = document.createElement('a');
-                
-                // Linkiin gara format haaraatti jijjiirameera (fkn /motivation/harka-hin-kennini)
                 card.href = `/${item.cat}/${item.slug}`; 
-                
                 card.className = 'related-card';
                 card.innerHTML = `
                     <div class="related-card-badge">${catLabels[item.cat] || ''}</div>
@@ -245,7 +221,7 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
         }
         function toggleSaveArticle(id) {
             let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-            const currentUrl = window.location.pathname; // URL qulqulluu fi sirrii ta'e qofa fudhata
+            const currentUrl = window.location.pathname; 
             let title = document.getElementById('post-title')?.innerText || "Rise-d Article";
             const index = savedArticles.findIndex(a => a.id === id);
             if (index === -1) {
@@ -270,4 +246,3 @@ const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', educa
     </script>
 </body>
 </html>
-
