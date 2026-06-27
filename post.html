@@ -60,7 +60,9 @@
         <a href="/home.html" class="close-btn" title="Gara Dashboarditti Deebi'i">&times;</a>
         <h1 id="post-title" itemprop="headline">Loading...</h1>
         <div class="author-section">
-          <img src="/images/Defera.jpg" alt="Defera" class="author-photo" />
+          <a href="/about.html" title="Defera Dedecha ilaali">
+            <img src="/images/Defera.jpg" alt="Defera" class="author-photo" style="cursor:pointer;" />
+          </a>
           <p class="date" id="post-date" style="margin:0;"></p>
         </div>
         <div id="post-image-container"></div>
@@ -123,7 +125,7 @@
                         
                         const wordCount = cleanText.split(' ').filter(w => w.length > 0).length;
                         const minutes = Math.ceil(wordCount / 200);
-                        document.getElementById('post-date').innerHTML = `<strong style="color:#fff;">by Defera</strong> · ${formatted} · ${minutes} min read`;
+                        document.getElementById('post-date').innerHTML = `<a href="/about.html" style="color:#fff; text-decoration:none;"><strong>by Defera</strong></a> · ${formatted} · ${minutes} min read`;
 
                         let parsedBody = post.body.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
                         parsedBody = parsedBody.replace(/\n/g, '<br>');
@@ -246,3 +248,4 @@
     </script>
 </body>
 </html>
+
