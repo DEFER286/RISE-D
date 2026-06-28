@@ -202,7 +202,11 @@
                         document.getElementById('post-title').innerText = "Barruun hin argamne!";
                     }
                 })
-                .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
+                .catch((err) => { 
+                    console.error('Post load error:', err, 'category:', category, 'slug:', slug);
+                    document.getElementById('post-title').innerText = "Barruun hin argamne!"; 
+                    document.getElementById('post-date').innerHTML = `<a href="/home.html" style="color:#ff9800;">← Gara Jalqabaatti Deebi'i</a>`;
+                });
         }
 
         function loadRelatedPosts(currentItems, currentSlug, currentCat) {
