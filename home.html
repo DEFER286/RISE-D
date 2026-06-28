@@ -15,7 +15,8 @@
     <meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=700;800&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet"></noscript>
 
         <!-- TELEGRAM & SOCIAL MEDIA PREVIEW TAGS -->
     <meta property="og:type" content="website" />
@@ -289,7 +290,7 @@
             const plainDesc = plain.substring(0, 80) + (plain.length > 80 ? '...' : '');
             const emoji = cat === 'motivation' ? '🔥' : cat === 'stories' ? '📚' : '🎓';
             const imgHTML = item.image
-                ? `<img src="${item.image}" class="mini-card-img" alt="${item.title}" loading="lazy" onerror="this.className='mini-card-placeholder';this.outerHTML='<div class=mini-card-placeholder>${emoji}</div>'">`
+                ? `<img src="${item.image}" class="mini-card-img" alt="${item.title}" loading="lazy" width="400" height="130" decoding="async" onerror="this.className='mini-card-placeholder';this.outerHTML='<div class=mini-card-placeholder>${emoji}</div>'">`
                 : `<div class="mini-card-placeholder">${emoji}</div>`;
             const badgeClass = cat === 'motivation' ? 'badge-motivation' : cat === 'stories' ? 'badge-stories' : 'badge-education';
             const badgeLabel = cat === 'motivation' ? '🔥 Motivation' : cat === 'stories' ? '📚 Seenaa' : '🎓 Gorsa';
