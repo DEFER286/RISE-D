@@ -28,7 +28,7 @@
         .author-photo { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid #ff9800; flex-shrink:0; }
         @media (max-width: 600px) { .author-photo { width:35px; height:35px; } .date { font-size:12px; } }
         .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
-        img:not(.author-photo) { display: block; max-width: 100%; height: 260px; width: 100%; object-fit: cover; margin: 0 auto 20px auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        img:not(.author-photo) { display: block; max-width: 100%; height: auto; max-height: 450px; width: 100%; object-fit: cover; margin: 0 auto 20px auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
         /* === SUBSCRIBE style === */
         .subscribe-inline { margin-top: 50px; padding-top: 28px; border-top: 1px solid #444; text-align: center; }
@@ -162,7 +162,7 @@
 
                         if (post.image) {
                             document.getElementById('post-image-container').innerHTML =
-                                `<img src="${post.image}" alt="${post.title}" itemprop="image" loading="lazy" decoding="async" style="width:100%;height:260px;object-fit:cover;border-radius:12px;display:block;margin:0 auto;">`;
+                                `<img src="${post.image}" alt="${post.title}" itemprop="image" loading="lazy" decoding="async" style="width:100%;height:auto;max-height:450px;object-fit:cover;border-radius:12px;display:block;margin:0 auto;">`;
                         }
 
                         loadRelatedPosts(data.items, slug, category);
