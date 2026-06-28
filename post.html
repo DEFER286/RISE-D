@@ -126,39 +126,7 @@
                         canonical.href = `https://risetoday.vercel.app/${category}/${slug}`;
                         document.head.appendChild(canonical);
 
-                        // ✅ JSON-LD Structured Data — Google Search irratti author + date muldhisa
-                        const jsonLD = document.createElement('script');
-                        jsonLD.type = 'application/ld+json';
-                        jsonLD.text = JSON.stringify({
-                          "@context": "https://schema.org",
-                          "@type": "Article",
-                          "headline": post.title,
-                          "description": shortDesc,
-                          "image": post.image ? window.location.origin + post.image : "https://risetoday.vercel.app/images/Defera.jpg",
-                          "datePublished": post.date,
-                          "dateModified": post.date,
-                          "url": `https://risetoday.vercel.app/${category}/${slug}`,
-                          "author": {
-                            "@type": "Person",
-                            "name": "Defera Dedecha",
-                            "url": "https://risetoday.vercel.app/about.html"
-                          },
-                          "publisher": {
-                            "@type": "Organization",
-                            "name": "Rise Today",
-                            "url": "https://risetoday.vercel.app",
-                            "logo": {
-                              "@type": "ImageObject",
-                              "url": "https://risetoday.vercel.app/images/Defera.jpg"
-                            }
-                          },
-                          "mainEntityOfPage": {
-                            "@type": "WebPage",
-                            "@id": `https://risetoday.vercel.app/${category}/${slug}`
-                          },
-                          "timeRequired": `PT${minutes}M`
-                        });
-                        document.head.appendChild(jsonLD);
+                        // ✅ Canonical Tag — Duplicate content hin uumne
 
                         const d = new Date(post.date);
                         const formatted = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -202,11 +170,7 @@
                         document.getElementById('post-title').innerText = "Barruun hin argamne!";
                     }
                 })
-                .catch((err) => { 
-                    console.error('Post load error:', err, 'category:', category, 'slug:', slug);
-                    document.getElementById('post-title').innerText = "Barruun hin argamne!"; 
-                    document.getElementById('post-date').innerHTML = `<a href="/home.html" style="color:#ff9800;">← Gara Jalqabaatti Deebi'i</a>`;
-                });
+                .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
         }
 
         function loadRelatedPosts(currentItems, currentSlug, currentCat) {
