@@ -68,6 +68,17 @@
         <div id="post-image-container"></div>
         <div class="content" id="post-content" itemprop="articleBody"></div>
 
+        <!-- Comment Section -->
+        <div id="comment-section" style="display:none; margin-top:30px; padding-top:20px; border-top:1px solid #333;">
+            <h3 style="color:#FF9800; font-size:16px; margin-bottom:16px;">💬 Comments</h3>
+            <div id="comment-list"></div>
+            <div style="margin-top:16px;">
+                <input id="comment-name" type="text" placeholder="Maqaa kee..." style="width:100%;background:#1F1A3A;border:1px solid #444;color:#fff;border-radius:8px;padding:10px;font-size:14px;margin-bottom:10px;box-sizing:border-box;outline:none;">
+                <textarea id="comment-text" placeholder="Yaada kee barreessi..." style="width:100%;background:#1F1A3A;border:1px solid #444;color:#fff;border-radius:8px;padding:10px;font-size:14px;margin-bottom:10px;box-sizing:border-box;outline:none;resize:none;height:80px;"></textarea>
+                <button onclick="submitComment()" style="background:#FF9800;color:#000;border:none;padding:10px 24px;border-radius:20px;font-weight:bold;cursor:pointer;font-size:14px;">Post Comment</button>
+            </div>
+        </div>
+
         <div class="subscribe-inline">
             <div class="subscribe-inline-heading">Discover more from RISE.D</div>
             <p class="subscribe-inline-text">Subscribe to get the latest posts sent to your email.</p>
@@ -148,6 +159,8 @@
                             <button onclick="handleReaction('${itemID}','love')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">❤️ <span id="love-${itemID}">0</span></button>
                             <button onclick="handleReaction('${itemID}','funny')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">😂 <span id="funny-${itemID}">0</span></button>
                             <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background:#222;border:1px solid #444;color:#FF9800;padding:8px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-left:5px;">🔖 save</button>
+                            <button onclick="sharePost('${post.title}')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">↗ Share</button>
+                            <button onclick="toggleComments()" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">💬 <span id="comment-count">0</span> Comments</button>
                         </div>`;
                         document.getElementById('post-content').appendChild(emojiContainer);
 
@@ -213,6 +226,39 @@
                 grid.appendChild(card);
             });
             document.getElementById('related-section').style.display = 'block';
+        }
+
+        function sharePost(title) {
+            if (navigator.share) {
+                navigator.share({ title: title, url: window.location.href })
+                .catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link copied!');
+            }
+        }
+
+        function toggleComments() {
+            const section = document.getElementById('comment-section');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function submitComment() {
+            const name = document.getElementById('comment-name').value.trim();
+            const text = document.getElementById('comment-text').value.trim();
+            if (!name || !text) return;
+
+            const list = document.getElementById('comment-list');
+            const div = document.createElement('div');
+            div.style.cssText = 'background:#1F1A3A;border-radius:10px;padding:12px;margin-bottom:10px;';
+            div.innerHTML = `<strong style="color:#FF9800;">${name}</strong><p style="color:#ccc;margin:6px 0 0;">${text}</p>`;
+            list.appendChild(div);
+
+            document.getElementById('comment-name').value = '';
+            document.getElementById('comment-text').value = '';
+
+            const count = list.children.length;
+            document.getElementById('comment-count').innerText = count;
         }
 
         function handleReaction(id, type) {
