@@ -229,13 +229,59 @@
         }
 
         function sharePost(title) {
+            const url = window.location.href;
             if (navigator.share) {
-                navigator.share({ title: title, url: window.location.href })
-                .catch(() => {});
+                navigator.share({ title: title, url: url })
+                .catch((err) => {
+                    // User cancelled yookiin error → clipboard fallback godhi
+                    if (err.name !== 'AbortError') {
+                        copyToClipboardFallback(url);
+                    }
+                });
             } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('Link copied!');
+                copyToClipboardFallback(url);
             }
+        }
+
+        function copyToClipboardFallback(url) {
+            // Modern clipboard API try godhi
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url)
+                    .then(() => showShareToast('✅ Link copied!'))
+                    .catch(() => legacyCopy(url));
+            } else {
+                legacyCopy(url);
+            }
+        }
+
+        function legacyCopy(url) {
+            // Browsers durii (HTTP irratti illee hojjeta)
+            const el = document.createElement('textarea');
+            el.value = url;
+            el.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+            document.body.appendChild(el);
+            el.focus();
+            el.select();
+            try {
+                document.execCommand('copy');
+                showShareToast('✅ Link copied!');
+            } catch(e) {
+                showShareToast('Link: ' + url);
+            }
+            document.body.removeChild(el);
+        }
+
+        function showShareToast(msg) {
+            let toast = document.getElementById('share-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'share-toast';
+                toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#FF9800;color:#000;padding:10px 22px;border-radius:20px;font-weight:bold;font-size:14px;z-index:9999;box-shadow:0 4px 15px rgba(0,0,0,0.4);transition:opacity 0.4s;';
+                document.body.appendChild(toast);
+            }
+            toast.innerText = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 2500);
         }
 
         function toggleComments() {
@@ -281,7 +327,7 @@
             let title = document.getElementById('post-title')?.innerText || "Rise-d Article";
             const index = savedArticles.findIndex(a => a.id === id);
             if (index === -1) {
-                savedArticles.push({ id, title, url: currentUrl });
+             savedArticles.push({ id, title, url: currentUrl });
                 localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
                 alert("Barruun '" + title + "' saved! 🔖");
             } else {
@@ -302,4 +348,3 @@
     </script>
 </body>
 </html>
-
