@@ -344,28 +344,39 @@
                 renderGrid(tab.dataset.cat);
             });
         });
-
         // Fetch all 3 categories and merge
         let loaded = 0;
-        function tryRender() { 
-            loaded++; 
-            if (loaded === 3) { 
-                allPosts.sort((a,b) => {
-                    const dateA = new Date(a.item.date || 0);
-                    const dateB = new Date(b.item.date || 0);
+        function tryRender() {
+            loaded++;
+            if (loaded === 3) {
+                // 1. Sa'aatii fi guyyaa ammaa (Ethiopian Time) fudhadhu
+                const now = new Date();
+
+                // 2. Barreeffamoota keessaa kanneen sa'aatiin isaanii gahe qofa calali (Filter)
+                allPosts = allPosts.filter(p => {
+                    // CMS kee irratti dirreen guyyaa 'item.date' ykn 'item.Guyyaa' yoo ta'e dubbisa
+                    const postDate = new Date(p.item.date || p.item.Guyyaa || 0);
+                    return postDate <= now;
+                });
+
+                // 3. Erga calalamee booda bifa dhaan wal duraa duubaan (Date) hiriirsi
+                allPosts.sort((a, b) => {
+                    const dateA = new Date(a.item.date || a.item.Guyyaa || 0);
+                    const dateB = new Date(b.item.date || b.item.Guyyaa || 0);
                     return dateB - dateA;
                 });
-                renderGrid('all'); 
-            } 
+
+                renderGrid('all');
+            }
         }
 
         fetch('/data/motivation.json').then(r => r.json()).then(data => {
-            data.items.forEach((item, i) => allPosts.push({ cat: 'motivation', item, idx: i }));
+            if (data.items) data.items.forEach((item, i) => allPosts.push({ cat: 'motivation', item, idx: i }));
             tryRender();
         }).catch(() => tryRender());
 
         fetch('/data/stories.json').then(r => r.json()).then(data => {
-            data.items.forEach((item, i) => allPosts.push({ cat: 'stories', item, idx: i }));
+            if (data.items) data.items.forEach((item, i) => allPosts.push({ cat: 'stories', item, idx: i }));
             tryRender();
         }).catch(() => tryRender());
 
