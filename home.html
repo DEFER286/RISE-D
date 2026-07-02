@@ -252,26 +252,24 @@
         </div>
     </div>
 
-    <div style="margin-top:100px;text-align:center;padding:20px;">
-        <h1 style="color:#ff9800; font-size:2em; text-align:center; margin-top:30px; margin-bottom:10px; font-family: 'Poppins', sans-serif; font-weight: 800;">JIREENYA SIMACHUUFI 🫂</h1>
-        
-        <p style="text-align:center;color:#ddd;margin-bottom:30px;">Baga nagaan Dhufte!🙏</p>
-
-        <div id="search-wrapper" style="text-align:center;width:100%;">
-            <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Search...">
-        </div>
-
-        <!-- Category Tabs -->
-        <div class="cat-tabs">
-            <button class="cat-tab active" data-cat="all">✨ Hundaa</button>
-            <button class="cat-tab" data-cat="motivation">🔥 Motivation</button>
-            <button class="cat-tab" data-cat="stories">📚 Seenaa</button>
-            <button class="cat-tab" data-cat="education">🎓 Gorsa</button>
-        </div>
-
-        <!-- Unified Posts Grid -->
-        <div class="unified-grid" id="unified-grid"></div>
+    <div class="hero" style="margin-top:100px;text-align:center;padding:40px 20px 30px;">
+    <h1 style="color:#ff9800; font-size:2em; text-align:center; margin-top:30px; margin-bottom:10px; font-family: 'Poppins', sans-serif; font-weight: 800;">JIREENYA SIMACHUUFI 🫂</h1>
+    <p style="text-align:center;color:#ddd;margin-bottom:30px;">Baga nagaan Dhufte!🙏</p>
+    <div id="search-wrapper" style="text-align:center;width:100%;">
+        <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Search...">
     </div>
+    <div class="cat-tabs">
+        <button class="cat-tab active" data-cat="all">✨ Hundaa</button>
+        <button class="cat-tab" data-cat="motivation">🔥 Motivation</button>
+        <button class="cat-tab" data-cat="stories">📚 Seenaa</button>
+        <button class="cat-tab" data-cat="education">🎓 Gorsa</button>
+    </div>
+</div>
+
+<!-- Posts Grid — hero alaatti -->
+<div style="padding:0 16px;">
+    <div class="unified-grid" id="unified-grid"></div>
+</div>
 
     <script>
         const menuBtn = document.getElementById('menu-btn');
@@ -394,6 +392,17 @@
                 card.style.display = card.textContent.toLowerCase().includes(input) ? '' : 'none';
             });
         }
+        /* === HERO SECTION === */
+.hero {
+    background-image: 
+        linear-gradient(rgba(10, 5, 30, 0.60), rgba(10, 5, 30, 0.60)),
+        url('/images/hero-bg.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 0 0 24px 24px;
+    padding-bottom: 30px;
+}
     </script>
 
     <div class="subscribe-card">
