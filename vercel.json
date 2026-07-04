@@ -21,5 +21,28 @@
       "source": "/education/:slug",
       "destination": "/post.html?cat=education&slug=:slug"
     }
+  ],
+
+  "redirects": [
+    {
+      "source": "/home.html",
+      "destination": "/home",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/saved.html",
+      "destination": "/saved",
+      "permanent": true
+    },
+    {
+      "source": "/profile.html",
+      "destination": "/profile",
+      "permanent": true
+    }
   ]
 }
