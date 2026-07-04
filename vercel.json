@@ -10,7 +10,7 @@
 
     { "source": "/motivation", "destination": "/motivation.html" },
     { "source": "/stories", "destination": "/stories.html" },
-    { "source": "/education", "destination": "/educationa.html" },
+    { "source": "/education", "destination": "/education.html" },
 
     {
       "source": "/motivation/:slug",
@@ -27,30 +27,14 @@
   ],
 
   "redirects": [
-    {
-      "source": "/index.html",
-      "destination": "/index",
-      "permanent": true
-    },
-    {
-      "source": "/home.html",
-      "destination": "/home",
-      "permanent": true
-    },
-    {
-      "source": "/about.html",
-      "destination": "/about",
-      "permanent": true
-    },
-    {
-      "source": "/saved.html",
-      "destination": "/saved",
-      "permanent": true
-    },
-    {
-      "source": "/profile.html",
-      "destination": "/profile",
-      "permanent": true
-    }
+    { "source": "/index.html", "destination": "/index", "permanent": true },
+    { "source": "/home.html", "destination": "/home", "permanent": true },
+    { "source": "/about.html", "destination": "/about", "permanent": true },
+    { "source": "/saved.html", "destination": "/saved", "permanent": true },
+    { "source": "/profile.html", "destination": "/profile", "permanent": true },
+
+    { "source": "/stories.html", "destination": "/stories", "permanent": true },
+    { "source": "/education.html", "destination": "/education", "permanent": true },
+    { "source": "/motivation.html", "destination": "/motivation", "permanent": true }
   ]
 }
