@@ -1,5 +1,14 @@
 {
   "rewrites": [
+    { "source": "/home", "destination": "/home.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/saved", "destination": "/Saved.html" },
+    { "source": "/profile", "destination": "/Profile.html" },
+
+    { "source": "/motivation", "destination": "/Motivational.html" },
+    { "source": "/stories", "destination": "/Stories.html" },
+    { "source": "/education", "destination": "/educationa.html" },
+
     {
       "source": "/motivation/:slug",
       "destination": "/post.html?cat=motivation&slug=:slug"
