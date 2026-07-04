@@ -8,7 +8,7 @@
     { "source": "/saved", "destination": "/saved.html" },
     { "source": "/profile", "destination": "/profile.html" },
 
-    { "source": "/motivation", "destination": "/motivational.html" },
+    { "source": "/motivation", "destination": "/motivation.html" },
     { "source": "/stories", "destination": "/stories.html" },
     { "source": "/education", "destination": "/educationa.html" },
 
