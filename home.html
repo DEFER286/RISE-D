@@ -35,32 +35,7 @@
   
     <link rel="canonical" href="https://risetoday.vercel.app/home.html" />
     <style>
-        /* === DESKTOP TOP NAV === */
-        .desktop-nav { display: none; }
-        @media (min-width: 768px) {
-            .desktop-nav {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                background-color: #120B24;
-                padding: 14px 40px;
-                position: fixed;
-                top: 0; left: 0;
-                width: 100%;
-                box-sizing: border-box;
-                z-index: 1000;
-                border-bottom: 1px solid rgba(255,255,255,0.08);
-                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            }
-            .desktop-nav-logo { color: #FF9800; font-size: 20px; font-weight: bold; text-decoration: none; letter-spacing: 1px; }
-            .desktop-nav-links { display: flex; gap: 28px; align-items: center; }
-            .desktop-nav-links a { color: #ccc; text-decoration: none; font-size: 15px; transition: color 0.2s; }
-            .desktop-nav-links a:hover { color: #FF9800; }
-            .desktop-nav-links a.active { color: #FF9800; font-weight: bold; }
-            .desktop-nav-profile { background-color: rgba(255,152,0,0.15) !important; border: 1px solid #FF9800; color: #FF9800 !important; border-radius: 50px; padding: 6px 18px !important; font-weight: bold !important; }
-            .desktop-nav-profile:hover { background-color: #FF9800 !important; color: #111 !important; }
-            body { padding-bottom: 0 !important; padding-top: 65px !important; }
-        }
+
 
         /* === SEARCH BAR === */
         #dashboard-search {
@@ -156,16 +131,7 @@
         .badge-stories { background: rgba(0,188,212,0.2); color: #00BCD4; }
         .badge-education { background: rgba(139,195,74,0.2); color: #8BC34A; }
 
-        /* === BOTTOM NAV (mobile) === */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #120B24; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.3); z-index: 1000; border-top: 1px solid rgba(255,255,255,0.05); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #888; font-size: 12px; gap: 4px; width: 25%; text-align: center; }
-        .nav-icon { font-size: 20px; }
-        .nav-item.active { color: #FF9800; }
-        @media (min-width: 768px) { 
-            .bottom-nav { display: none !important; } 
-        }
-
-        body { padding-bottom: 70px !important; }
+        body { padding-bottom: 30px !important; }
 
         .main-title {
             font-family: 'Poppins', sans-serif;
@@ -195,21 +161,11 @@
 
 <body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0;">
 
-    <nav class="desktop-nav">
-        <a href="/home.html" class="desktop-nav-logo">⚡ RISE TODAY</a>
-        <div class="desktop-nav-links">
-            <a href="/home.html" class="active">Home</a>
-            <a href="/motivation.html">Motivation</a>
-            <a href="/stories.html">Seenaa</a>
-            <a href="/education.html">Gorsa</a>
-            <a href="/saved.html">🔖 Ol-kaa'ame</a>
-            <a href="/profile.html" class="desktop-nav-profile">👤 Profile</a>
-        </div>
-    </nav>
-
     <div class="mobile-menu-btn">
         <!-- Hamburger Button -->
-        <div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px; position: fixed; top: 10px; left: 10px; z-index: 10000;">☰</div>
+        <div id="menu-btn" style="cursor:pointer; position:fixed; top:12px; left:12px; z-index:10000; background:rgba(0,0,0,0.45); border-radius:8px; padding:6px 10px; backdrop-filter:blur(4px);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF9800" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </div>
 
         <!-- Side Menu -->
         <div id="side-menu" style="display: none; background-color: #0D0D0D; position: fixed; top: 0; left: 0; width: 75%; max-width: 300px; height: 100%; z-index: 9999; padding-top: 60px; overflow-y: auto;">
@@ -398,18 +354,7 @@
         </div>
     </div>
 
-    <div class="bottom-nav">
-        <a href="/home.html" class="nav-item active"><span class="nav-icon">🎛️</span><span>Home</span></a>
-        <a href="#" class="nav-item" onclick="document.getElementById('mobile-search-modal').style.display='flex';return false;"><span class="nav-icon">🔍</span><span>Search</span></a>
-        <a href="/saved.html" class="nav-item"><span class="nav-icon">🔖</span><span>Saved</span></a>
-        <a href="/profile.html" class="nav-item"><span class="nav-icon">👤</span><span>Profile</span></a>
-    </div>
 
-    <!-- Mobile Search Modal -->
-    <div id="mobile-search-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; flex-direction:column; gap:16px;">
-        <input type="text" onkeyup="searchDashboard()" id="mobile-search-input" placeholder="Search..." style="width:80%; padding:14px 20px; border-radius:50px; border:2px solid #FF9800; font-size:16px; outline:none; background:#1F1A3A; color:white;">
-        <button onclick="document.getElementById('mobile-search-modal').style.display='none';" style="background:#FF9800; border:none; color:#111; padding:10px 28px; border-radius:50px; font-weight:bold; font-size:15px; cursor:pointer;">Close</button>
-    </div>
 
 </body>
 </html>
