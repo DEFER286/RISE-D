@@ -37,19 +37,7 @@
     <style>
 
 
-        /* === SEARCH BAR === */
-        #dashboard-search {
-            background-color: white !important; color: #333 !important;
-            border: 1px solid #ddd !important; border-radius: 50px !important;
-            padding: 15px 25px !important; width: 80% !important; max-width: 450px;
-            display: none; margin: 30px auto !important;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-        #dashboard-search:focus { border-color: #FF9800 !important; outline: none; }
-        @media (min-width: 768px) { #dashboard-search { display: block !important; } }
-        #search-wrapper { display: none; }
-        @media (min-width: 768px) { #search-wrapper { display: block; } }
+
 
         /* === THUMBNAIL CARD === */
         .post-card {
@@ -182,7 +170,7 @@
             <a href="/motivation.html" style="display:block; color:white; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">🔥 Motivation</a>
             <a href="/stories.html" style="display:block; color:white; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">📚 Seenaa</a>
             <a href="/education.html" style="display:block; color:white; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">🎓 Gorsa</a>
-            <a href="/saved.html" style="display:block; color:white; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">🔖 Ol-kaa'ame</a>
+            <a href="/saved.html" style="display:block; color:white; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">⭐ Favorite</a>
 
             <!-- Social Media -->
             <div style="padding: 20px 25px 30px;">
@@ -212,9 +200,7 @@
     <div class="hero" style="margin-top:0;text-align:center;padding:60px 20px 30px;">
     <h1 style="color:#ff9800; font-size:2em; text-align:center; margin-top:30px; margin-bottom:10px; font-family: 'Poppins', sans-serif; font-weight: 800;">JIREENYA SIMACHUUFI 🫂</h1>
     <p style="text-align:center;color:#ddd;margin-bottom:30px;">Baga nagaan Dhufte!🙏</p>
-    <div id="search-wrapper" style="text-align:center;width:100%;">
-        <input type="text" id="dashboard-search" onkeyup="searchDashboard()" placeholder="Search...">
-    </div>
+
     <div class="cat-tabs">
         <button class="cat-tab active" data-cat="all">✨ Hundaa</button>
         <button class="cat-tab" data-cat="motivation">🔥 Motivation</button>
