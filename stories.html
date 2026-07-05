@@ -1,198 +1,195 @@
 <!DOCTYPE html>
 <html lang="om">
 <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KE3FRR2XHP"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KE3FRR2XHP"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-KE3FRR2XHP');
     </script>
-    
     <meta charset="UTF-8">
+    <meta name="robots" content="max-image-preview:large">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instructive Stories - RISE.D</title>
-        <meta name="description" content="Rise-d: Seenaawwan barsiiso fi nama kakaasan kanneen jireenya kee irratti jijjiirama fidan asitti dubbisi.">
-          <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-        <link rel="icon" type="image/png" href="/images/favicon.png">
-        <link rel="apple-touch-icon" href="/images/favicon.png">
-</head>
-<body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding: 0; font-family: sans-serif; color: #ffffff;">
+    <title>Seenaa – RISE TODAY</title>
+    <meta name="description" content="Seenaa barnoota qabu fi jijjiirama fidu. Instructive stories in Afaan Oromo." />
+    <link rel="canonical" href="https://risetoday.vercel.app/stories.html" />
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Seenaa – RISE TODAY" />
+    <meta property="og:description" content="Seenaa barnoota qabu fi jijjiirama fidu." />
+    <meta property="og:image" content="https://risetoday.vercel.app/images/og-image.webp" />
+    <meta property="og:url" content="https://risetoday.vercel.app/stories.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet"></noscript>
+    <style>
+        .desktop-nav { display: none; }
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex; justify-content: space-between; align-items: center;
+                background-color: #120B24; padding: 14px 40px; position: fixed;
+                top: 0; left: 0; width: 100%; box-sizing: border-box; z-index: 1000;
+                border-bottom: 1px solid rgba(255,255,255,0.08); box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            }
+            .desktop-nav-logo { color: #FF9800; font-size: 20px; font-weight: bold; text-decoration: none; letter-spacing: 1px; }
+            .desktop-nav-links { display: flex; gap: 28px; align-items: center; }
+            .desktop-nav-links a { color: #ccc; text-decoration: none; font-size: 15px; transition: color 0.2s; }
+            .desktop-nav-links a:hover { color: #00BCD4; }
+            .desktop-nav-links a.active { color: #00BCD4; font-weight: bold; }
+            .desktop-nav-profile { background-color: rgba(255,152,0,0.15) !important; border: 1px solid #FF9800; color: #FF9800 !important; border-radius: 50px; padding: 6px 18px !important; font-weight: bold !important; }
+            .desktop-nav-profile:hover { background-color: #FF9800 !important; color: #111 !important; }
+            .mobile-menu-btn { display: none; }
+            #side-menu { display: none !important; }
+            body { padding-bottom: 0 !important; padding-top: 65px !important; }
+        }
 
-    <!-- Menu Button ☰ -->
-    <nav style="position: relative; z-index: 9999;">
-                
-        <div id="menu-btn" style="cursor: pointer; font-size: 24px; color: #ff9800; padding: 15px;">☰</div>
-        
-        <!-- Menu Gadi-ba'u -->
-        <div id="side-menu" style="display: none; background-color: #1A0D2E; position: fixed; top: 50px; left: 0; width: 100%; text-align: center; padding: 20px; overflow-y: auto; max-height: 80vh;">
-            <a href="index.html" style="display: block; color: white; padding: 10px; text-decoration: none; font-size: 18px;">Portfolio</a>
-            <a href="about.html" style="display: block; color: white; padding: 10px; text-decoration: none; font-size: 18px;">About</a>
-            
-            <div style="margin: 10px 0;">
-                <a href="#" id="home-dropdown-btn" style="display: block; color: #ff9800; padding: 10px; text-decoration: none; font-size: 18px; font-weight: bold;">Home ▼</a>
-                <div id="home-sub-menu" style="display: none; background-color: #2A1D3E; padding: 10px; border-radius: 8px; margin: 5px 20%; border-left: 3px solid #ff9800;">
-                    <a href="motivation.html" style="display: block; color: white; padding: 8px; text-decoration: none; font-size: 15px;">1. Motivational Speech</a>
-                    <a href="stories.html" style="display: block; color: white; padding: 8px; text-decoration: none; font-size: 15px; margin-top: 5px;">2. Instructive Stories</a>
-                </div>
-            </div>
+        .unified-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: 280px; gap: 14px; margin-top: 10px; padding: 0 4px;
+        }
+        @media (min-width: 768px) {
+            .unified-grid { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 300px; gap: 20px; }
+        }
+
+        .mini-card { background-color: #1F1A3A; border-radius: 10px; overflow: hidden; transition: transform 0.2s; text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; }
+        .mini-card:hover { transform: translateY(-3px); }
+        .mini-card-img, .mini-card-placeholder { width: 100%; height: 130px; object-fit: cover; display: block; flex-shrink: 0; }
+        .mini-card-placeholder { display: flex; align-items: center; justify-content: center; font-size: 36px; background: linear-gradient(135deg,#1F1A3A,#0d2d35); height: 130px; }
+        .mini-card-body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .mini-card-title { color: #fff; font-size: 13px; font-weight: bold; line-height: 1.4; margin: 0 0 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 36px; flex-shrink: 0; }
+        .mini-card-desc { color: #bbb; font-size: 12px; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 34px; flex-shrink: 0; }
+        .mini-card-link { font-size: 12px; font-weight: bold; margin-top: auto; }
+
+        .cat-badge { display: inline-block; font-size: 11px; font-weight: bold; border-radius: 50px; padding: 3px 10px; margin-bottom: 6px; }
+        .badge-stories { background: rgba(0,188,212,0.2); color: #00BCD4; }
+
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #120B24; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.3); z-index: 1000; border-top: 1px solid rgba(255,255,255,0.05); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #888; font-size: 12px; gap: 4px; width: 25%; text-align: center; }
+        .nav-icon { font-size: 20px; }
+        .nav-item.active { color: #00BCD4; }
+        @media (min-width: 768px) { .bottom-nav { display: none !important; } }
+
+        body { padding-bottom: 70px !important; margin: 0; background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; }
+
+        .hero {
+            background-image: linear-gradient(rgba(10, 5, 30, 0.65), rgba(10, 5, 30, 0.65)), url('/images/hero-bg.webp');
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            border-radius: 0 0 24px 24px; padding: 80px 20px 30px; text-align: center;
+        }
+        .loading-msg { text-align: center; color: #888; padding: 40px 0; font-size: 15px; }
+    </style>
+</head>
+
+<body>
+    <nav class="desktop-nav">
+        <a href="/home.html" class="desktop-nav-logo">⚡ RISE TODAY</a>
+        <div class="desktop-nav-links">
+            <a href="/home.html">Home</a>
+            <a href="/motivation.html">Motivation</a>
+            <a href="/stories.html" class="active">Seenaa</a>
+            <a href="/education.html">Gorsa</a>
+            <a href="/saved.html">🔖 Ol-kaa'ame</a>
+            <a href="/profile.html" class="desktop-nav-profile">👤 Profile</a>
         </div>
     </nav>
 
-    <!-- Qabiyyee Fuulachaa (Content) -->
-    <div style="max-width: 600px; margin: 0 auto; padding: 20px; margin-top: 20px;">
-        <!-- Koodii `stories.html` keessatti akkasitti galchinna -->
-<div style="max-width: 600px; margin: 0 auto; padding: 20px; margin-top: 20px;">
-
-    <!-- Liinkii gara Home geessu (Koodii Haaraa) -->
-    <div style="text-align: left; margin-bottom: 20px;">
-        <a href="home.html" style="color: #ff9800; text-decoration: none; font-size: 16px; font-weight: bold; background-color: #2A1D3E; padding: 8px 15px; border-radius: 20px; border: 1px solid #ff9800;">
-            ⬅ Gara Home Deebi'i
-        </a>
+    <div class="mobile-menu-btn">
+        <div id="menu-btn" style="cursor:pointer;font-size:24px;color:#ff9800;padding:15px;position:fixed;top:10px;left:10px;z-index:10000;">☰</div>
+        <div id="side-menu" style="display:none;background-color:#0D0D0D;position:fixed;top:0;left:0;width:75%;height:100%;z-index:9999;padding-top:60px;">
+            <div id="close-btn" style="position:absolute;top:15px;right:20px;font-size:28px;color:white;cursor:pointer;">✕</div>
+            <a href="/home.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:16px 25px;border-bottom:1px solid #2a2a2a;">Home</a>
+            <a href="/motivation.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:16px 25px;border-bottom:1px solid #2a2a2a;">🔥 Motivation</a>
+            <a href="/stories.html" style="display:block;color:#00BCD4;text-decoration:none;font-size:18px;padding:16px 25px;border-bottom:1px solid #2a2a2a;">📚 Seenaa</a>
+            <a href="/education.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:16px 25px;border-bottom:1px solid #2a2a2a;">🎓 Gorsa</a>
+            <a href="/saved.html" style="display:block;color:white;text-decoration:none;font-size:18px;padding:16px 25px;border-bottom:1px solid #2a2a2a;">🔖 Ol-kaa'ame</a>
+        </div>
     </div>
 
-    <!-- Mata-duree weebsaayitiikee (Kun akkuma jirutti tura, hin badu!) -->
-    <h1 style="color: #ff9800; text-align: center; font-size: 2.2em;">📚 Instructive Stories</h1>
-    
-    <!-- Qabiyyee fayiilii stories koodii hafe hunda... -->
-    
-        <p style="text-align: center; color: #ddd; margin-bottom: 40px;">Seenaawwan gaggabaaboo barsiisaa ta'an.</p>
+    <div class="hero">
+        <h1 style="color:#00BCD4;font-size:2em;margin:0 0 10px;font-family:'Poppins',sans-serif;font-weight:800;">📚 Seenaa</h1>
+        <p style="color:#ddd;margin:0;">Seenaa barnoota qabu fi jijjiirama fidu.</p>
+    </div>
 
-        <!-- Barruuleen CMS irraa asitti ofumaan seenu -->
-    <div id="stories-container"></div>  <div style="margin: 40px auto; padding: 20px; max-width: 600px; background-color: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-    </div> 
-        
-   <!-- Koodii JavaScript Menu Hojjechiisuuf -->
+    <div style="padding:16px;">
+        <div class="unified-grid" id="unified-grid">
+            <p class="loading-msg" id="loading-msg">Fe'amaa jira...</p>
+        </div>
+    </div>
+
+    <div style="padding:0 16px 20px;">
+        <div style="background-color:#1F1A3A;border-top:5px solid white;border-radius:15px;padding:30px;text-align:center;margin-top:20px;">
+            <div style="color:white;font-size:20px;font-weight:bold;margin-bottom:10px;">📩 Subscribe</div>
+            <p style="color:#ddd;font-size:16px;margin-bottom:20px;">Enter your Email</p>
+            <form action="https://formspree.io/f/xbdbaolp" method="POST" style="display:flex;gap:10px;width:90%;max-width:320px;margin:0 auto;justify-content:center;align-items:center;">
+                <input type="email" name="email" placeholder="email..." required style="background-color:white;color:#333;border:1px solid #ddd;border-radius:50px;padding:10px 15px;width:60%;font-size:14px;">
+                <button type="submit" style="background-color:#FF9800;color:white;border:none;border-radius:50px;padding:10px 18px;font-weight:bold;cursor:pointer;font-size:14px;">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="/home.html" class="nav-item"><span class="nav-icon">🎛️</span><span>Home</span></a>
+        <a href="#" class="nav-item" onclick="document.getElementById('mobile-search-modal').style.display='flex';return false;"><span class="nav-icon">🔍</span><span>Search</span></a>
+        <a href="/saved.html" class="nav-item"><span class="nav-icon">🔖</span><span>Saved</span></a>
+        <a href="/profile.html" class="nav-item"><span class="nav-icon">👤</span><span>Profile</span></a>
+    </div>
+
+    <div id="mobile-search-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:16px;">
+        <input type="text" onkeyup="searchCards()" id="mobile-search-input" placeholder="Search..." style="width:80%;padding:14px 20px;border-radius:50px;border:2px solid #00BCD4;font-size:16px;outline:none;background:#1F1A3A;color:white;">
+        <button onclick="document.getElementById('mobile-search-modal').style.display='none';" style="background:#FF9800;border:none;color:#111;padding:10px 28px;border-radius:50px;font-weight:bold;font-size:15px;cursor:pointer;">Close</button>
+    </div>
+
     <script>
-  // 1. Menu hojjechiisuuf (Isa duraa)
-  const menuBtn = document.getElementById('menu-btn');
-  const sideMenu = document.getElementById('side-menu');
-  menuBtn.addEventListener('click', () => {
-    sideMenu.style.display = sideMenu.style.display === 'none' ? 'block' : 'none';
-  });
+        document.getElementById('menu-btn').addEventListener('click', () => { document.getElementById('side-menu').style.display = 'block'; });
+        document.getElementById('close-btn').addEventListener('click', () => { document.getElementById('side-menu').style.display = 'none'; });
 
-  const homeBtn = document.getElementById('home-dropdown-btn');
-  const homeSubMenu = document.getElementById('home-sub-menu');
-  homeBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    homeSubMenu.style.display = homeSubMenu.style.display === 'none' ? 'block' : 'none';
-    homeBtn.innerHTML = homeSubMenu.style.display === 'block' ? 'Home ▲' : 'Home ▼';
-  });
-
-    // 1. Barruulee Instructive Stories JSON keessaa harkisee fiduu
-    fetch('data/stories.json')
-        .then(response => response.json())
-        .then(data => {
-            // Maqaa id container kee fayiila stories.html keessa jiru mirkaneeffadhu
-            // Yoo 'stories-container' ta'e akkuma jirutti dhiisi
-            const container = document.getElementById('stories-container') || document.getElementById('all-stories-articles');
-            if (container) {
-                container.innerHTML = '';
-            } else {
-                console.error("ID saanduqa barruun itti fe'amu (container) hin argamne!");
-                return;
-            }
-            
-            // A. Barruulee ijaaruu fi iddoo Utterances + Emoji qopheessuu
-            data.items.forEach((story) => {
-                // Tiitilii barruu sanaa gara ID auto-scroll mijatutti jijjiiruu
-                const itemID = story.title.replace(/\s+/g, '-').toLowerCase();
-                
-                let imageHtml = '';
-                if (story.image) {
-                    imageHtml = `<img src="${story.image}" alt="${story.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">`;
-                }
-
-                container.innerHTML += `
-                    <div class="article-card" id="${itemID}" style="background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 30px; border-radius: 8px;">
-                        ${imageHtml}
-                        <h3 style="color: #00BCD4; margin-top: 0;">${story.title}</h3>
-                        <div class="article-body" style="color: #ddd; line-height: 1.6; margin-bottom: 20px;">${story.body ? marked.parse(story.body) : ''}</div>
-
-                        
-                        <!-- Emoji Reactions Box -->
-                        <div class="reaction-box" style="margin: 25px 0; padding: 10px; border-top: 1px solid #333; text-align: center;">
-                            <p style="color: #888; font-size: 14px; margin-bottom: 10px;">What do you think?</p>
-                            <button onclick="handleReaction('${itemID}', 'like')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">👍 <span id="like-${itemID}">0</span></button>
-                            <button onclick="handleReaction('${itemID}', 'love')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">❤️ <span id="love-${itemID}">0</span></button>
-                            <button onclick="handleReaction('${itemID}', 'funny')" style="background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; margin: 0 5px;">😆 <span id="funny-${itemID}">0</span></button>
-                        </div>
-
-                        <!-- Saanduqa Utterances (Comments) -->
-                        <div class="comment-box" id="utterances-${itemID}"></div>
+        function buildCard(item) {
+            const raw = item.description || item.body || '';
+            const plain = raw.replace(/<[^>]*>/g, ' ').replace(/#{1,6}\s*/g, '').replace(/\*{1,2}([^*]*)\*{1,2}/g, '$1').replace(/[-•*]\s+/g, ' ').replace(/\\n/g, ' ').replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+            const desc = plain.substring(0, 80) + (plain.length > 80 ? '...' : '');
+            const imgHTML = item.image
+                ? `<img src="${item.image}" class="mini-card-img" alt="${item.title}" loading="lazy" width="400" height="130" decoding="async" onerror="this.outerHTML='<div class=mini-card-placeholder>📚</div>'">`
+                : `<div class="mini-card-placeholder">📚</div>`;
+            return `
+                <a href="/stories/${item.slug}" class="mini-card">
+                    ${imgHTML}
+                    <div class="mini-card-body">
+                        <span class="cat-badge badge-stories">📚 Seenaa</span>
+                        <h3 class="mini-card-title">${item.title}</h3>
+                        <p class="mini-card-desc">${desc}</p>
+                        <span class="mini-card-link" style="color:#00BCD4;">Dubbisi ➔</span>
                     </div>
-                `;
-            });
+                </a>`;
+        }
 
-            // B. Barruu hunda jalatti Utterances Comment Box fe'uu
-            data.items.forEach((story) => {
-                const itemID = story.title.replace(/\s+/g, '-').toLowerCase();
-                
-                const script = document.createElement('script');
-                script.src = 'https://utteranc.es/client.js';
-                script.setAttribute('repo', 'DEFER286/RISE-D'); // Maqaa repo kee isa sirrii
-                script.setAttribute('issue-term', itemID); // Barruu hundaaf comment gargar baasa
-                script.setAttribute('theme', 'github-dark'); 
-                script.setAttribute('crossorigin', 'anonymous');
-                script.async = true;
-
-                const targetBox = document.getElementById('utterances-' + itemID);
-                if (targetBox) {
-                    targetBox.appendChild(script);
+        fetch('/data/stories.json')
+            .then(r => r.json())
+            .then(data => {
+                const grid = document.getElementById('unified-grid');
+                document.getElementById('loading-msg')?.remove();
+                const now = new Date();
+                const posts = (data.items || [])
+                    .filter(item => new Date(item.date || item.Guyyaa || 0) <= now)
+                    .sort((a, b) => new Date(b.date || b.Guyyaa || 0) - new Date(a.date || a.Guyyaa || 0));
+                if (posts.length === 0) {
+                    grid.innerHTML = '<p class="loading-msg">Post hin jiru.</p>';
+                } else {
+                    grid.innerHTML = posts.map(buildCard).join('');
                 }
-                
-                // Emoji kuusaa keessaa fiduu
-                loadReactions(itemID);
+            })
+            .catch(() => {
+                document.getElementById('unified-grid').innerHTML = '<p class="loading-msg">Rakkoo uumame. Irra deebi\'ii yaali.</p>';
             });
-            // C. KOODII AUTO-SCROLL (Amguddaan fi Kan Hin Maqne)
-            if (window.location.hash) {
-                const hashValue = decodeURIComponent(window.location.hash.substring(1)).toLowerCase().trim();
-                
-                setTimeout(() => {
-                    const allCards = document.querySelectorAll('.article-card');
-                    let targetElement = null;
 
-                    allCards.forEach(card => {
-                        if (card.id.includes(hashValue) || hashValue.includes(card.id)) {
-                            targetElement = card;
-                        }
-                    });
-
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    } else {
-                        const allTitles = document.querySelectorAll('h3');
-                        allTitles.forEach(title => {
-                            if (title.innerText.toLowerCase().includes(hashValue)) {
-                                title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                        });
-                    }
-                }, 1000); 
-            }
-
-        })
-        .catch(error => console.error('Barruun Stories hin argamne:', error));
-
-    // Emoji reaction kuusuu fi hordofuuf function
-    function handleReaction(itemID, type) {
-        let count = parseInt(localStorage.getItem(`${itemID}-${type}`) || 0);
-        count++;
-        localStorage.setItem(`${itemID}-${type}`, count);
-        const element = document.getElementById(`${type}-${itemID}`);
-        if (element) element.innerText = count;
-    }
-
-    function loadReactions(itemID) {
-        ['like', 'love', 'funny'].forEach(type => {
-            let count = localStorage.getItem(`${itemID}-${type}`) || 0;
-            const element = document.getElementById(`${type}-${itemID}`);
-            if (element) element.innerText = count;
-        });
-    }
-</script>
-
-
+        function searchCards() {
+            const val = document.getElementById('mobile-search-input')?.value.toLowerCase() || '';
+            document.querySelectorAll('.mini-card').forEach(card => {
+                card.style.display = card.textContent.toLowerCase().includes(val) ? '' : 'none';
+            });
+        }
+    </script>
 </body>
 </html>
