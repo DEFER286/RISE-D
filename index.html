@@ -55,7 +55,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #020617;
+  background: #0a0a0a;
   color: white;
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -66,14 +66,14 @@ nav {
   position: fixed;
   top: 0; left: 0;
   width: 100%;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(10, 10, 10, 0.92);
   backdrop-filter: blur(10px);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 15px 24px;
   box-sizing: border-box;
   z-index: 1000;
+  border-bottom: 1px solid rgba(255,152,0,0.1);
 }
 
 .logo {
@@ -81,53 +81,6 @@ nav {
   font-size: 18px;
   color: #FF9800;
   letter-spacing: 1px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-links a {
-  color: #ccc;
-  text-decoration: none;
-  font-size: 15px;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover { color: #FF9800; }
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 5px;
-}
-
-.hamburger div {
-  width: 24px;
-  height: 2.5px;
-  background: #FF9800;
-  border-radius: 2px;
-}
-
-@media (max-width: 768px) {
-  .nav-links {
-    position: absolute;
-    top: 58px; right: 0;
-    background: #0f172a;
-    flex-direction: column;
-    width: 200px;
-    display: none;
-    padding: 10px 0;
-    border-left: 2px solid #FF9800;
-  }
-  .nav-links a {
-    padding: 12px 20px;
-    border-bottom: 1px solid #1e293b;
-  }
-  .nav-links.active { display: flex; }
-  .hamburger { display: flex; }
 }
 
 /* HERO */
@@ -139,27 +92,29 @@ nav {
   align-items: center;
   text-align: center;
   padding: 20px;
-  background: radial-gradient(ellipse at center, #1a0d2e 0%, #020617 70%);
+  background: #0a0a0a;
 }
 
 .hero h1 {
-  font-size: 42px;
-  margin-bottom: 12px;
-  letter-spacing: 1px;
+  font-size: 40px;
+  margin-bottom: 14px;
+  letter-spacing: 2px;
+  color: #FF9800;
+  line-height: 1.2;
 }
 
 .hero p {
-  color: #cbd5e1;
-  font-size: 16px;
-  margin-bottom: 30px;
-  max-width: 400px;
+  color: #aaa;
+  font-size: 15px;
+  margin-bottom: 32px;
+  max-width: 380px;
   line-height: 1.6;
 }
 
 .btn {
   background: linear-gradient(135deg, #FF9800, #ffb74d);
   color: #111;
-  padding: 14px 32px;
+  padding: 14px 34px;
   border: none;
   border-radius: 40px;
   cursor: pointer;
@@ -172,26 +127,25 @@ nav {
 
 .btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 24px rgba(255, 152, 0, 0.5);
+  box-shadow: 0 0 28px rgba(255,152,0,0.45);
 }
 
 /* FOOTER */
 footer {
-  background: #0f172a;
+  background: #0d0d0d;
   text-align: center;
   padding: 30px 20px;
-  margin-top: 50px;
-  border-top: 1px solid rgba(255,152,0,0.15);
+  border-top: 1px solid rgba(255,152,0,0.12);
 }
 
 footer a {
   color: #FF9800;
   text-decoration: none;
   margin: 0 10px;
-  font-size: 15px;
+  font-size: 14px;
 }
 
-footer a:hover { text-shadow: 0 0 10px #FF9800; }
+footer a:hover { opacity: 0.75; }
 
 </style>
 </head>
@@ -205,26 +159,21 @@ footer a:hover { text-shadow: 0 0 10px #FF9800; }
 
 <!-- HERO -->
 <section class="hero">
-  <h1>RISE TODAY — Jireenya Simachuufi</h1>
+  <h1>RISE UP DESIGN YOUR FUTURE</h1>
   <p>Tarkaanfi tokko fudhu... Milkaa'inni si eega jira 🔥</p>
   <a href="/home.html" class="btn">🚀 View Website</a>
 </section>
 
-<!-- Hidden internal links for Google crawler -->
-<div style="display:none;" aria-hidden="true">
-  <a href="/home.html">Home</a>
-  <a href="/motivation.html">Motivation</a>
-  <a href="/stories.html">Seenaa</a>
-  <a href="/education.html">Gorsa</a>
-  <a href="/about.html">About</a>
-</div>
+
 
 <!-- FOOTER -->
 <footer id="footer">
   <p style="color:#888; font-size:14px; margin-bottom:16px;">Quick Links</p>
   <a href="/home.html">Home</a>
+  <a href="/motivation.html">Motivation</a>
+  <a href="/stories.html">Seenaa</a>
+  <a href="/education.html">Gorsa</a>
   <a href="/about.html">About Us</a>
-  <a href="/home.html#services">Our Service</a>
 
   <div style="margin-top:24px; padding-top:20px; border-top:1px solid rgba(255,153,0,0.1);">
     <p style="font-size:13px; color:rgba(255,255,255,0.5); margin:0; letter-spacing:1px;">
@@ -233,11 +182,7 @@ footer a:hover { text-shadow: 0 0 10px #FF9800; }
   </div>
 </footer>
 
-<script>
-function toggleMenu() {
-  document.getElementById("navLinks").classList.toggle("active");
-}
-</script>
+
 
 </body>
 </html>
