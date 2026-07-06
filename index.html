@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="om">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MULDHATA KEE DHUGOOMSI</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />
-    <meta name="description" content="Bakka guddinaa, kaka'umsa guyyaa guyyaafi yaada jireenya kee itti dabalattu. Har'a irraa jijjiirama jalqabi!" />
-    
-        <!-- KUTAA TELEGRAM, FACEBOOK & SOCIAL MEDIA (AFAAN OROMOO) -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO -->
+<title>RISE TODAY</title>
+<meta name="description" content="Bakka guddinaa, kaka'umsa guyyaa guyyaafi yaada jireenya kee itti dabalattu. Har'a irraa jijjiirama jalqabi!" />
+<meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />
+
+<!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="RISE TODAY — Muldhata Kee Dhugoomsi" />
 <meta property="og:description" content="Motivational content in Afaan Oromo: gorsa jireenyaa, seenaa barnoota qabu, personal growth, self improvement and success mindset every day"/>
@@ -18,97 +19,197 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:url" content="https://risetoday.vercel.app/" />
 
-<!-- KUTAA TWITTER / X (AFAAN INGILIFFAA - GABAABAA) -->
+<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="RISE TODAY — Muldhata Kee Dhugoomsi" />
 <meta name="twitter:description" content="Start small. Grow daily. Become great. 🚀" />
 <meta name="twitter:image" content="https://risetoday.vercel.app/images/og-image.webp" />
 <meta name="telegram:channel" content="@imala_kaayoo" />
 
-    <link rel="canonical" href="https://risetoday.vercel.app/" />
-    <link rel="icon" type="image/png" href="/images/favicon.png">
+<link rel="canonical" href="https://risetoday.vercel.app/" />
+<link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/favicon.png">
+
+<style>
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #020617;
+  color: white;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* NAVBAR */
+nav {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+  color: #FF9800;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: #FF9800; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger div {
+  width: 24px;
+  height: 2.5px;
+  background: #FF9800;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 58px; right: 0;
+    background: #0f172a;
+    flex-direction: column;
+    width: 200px;
+    display: none;
+    padding: 10px 0;
+    border-left: 2px solid #FF9800;
+  }
+  .nav-links a {
+    padding: 12px 20px;
+    border-bottom: 1px solid #1e293b;
+  }
+  .nav-links.active { display: flex; }
+  .hamburger { display: flex; }
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background: radial-gradient(ellipse at center, #1a0d2e 0%, #020617 70%);
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.hero p {
+  color: #cbd5e1;
+  font-size: 16px;
+  margin-bottom: 30px;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.btn {
+  background: linear-gradient(135deg, #FF9800, #ffb74d);
+  color: #111;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+  display: inline-block;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 24px rgba(255, 152, 0, 0.5);
+}
+
+/* FOOTER */
+footer {
+  background: #0f172a;
+  text-align: center;
+  padding: 30px 20px;
+  margin-top: 50px;
+  border-top: 1px solid rgba(255,152,0,0.15);
+}
+
+footer a {
+  color: #FF9800;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 15px;
+}
+
+footer a:hover { text-shadow: 0 0 10px #FF9800; }
+
+</style>
 </head>
-<body style="background-color: #110A1C; color: white; font-family: sans-serif; margin: 0; padding: 0;">
 
-    <header <div style="background-color: #1A0D2E; padding: 25px 20px; border-radius: 12px; text-align: center; margin: 15px auto; max-width: 90%;">
+<body>
 
-      <div style="font-family: 'Arial', sans-serif; font-size: 36px; font-weight: 900; letter-spacing: 2px; display: inline-block; margin-bottom: 10px;">
-      <span style="color: #ffffff;">RISE</span>&nbsp;<span style="color: #FF9800;">TODAY</span><span style="color: #ff4d4d; font-size: 40px;">.</span>
-      </div>
-        
- 
-      <p style="font-style: italic; font-weight: bold; color: #FF9800; font-size: 16px; letter-spacing: 1px; text-transform: uppercase; margin-top: 8px; margin-bottom: 20px;">RISE UP. DESIGN YOUR FUTURE</p>
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">⚡ RISE TODAY</div>
+</nav>
 
-      <div style="border: 1px solid #FF9800; border-radius: 8px; padding: 10px; max-width: 100%; margin: 0 auto;">
-        <h3 style="color: #ff9800; margin: 0; font-size: 18px; text-align: center;">Gorsaafii Boqonnaa Sammuu</h3>
-      </div>
-</p>
-</p>
-    </header>
+<!-- HERO -->
+<section class="hero">
+  <h1>🔥 RISE UP DESIGN YOUR FUTURE </h1>
+  <p>TARKAANFI TOKKO FUDHU... MILKAA'INNI SI EEGA JIRA</p>
+  <a href="/home.html" class="btn">🚀 Get Started</a>
+</section>
 
-    <section style="padding: 40px 20px; text-align: center; background: linear-gradient(#1A0D2E, #110A1C);">
-        <a href="/about.html" title="Defera Dedecha ilaali">
-        <img src="profile.png" style="width: 130px; height: 130px; border-radius: 50%; border: 3px solid #ff9800; margin-bottom: 20px; object-fit: cover; display: block; margin-left: auto; margin-right: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor:pointer;">
-        </a>
-        <h2 style="font-size: 28px; margin-bottom: 10px;">Baga Nagaan Dhuftan! 👋</h2>
-        <p style="color: #ddd; max-width: 500px; margin: 0 auto 20px auto; line-height: 1.6;">
-            Ani Defera Dedecha jedhama. Web Developer and Designer 
-        </p>
-        <a href="#contact-section" class="contact-btn" style="background: #FF9800; color: #fff; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 15px;">CONTACT</a>
+<!-- FOOTER -->
+<footer id="footer">
+  <p style="color:#888; font-size:14px; margin-bottom:16px;">Quick Links</p>
+  <a href="/home.html">Home</a>
+  <a href="/about.html">About Us</a>
+  <a href="/home.html#services">Our Service</a>
 
-    </section>
+  <div style="margin-top:24px; padding-top:20px; border-top:1px solid rgba(255,153,0,0.1);">
+    <p style="font-size:13px; color:rgba(255,255,255,0.5); margin:0; letter-spacing:1px;">
+      &copy; 2026 <span style="color:#FF9800; font-weight:bold;">RISE TODAY</span>. All rights reserved.
+    </p>
+  </div>
+</footer>
 
-            <!-- Section: Skills & Tools -->
-        <section style="padding: 30px 20px; background-color: #1A0D2E; text-align: center;">
-            <h3 style="color: #FF9800; margin-bottom: 20px; font-family: sans-serif;">Skills & Tools 🛠️</h3>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
-                <span style="background-color: #25163E; padding: 10px 20px; border-radius: 20px; border: 1px solid #ff9800; font-family: sans-serif; font-size: 14px; color: #ffffff;">HTML5</span>
-                <span style="background-color: #25163E; padding: 10px 20px; border-radius: 20px; border: 1px solid #ff9800; font-family: sans-serif; font-size: 14px; color: #ffffff;">CSS3</span>
-                <span style="background-color: #25163E; padding: 10px 20px; border-radius: 20px; border: 1px solid #ff9800; font-family: sans-serif; font-size: 14px; color: #ffffff;">JavaScript</span>
-                <span style="background-color: #25163E; padding: 10px 20px; border-radius: 20px; border: 1px solid #ff9800; font-family: sans-serif; font-size: 14px; color: #ffffff;">GitHub</span>
-                <span style="background-color: #25163E; padding: 10px 20px; border-radius: 20px; border: 1px solid #ff9800; font-family: sans-serif; font-size: 14px; color: #ffffff;">Vercel Deploy</span>
-            </div>
-        </section>
-    
+<script>
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
 
-            <!-- Section: My Projects / Websites -->
-        <section style="padding: 40px 20px; text-align: center;">
-            <h3 style="color: #FF9800; margin-bottom: 20px; font-family: sans-serif; letter-spacing: 1px;">My Projects 🚀</h3>
-            
-            <div style="background-color: #1A0D2E; padding: 25px; border-radius: 12px; border: 1px solid #333; max-width: 450px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3);"><h4 style="margin: 0 0 12px 0; font-size: 22px; color: #fff; font-family: sans-serif;">RISE TODAY — WEBSITE</h4>
-                <p style="color: #ccc; font-size: 16px; line-height: 1.6; margin-bottom: 20px; font-style: italic;">
-                 "Tarkaanfii Tokko Fudhu... Milkaa’inni Si Eegaa Jira!" 👇</p>
-                
-                <a href="home.html" style="color: #FF9800; font-weight: bold; text-decoration: none; display: inline-block; font-family: sans-serif; border: 1px solid #FF9800; padding: 8px 16px; border-radius: 6px; transition: 0.3s;">View Website (Demo) →</a>
-            </div>
-        </section>
-    
-    <footer id="contact-section" style="background-color: #1A0D2E; padding: 40px 20px; text-align: center;">
-    <h3 style="color: #FF9800; font-size: 22px; margin-bottom: 25px; font-family: sans-serif;">Contact Us</h3>
-
-    <!-- Saanduqa Liinkilee Wal-bira Qabu (Flexbox container) -->
-    <div style="display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 30px;">
-
-        <!-- Liinkii Telegram -->
-        <a href="https://t.me/rised_official" target="_blank" style="color: #fff; text-decoration: none; font-size: 16px; font-weight: bold;">
-            Telegram
-        </a>
-
-        <!-- Liinkii Email -->
-        <a href="mailto:dedechadefera@gmail.com" style="color: #fff; text-decoration: none; font-size: 16px; font-weight: bold;">
-            Email
-        </a>
-
-    </div>
-
-    <!-- Mirga Abbummaa (Copyright Footer Haaraa) -->
-    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 153, 0, 0.1);">
-        <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6); margin: 0; font-family: sans-serif; letter-spacing: 1px;">
-            &copy; 2026 <span style="color: #ff9900; font-weight: bold;">RISE TODAY</span>. All rights reserved.
-        </p>
-    </div>
-    </footer>
-    
 </body>
 </html>
+ 
