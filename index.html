@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="om">
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- SEO -->
-<title>RISE TODAY</title>
+<title>RISE TODAY — Muldhata Kee Dhugoomsi</title>
 <meta name="description" content="Bakka guddinaa, kaka'umsa guyyaa guyyaafi yaada jireenya kee itti dabalattu. Har'a irraa jijjiirama jalqabi!" />
 <meta name="google-site-verification" content="muAJ2j4ODOIR95D3al2KYqhsmcZ2avQ6lFmbL6Ga4_o" />
+<meta name="keywords" content="RISE TODAY, Afaan Oromo, motivation, gorsa jireenyaa, seenaa, personal growth, self improvement, Oromoo" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="author" content="Defera Dedecha" />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
@@ -29,6 +32,23 @@
 <link rel="canonical" href="https://risetoday.vercel.app/" />
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/favicon.png">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "RISE TODAY",
+  "url": "https://risetoday.vercel.app/",
+  "description": "Motivational content in Afaan Oromo — gorsa jireenyaa, seenaa barnoota qabu, personal growth every day.",
+  "inLanguage": "om",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://risetoday.vercel.app/home.html?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 
 <style>
 
@@ -185,10 +205,19 @@ footer a:hover { text-shadow: 0 0 10px #FF9800; }
 
 <!-- HERO -->
 <section class="hero">
-  <h1>🔥 RISE UP DESIGN YOUR FUTURE </h1>
-  <p>TARKAANFI TOKKO FUDHU... MILKAA'INNI SI EEGA JIRA</p>
-  <a href="/home.html" class="btn">🚀 Get Started</a>
+  <h1>RISE TODAY — Jireenya Simachuufi</h1>
+  <p>Tarkaanfi tokko fudhu... Milkaa'inni si eega jira 🔥</p>
+  <a href="/home.html" class="btn">🚀 View Website</a>
 </section>
+
+<!-- Hidden internal links for Google crawler -->
+<div style="display:none;" aria-hidden="true">
+  <a href="/home.html">Home</a>
+  <a href="/motivation.html">Motivation</a>
+  <a href="/stories.html">Seenaa</a>
+  <a href="/education.html">Gorsa</a>
+  <a href="/about.html">About</a>
+</div>
 
 <!-- FOOTER -->
 <footer id="footer">
@@ -212,4 +241,3 @@ function toggleMenu() {
 
 </body>
 </html>
- 
