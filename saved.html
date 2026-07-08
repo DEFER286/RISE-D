@@ -11,92 +11,71 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RISE.D - OL-KAA'AME</title>
-    <style>
-        /* --- Bottom Navigation Bar Style --- */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #120B24;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #888888;
-            font-size: 12px;
-            gap: 4px;
-            transition: color 0.3s ease;
-            width: 25%;
-            text-align: center;
-        }
-
-        .nav-icon {
-            font-size: 20px;
-        }
-
-        .nav-item.active {
-            color: #FF9800; 
-        }
-
-        .nav-item:hover {
-            color: #ffffff;
-        }
-
-        @media (min-width: 768px) {
-            .bottom-nav {
-                display: none;
-            }
-        }
-    </style>
+    <title>RISE TODAY - saved </title>
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="apple-touch-icon" href="/images/favicon.png">
-</head>
-<body style="background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; margin: 0; padding-bottom: 90px !important;">
-
-    <div style="margin-top: 100px; text-align: center; padding: 20px;">
-        <h1 style="color: #FF9800; font-size: 2.2em; font-family: sans-serif;">🔖 Barruulee Ol-kaa'aman</h1>
-        <p style="color: #ddd; margin-bottom: 30px;">Barruulee booda dubbisuuf ol-kaayatte asitti argatta.</p>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { margin: 0; padding-top: 60px; background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; font-family: 'Poppins', sans-serif; }
         
-                <!-- Iddoo barruuleen ol-kaa'aman itti dhalatan -->
-        <div id="saved-articles-container" style="max-width: 500px; margin: 20px auto; padding: 10px;">
-            <p id="no-saved-message" style="color: #888; font-style: italic; text-align: center; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+        /* Side Menu Styles for both Mobile and Desktop */
+        #menu-btn { cursor: pointer; font-size: 26px; color: #ff9800; padding: 15px; position: fixed; top: 0; left: 0; z-index: 10000; background-color: rgba(17, 10, 28, 0.8); border-bottom-right-radius: 8px; }
+        #side-menu { display: none; background-color: #0D0D0D; position: fixed; top: 0; left: 0; width: 280px; height: 100%; z-index: 9999; padding-top: 60px; box-shadow: 4px 0 15px rgba(0,0,0,0.5); transition: all 0.3s ease; }
+        #close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; color: white; cursor: pointer; }
+        #side-menu a { display: block; color: white; text-decoration: none; font-size: 18px; padding: 16px 25px; border-bottom: 1px solid #2a2a2a; transition: background 0.2s; }
+        #side-menu a:hover { background-color: #1F1A3A; color: #FF9800; }
+        #side-menu a.active { color: #FF9800; font-weight: bold; background-color: rgba(255, 152, 0, 0.1); }
+
+        .hero {
+            background-image: linear-gradient(rgba(10, 5, 30, 0.65), rgba(10, 5, 30, 0.65)), url('/images/hero-bg.webp');
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            border-radius: 0 0 24px 24px; padding: 80px 20px 30px; text-align: center;
+        }
+
+        .saved-card {
+            display: block; text-decoration: none; background: #1F1A3A; padding: 16px 20px; 
+            margin: 14px 0; border-radius: 12px; border-left: 4px solid #FF9800; 
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .saved-card:hover { background: rgba(31, 26, 58, 0.8); transform: translateX(4px); }
+    </style>
+</head>
+<body>
+
+    <!-- Side Menu Only for both Mobile & Desktop -->
+    <div id="menu-btn">☰</div>
+    <div id="side-menu">
+        <div id="close-btn">✕</div>
+        <a href="/home.html">Home</a>
+        <a href="/motivation.html">🔥 Motivation</a>
+        <a href="/stories.html">📚 Seenaa</a>
+        <a href="/education.html">🎓 Gorsa</a>
+        <a href="/saved.html" class="active">🔖 saved </a>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <h1 style="color: #FF9800; font-size: 2em; margin: 0 0 10px; font-weight: 800;">🔖 Barruulee Ol-kaa'aman</h1>
+        <p style="color: #ddd; margin: 0;">Barruulee booda dubbisuuf ol-kaayatte asitti argatta.</p>
+    </div>
+
+    <!-- Container -->
+    <div style="padding: 16px;">
+        <div id="saved-articles-container" style="max-width: 600px; margin: 10px auto 0;">
+            <p id="no-saved-message" style="color: #888; font-style: italic; text-align: center; background: rgba(255,255,255,0.05); padding: 25px; border-radius: 12px;">
                 Ammaaf barruun ol-kaa'ame hin jiru.
             </p>
         </div>
-        
     </div>
 
-    <div class="bottom-nav">
-        <a href="home.html" class="nav-item">
-            <span class="nav-icon">🎛️</span>
-            <span class="nav-label">Home</span>
-        </a>
-        <a href="home.html#dashboard-search" class="nav-item">
-            <span class="nav-icon">🔍</span>
-            <span class="nav-label">Search</span>
-        </a>
-        <a href="saved.html" class="nav-item active">
-            <span class="nav-icon">🔖</span>
-            <span class="nav-label">Saved</span>
-        </a>
-        <a href="profile.html" class="nav-item">
-            <span class="nav-icon">👤</span>
-            <span class="nav-label">Profile</span>
-        </a>
-    </div>
     <script>
+        // Menu functionality
+        document.getElementById('menu-btn').addEventListener('click', () => { document.getElementById('side-menu').style.display = 'block'; });
+        document.getElementById('close-btn').addEventListener('click', () => { document.getElementById('side-menu').style.display = 'none'; });
+
         document.addEventListener("DOMContentLoaded", function() {
             const container = document.getElementById("saved-articles-container");
             const message = document.getElementById("no-saved-message");
@@ -112,37 +91,20 @@
                 savedArticles.forEach(article => {
                     const card = document.createElement("a");
                     card.href = article.url;
-                    card.style.textDecoration = "none";
-                    card.style.display = "block";
-                    card.style.background = "rgba(255, 255, 255, 0.08)";
-                    card.style.padding = "15px 20px";
-                    card.style.margin = "12px 0";
-                    card.style.borderRadius = "12px";
-                    card.style.borderLeft = "4px solid #FF9800";
-                    card.style.transition = "transform 0.2s ease, background 0.2s ease";
+                    card.className = "saved-card";
                     
                     card.innerHTML = `
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #fff; font-weight: bold; font-size: 16px;">${article.title}</span>
+                            <span style="color: #fff; font-weight: bold; font-size: 15px; font-family: sans-serif;">${article.title}</span>
                             <span style="color: #FF9800; font-size: 18px;">➔</span>
                         </div>
                     `;
-                    
-                    // Hover effect dabalataaf
-                    card.onmouseover = () => {
-                        card.style.background = "rgba(255, 255, 255, 0.15)";
-                        card.style.transform = "translateX(5px)";
-                    };
-                    card.onmouseout = () => {
-                        card.style.background = "rgba(255, 255, 255, 0.08)";
-                        card.style.transform = "translateX(0)";
-                    };
                     
                     container.appendChild(card);
                 });
             }
         });
-  </script>
+    </script>
     
 </body>
 </html>
