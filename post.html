@@ -7,9 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RiseToday - Barruu Guutuu</title>
 
-    <!-- ======================================================== -->
-    <!-- TELEGRAM & SOCIAL MEDIA PREVIEW TAGS (Duraan kan kufu) -->
-    <!-- ======================================================== -->
     <meta property="og:type" content="article" />
     <meta id="meta-og-title" property="og:title" content="RiseToday - Barruulee Onnachiisoo" />
     <meta id="meta-og-desc" property="og:description" content="Barruulee, seenaawwan fi gorsa adda addaa dubbisaa." />
@@ -30,6 +27,10 @@
         .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
         img:not(.author-photo) { display: block; max-width: 100%; height: auto; max-height: 450px; width: 100%; object-fit: cover; margin: 0 auto 20px auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
+        /* === INTERACTION BUTTONS STYLE === */
+        .reaction-btn { background:#222; border:1px solid #444; color:#fff; padding:10px 18px; margin:5px; border-radius:20px; cursor:pointer; font-size:14px; transition: 0.2s ease; }
+        .reaction-btn:hover { background: #333; }
+        
         /* === SUBSCRIBE style === */
         .subscribe-inline { margin-top: 50px; padding-top: 28px; border-top: 1px solid #444; text-align: center; }
         .subscribe-inline-heading { color: #ffffff; font-size: 17px; font-weight: bold; margin-bottom: 6px; }
@@ -57,22 +58,27 @@
     <link rel="apple-touch-icon" href="/images/favicon.png">
 </head>
 <body>
-    <!-- schema.org uumameera Telegraam Bot akka gargaarutti -->
+
     <div class="post-container" itemscope itemtype="http://schema.org/Article">
         <a href="/home.html" class="close-btn" title="Gara Dashboarditti Deebi'i">&times;</a>
         <h1 id="post-title" itemprop="headline">Loading...</h1>
+        
         <div class="author-section">
           <a href="/about.html" title="Defera Dedecha ilaali">
             <img src="/images/Defera.jpg" alt="Defera" class="author-photo" loading="lazy" decoding="async" style="cursor:pointer;" />
           </a>
           <p class="date" id="post-date" style="margin:0;"></p>
         </div>
+
         <div id="post-image-container"></div>
         <div class="content" id="post-content" itemprop="articleBody"></div>
 
+        <!-- Dynamic Action Toolbar (Reaction + Saved + Share + Comment BTNs) -->
+        <div id="dynamic-action-toolbar"></div>
+
         <!-- Comment Section -->
         <div id="comment-section" style="display:none; margin-top:30px; padding-top:20px; border-top:1px solid #333;">
-            <h3 style="color:#FF9800; font-size:16px; margin-bottom:16px;">💬 Comments</h3>
+            <h3 style="color:#FF9800; font-size:16px; margin-bottom:16px;">💬 Yaada Kenname (<span id="comment-heading-count">0</span>)</h3>
             <div id="comment-list"></div>
             <div style="margin-top:16px;">
                 <input id="comment-name" type="text" placeholder="Maqaa kee..." style="width:100%;background:#1F1A3A;border:1px solid #444;color:#fff;border-radius:8px;padding:10px;font-size:14px;margin-bottom:10px;box-sizing:border-box;outline:none;">
@@ -110,6 +116,7 @@
         }
 
         const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
+        let itemID = category && slug ? (category + "-" + slug) : null;
         
         if (slug && category !== null) {
             fetch(`/data/${category}.json`)
@@ -118,28 +125,22 @@
                     const post = data.items.find(item => item.slug === slug);
                     
                     if (post) {
-                        // Meta tags dynamic ta'an asirratti kaana
                         document.title = post.title;
                         document.getElementById('post-title').innerText = post.title;
                         
-                        // Ibsa gabaabaa uumuu (Jechoota jalqabaa 150)
                         const cleanText = (post.body || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
                         const shortDesc = cleanText.substring(0, 150) + "...";
 
-                        // Meta Tags Telegraamiif jiran asitti update gochuu
                         document.getElementById('meta-og-title').setAttribute('content', post.title);
                         document.getElementById('meta-og-desc').setAttribute('content', shortDesc);
                         if (post.image) {
                             document.getElementById('meta-og-image').setAttribute('content', window.location.origin + post.image);
                         }
 
-                        // ✅ Canonical Tag — Duplicate content hin uumne
                         const canonical = document.createElement('link');
                         canonical.rel = 'canonical';
                         canonical.href = `https://risetoday.vercel.app/${category}/${slug}`;
                         document.head.appendChild(canonical);
-
-                        // ✅ Canonical Tag — Duplicate content hin uumne
 
                         const d = new Date(post.date);
                         const formatted = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -152,22 +153,22 @@
                         parsedBody = parsedBody.replace(/\n/g, '<br>');
                         document.getElementById('post-content').innerHTML = parsedBody;
 
-                        let itemID = category + "-" + slug;
-                        const emojiContainer = document.createElement('div');
-                        emojiContainer.innerHTML = `
-                        <div style="margin:40px 0 20px 0;padding-top:20px;border-top:1px solid #333;text-align:center;">
-                            <p style="color:#888;font-size:14px;margin-bottom:15px;">What do you think?</p>
-                            <button onclick="handleReaction('${itemID}','like')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">👍<span id="like-${itemID}">0</span></button>
-                            <button onclick="handleReaction('${itemID}','love')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">❤️ <span id="love-${itemID}">0</span></button>
-                            <button onclick="handleReaction('${itemID}','funny')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">😂 <span id="funny-${itemID}">0</span></button>
-                            <button onclick="toggleSaveArticle('${itemID}')" id="save-btn-${itemID}" style="background:#222;border:1px solid #444;color:#FF9800;padding:8px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-left:5px;">🔖 save</button>
-                            <button onclick="sharePost('${post.title}')" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">↗ Share</button>
-                            <button onclick="toggleComments()" style="background:#222;border:1px solid #444;color:#fff;padding:8px 16px;margin:5px;border-radius:20px;cursor:pointer;">💬 <span id="comment-count">0</span> Comments</button>
+                        // Toolbar dynamically inject gochuu (Reaction + Saved + Share + Comment)
+                        document.getElementById('dynamic-action-toolbar').innerHTML = `
+                        <div style="margin:40px 0 20px 0; padding-top:20px; border-top:1px solid #333; text-align:center;">
+                            <p style="color:#888; font-size:14px; margin-bottom:15px;">What do you think?</p>
+                            <button onclick="handleReaction('like')" class="reaction-btn">👍 <span id="like-count">0</span></button>
+                            <button onclick="handleReaction('love')" class="reaction-btn">❤️ <span id="love-count">0</span></button>
+                            <button onclick="handleReaction('funny')" class="reaction-btn">😂 <span id="funny-count">0</span></button>
+                            <button onclick="toggleSaveArticle()" id="save-btn" class="reaction-btn" style="font-weight:bold;">🔖 save</button>
+                            <button onclick="sharePost('${post.title.replace(/'/g, "\\'")}')" class="reaction-btn">↗ Share</button>
+                            <button onclick="toggleComments()" class="reaction-btn">💬 <span id="comment-count">0</span> Comments</button>
                         </div>`;
-                        document.getElementById('post-content').appendChild(emojiContainer);
 
-                        loadReactions(itemID);
-                        updateSaveButtonVisual(itemID);
+                        // Data duraan kufame fiduu
+                        loadReactions();
+                        updateSaveButtonVisual();
+                        loadComments();
 
                         let readArticles = JSON.parse(localStorage.getItem('readArticlesList')) || [];
                         if (!readArticles.includes(itemID)) {
@@ -177,7 +178,7 @@
 
                         if (post.image) {
                             document.getElementById('post-image-container').innerHTML =
-                                `<img src="${post.image}" alt="${post.title}" itemprop="image" loading="lazy" decoding="async" style="width:100%;height:auto;max-height:450px;object-fit:cover;border-radius:12px;display:block;margin:0 auto;">`;
+                                `<img src="${post.image}" alt="${post.title}" itemprop="image" loading="lazy" decoding="async" style="width:100%; height:auto; max-height:450px; object-fit:cover; border-radius:12px; display:block; margin:0 auto;">`;
                         }
 
                         loadRelatedPosts(data.items, slug, category);
@@ -188,6 +189,135 @@
                 .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
         }
 
+        /* === REACTIONS LOGIC === */
+        function handleReaction(type) {
+            if (!itemID) return;
+            let userReactedKey = `reacted_${itemID}`;
+            
+            // User-riin tokko al tokko qofa akka reaction laatu gochuuf
+            if (localStorage.getItem(userReactedKey)) {
+                alert("Duraan reaction laataniittu! 😊");
+                return;
+            }
+
+            let key = `reaction_${itemID}_${type}`;
+            let count = parseInt(localStorage.getItem(key)) || 0;
+            count++;
+            localStorage.setItem(key, count);
+            localStorage.setItem(userReactedKey, type); // kan cuqaase galmeessi
+            
+            document.getElementById(`${type}-count`).innerText = count;
+        }
+
+        function loadReactions() {
+            if (!itemID) return;
+            ['like','love','funny'].forEach(type => {
+                let count = localStorage.getItem(`reaction_${itemID}_${type}`) || 0;
+                let el = document.getElementById(`${type}-count`);
+                if (el) el.innerText = count;
+            });
+        }
+
+        /* === SAVE TO LOCALSTORAGE LOGIC === */
+        function toggleSaveArticle() {
+            if (!itemID) return;
+            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
+            const currentUrl = window.location.pathname + window.location.search; 
+            let title = document.getElementById('post-title')?.innerText || "Rise Today Article";
+            
+            const index = savedArticles.findIndex(a => a.id === itemID);
+            if (index === -1) {
+                savedArticles.push({ id: itemID, title: title, url: currentUrl });
+                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
+            } else {
+                savedArticles.splice(index, 1);
+                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
+            }
+            updateSaveButtonVisual();
+        }
+
+        function updateSaveButtonVisual() {
+            if (!itemID) return;
+            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
+            const btn = document.getElementById('save-btn');
+            if (!btn) return;
+            
+            const isSaved = savedArticles.some(a => a.id === itemID);
+            if (isSaved) { 
+                btn.innerHTML = "❤️ saved"; 
+                btn.style.background = "#FF9800"; 
+                btn.style.color = "#110A1C"; 
+                btn.style.borderColor = "#FF9800";
+            } else { 
+                btn.innerHTML = "🔖 save"; 
+                btn.style.background = "#222"; 
+                btn.style.color = "#FF9800"; 
+                btn.style.borderColor = "#444";
+            }
+        }
+
+        /* === SHARE LOGIC === */
+        function sharePost(title) {
+            const shareUrl = window.location.href;
+            if (navigator.share) {
+                navigator.share({ title: title, url: shareUrl }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(shareUrl);
+                alert('Liinkiin barruu kanaa copy ta\'eera! ↗');
+            }
+        }
+
+        /* === COMMENTS WITH LOCALSTORAGE === */
+        function toggleComments() {
+            const section = document.getElementById('comment-section');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            if(section.style.display === 'block') {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function submitComment() {
+            if (!itemID) return;
+            const name = document.getElementById('comment-name').value.trim();
+            const text = document.getElementById('comment-text').value.trim();
+            if (!name || !text) {
+                alert("Maqaa fi yaada kee guuti!");
+                return;
+            }
+
+            let comments = JSON.parse(localStorage.getItem(`comments_${itemID}`)) || [];
+            const newComment = { name, text, date: new Date().toISOString() };
+            comments.push(newComment);
+            localStorage.setItem(`comments_${itemID}`, JSON.stringify(comments));
+
+            document.getElementById('comment-name').value = '';
+            document.getElementById('comment-text').value = '';
+
+            renderComments(comments);
+        }
+
+        function loadComments() {
+            if (!itemID) return;
+            let comments = JSON.parse(localStorage.getItem(`comments_${itemID}`)) || [];
+            renderComments(comments);
+        }
+
+        function renderComments(comments) {
+            const list = document.getElementById('comment-list');
+            list.innerHTML = '';
+            
+            comments.forEach(c => {
+                const div = document.createElement('div');
+                div.style.cssText = 'background:#1F1A3A; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #FF9800;';
+                div.innerHTML = `<strong style="color:#FF9800;">${c.name}</strong><p style="color:#ccc; margin:6px 0 0; font-size:14px;">${c.text}</p>`;
+                list.appendChild(div);
+            });
+
+            document.getElementById('comment-count').innerText = comments.length;
+            document.getElementById('comment-heading-count').innerText = comments.length;
+        }
+
+        /* === RELATED POSTS LOGIC === */
         function loadRelatedPosts(currentItems, currentSlug, currentCat) {
             const otherCats = ['motivation', 'stories', 'education'].filter(c => c !== currentCat);
             
@@ -216,7 +346,7 @@
             const grid = document.getElementById('related-grid');
             grid.innerHTML = '';
             items.forEach(item => {
-                const desc = item.description || (item.body ? item.body.replace(/\*\*(.*?)\*\*/g, '$1').substring(0, 80) + '...' : '');
+                const desc = item.description || (item.body ? item.body.replace(/\*\*(.*?)\*\"/g, '$1').substring(0, 80) + '...' : '');
                 const card = document.createElement('a');
                 card.href = `/${item.cat}/${item.slug}`; 
                 card.className = 'related-card';
@@ -229,80 +359,6 @@
             });
             document.getElementById('related-section').style.display = 'block';
         }
-
-        function sharePost(title) {
-            if (navigator.share) {
-                navigator.share({ title: title, url: window.location.href })
-                .catch(() => {});
-            } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('Link copied!');
-            }
-        }
-
-        function toggleComments() {
-            const section = document.getElementById('comment-section');
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function submitComment() {
-            const name = document.getElementById('comment-name').value.trim();
-            const text = document.getElementById('comment-text').value.trim();
-            if (!name || !text) return;
-
-            const list = document.getElementById('comment-list');
-            const div = document.createElement('div');
-            div.style.cssText = 'background:#1F1A3A;border-radius:10px;padding:12px;margin-bottom:10px;';
-            div.innerHTML = `<strong style="color:#FF9800;">${name}</strong><p style="color:#ccc;margin:6px 0 0;">${text}</p>`;
-            list.appendChild(div);
-
-            document.getElementById('comment-name').value = '';
-            document.getElementById('comment-text').value = '';
-
-            const count = list.children.length;
-            document.getElementById('comment-count').innerText = count;
-        }
-
-        function handleReaction(id, type) {
-            let key = 'reaction_' + id + '_' + type;
-            let count = parseInt(localStorage.getItem(key)) || 0;
-            count++;
-            localStorage.setItem(key, count);
-            document.getElementById(type + '-' + id).innerText = count;
-        }
-        function loadReactions(id) {
-            ['like','love','funny'].forEach(type => {
-                let count = localStorage.getItem('reaction_' + id + '_' + type) || 0;
-                let el = document.getElementById(type + '-' + id);
-                if (el) el.innerText = count;
-            });
-        }
-        function toggleSaveArticle(id) {
-            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-            const currentUrl = window.location.pathname; 
-            let title = document.getElementById('post-title')?.innerText || "Rise-d Article";
-            const index = savedArticles.findIndex(a => a.id === id);
-            if (index === -1) {
-                savedArticles.push({ id, title, url: currentUrl });
-                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
-                alert("Barruun '" + title + "' saved! 🔖");
-            } else {
-                savedArticles.splice(index, 1);
-                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
-                alert("Barruun '" + title + "' Ol-kaa'amee keessaa haqameera! ❌");
-            }
-            updateSaveButtonVisual(id);
-        }
-        function updateSaveButtonVisual(id) {
-            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-            const btn = document.getElementById(`save-btn-${id}`);
-            if (!btn) return;
-            const isSaved = savedArticles.some(a => a.id === id);
-            if (isSaved) { btn.innerHTML = "❤️ saved"; btn.style.background = "#FF9800"; btn.style.color = "#110A1C"; }
-            else { btn.innerHTML = "🔖 save"; btn.style.background = "#222"; btn.style.color = "#FF9800"; }
-        }
     </script>
 </body>
 </html>
-
-    
