@@ -36,17 +36,19 @@
     <link rel="canonical" href="https://risetoday.vercel.app/home.html" />
     
     <style>
-        /* === UNIFIED POSTS GRID (CLS Fix) === */
+                /* === UNIFIED POSTS GRID === */
         .unified-grid { 
-            display: grid;2
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr) !important; /* Mobile irratti sarara 2 wal-tarree akka ta'u dirqisisa */
+            gap: 10px; /* fageenya gidduu isaanii xiqqoo dhiphisnee akka wal bira lixaniif */
             margin-top: 10px; 
             padding: 0 4px;
-            min-height: 600px; /* Layout shift ittisuuf base height */
         }
         @media (min-width: 768px) {
-            .unified-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+            .unified-grid { 
+                grid-template-columns: repeat(3, 1fr) !important; /* Desktop irratti ammoo sarara 3 ta'a */
+                gap: 20px; 
+            }
         }
 
         /* === MINI CARD === */
@@ -54,13 +56,14 @@
             background-color: #1F1A3A;
             border-radius: 10px;
             overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
-            aspect-ratio: 1 / 1.4; /* Aspect ratio card hundaaf qixxeessuuf (CLS Fix) */
+            height: 100%;
         }
+
         @media (min-width: 768px) {
             .mini-card { aspect-ratio: 1 / 1.2; }
         }
