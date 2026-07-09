@@ -23,6 +23,7 @@ collections:
               - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: naannoo-kee-ilaali (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
+              - { label: "Meta Description", name: "description", widget: "string", required: false }
               - { label: "Photo", name: "image", widget: "image", required: false }
 
   # Inni Instructive Stories akkuma jirutti itti fufa
@@ -41,6 +42,7 @@ collections:
               - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gatii-kee-beeki (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
+              - { label: "Meta Description", name: "description", widget: "string", required: false }
               - { label: "Photo", name: "image", widget: "image", required: false }
 
   # Kutaa Haaraa: Gorsa Barnootaa
@@ -59,5 +61,5 @@ collections:
               - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gorsa-barnootaa (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Qabiyyee Barruu", name: "body", widget: "markdown" }
+              - { label: "Meta Description", name: "description", widget: "string", required: false }
               - { label: "Photo", name: "image", widget: "image", required: false }
-              
