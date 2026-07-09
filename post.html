@@ -131,8 +131,21 @@
                         const cleanText = (post.body || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
                         const shortDesc = cleanText.substring(0, 150) + "...";
 
-                        document.getElementById('meta-og-title').setAttribute('content', post.title);
-                        document.getElementById('meta-og-desc').setAttribute('content', shortDesc);
+                        // Meta description duraan ijaarame argachuu ykn haaraa uumuu
+let metaDesc = document.querySelector('meta[name="description"]');
+if (!metaDesc) {
+    metaDesc = document.createElement('meta');
+    metaDesc.setAttribute('name', 'description');
+    document.head.appendChild(metaDesc);
+}
+
+// Yoo admin panel irratti guuttee jirta ta'e isa nuyi uumne (post.description) fudhata, yoo duwwaa ta'e immoo shortDesc (ofumaan kan cite) sana fayyadama.
+const finalDesc = post.description && post.description.trim() !== "" ? post.description : shortDesc;
+
+// Amma bakkoota hundatti ergi
+metaDesc.setAttribute('content', finalDesc);
+document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
+
                         if (post.image) {
                             document.getElementById('meta-og-image').setAttribute('content', window.location.origin + post.image);
                         }
