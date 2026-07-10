@@ -36,160 +36,138 @@
     <link rel="canonical" href="https://risetoday.vercel.app/home.html" />
     
     <style>
-        /* ==========================================================================
-           === 1. DEFAULT LIGHT MODE (Pure White & Gray Layout - No Orange) ===
-           ========================================================================== */
-        body { 
-            background-color: #ffffff; 
-            color: #333333; 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding-bottom: 40px !important;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* Hero Section */
-        .hero {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('/images/hero-bg.webp');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-radius: 0 0 24px 24px;
-            padding-bottom: 35px;
-            padding-top: 80px;
-            min-height: 120px; /* CLS Fix */
-            transition: background 0.3s;
-        }
-        .hero h1 { color: #000000; font-size: 2em; text-align: center; margin: 0 0 10px 0; font-family: 'Poppins', sans-serif; font-weight: 800; }
-        .hero p { text-align: center; color: #555555; margin: 0; }
-
-        /* Unified Posts Grid */
+        /* === UNIFIED POSTS GRID === */
         .unified-grid { 
             display: grid;
-            grid-template-columns: repeat(2, 1fr) !important; 
-            gap: 12px; 
-            margin-top: 20px; 
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px;
+            margin-top: 10px; 
             padding: 0 4px;
         }
         @media (min-width: 768px) {
-            .unified-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 20px; }
+            .unified-grid { 
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 20px; 
+            }
         }
 
-        /* Cards Layout */
+        /* === MINI CARD (MONOCHROME) === */
         .mini-card {
-            background-color: #f9f9f9;
-            border: 1px solid #eeeeee;
-            border-radius: 12px;
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
             overflow: hidden;
-            transition: transform 0.2s, background-color 0.3s, border-color 0.3s;
+            transition: transform 0.2s, border-color 0.2s;
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
             height: 100%;
         }
-        .mini-card:hover { transform: translateY(-3px); }
+
+        @media (min-width: 768px) {
+            .mini-card { aspect-ratio: 1 / 1.2; }
+        }
+        .mini-card:hover { 
+            transform: translateY(-3px); 
+            border-color: #444;
+        }
         
-        /* Fixed Aspect-Ratio to prevent Layout Shifts (CLS Fix) */
         .mini-card-img, .mini-card-placeholder { 
             width: 100%; 
-            aspect-ratio: 16 / 10; /* Fixed size prevents jumping */
+            height: 45%; 
             object-fit: cover; 
             display: block; 
             flex-shrink: 0; 
-            background: #e1e1e1;
+            background: #222;
         }
-        .mini-card-placeholder { display: flex; align-items: center; justify-content: center; font-size: 28px; color: #666; }
+        .mini-card-placeholder { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 32px; 
+            background: #222; 
+        }
+        .mini-card-body { padding: 10px 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+        .mini-card-title { color: #fff; font-size: 13px; font-weight: bold; line-height: 1.3; margin: 0 0 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .mini-card-desc { color: #aaa; font-size: 11px; line-height: 1.3; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .mini-card-link { font-size: 11px; font-weight: bold; margin-top: auto; color: #fff; }
+
+        /* === MONOCHROME BADGES === */
+        .cat-badge { 
+            display: inline-block; 
+            font-size: 10px; 
+            font-weight: bold; 
+            border-radius: 50px; 
+            padding: 2px 8px; 
+            margin-bottom: 4px; 
+            width: fit-content; 
+            background: #2a2a2a; 
+            color: #eee;
+            border: 1px solid #444;
+        }
+
+        /* === SUBSCRIBE CARD (MONOCHROME) === */
+        .subscribe-card { background-color: #1a1a1a; border-top: 3px solid #ffffff; border-radius: 15px; padding: 30px; text-align: center; margin-top: 40px; border-left: 1px solid #2a2a2a; border-right: 1px solid #2a2a2a; border-bottom: 1px solid #2a2a2a; }
+        .subscribe-card-content { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .subscribe-card-title { color: white; font-size: 20px; font-weight: bold; display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+        .subscribe-card-text { color: #ccc; font-size: 16px; margin-bottom: 20px; }
+        .email-input-group { display: flex; gap: 10px; width: 90%; max-width: 320px; margin: 0 auto; justify-content: center; align-items: center; }
+        input.email-input-pill { background-color: #222 !important; color: #fff !important; border: 1px solid #444 !important; border-radius: 50px !important; padding: 10px 15px !important; width: 60%; font-size: 14px; outline: none; }
+        input.email-input-pill::placeholder { color: #777; }
+        .email-subscribe-button { background-color: #ffffff !important; color: #000000 !important; border: none !important; border-radius: 50px !important; padding: 10px 18px !important; font-weight: bold; cursor: pointer; font-size: 14px; white-space: nowrap; transition: opacity 0.2s; }
+        .email-subscribe-button:hover { opacity: 0.9; }
         
-        .mini-card-body { padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .mini-card-title { color: #000000; font-size: 14px; font-weight: bold; line-height: 1.4; margin: 0 0 6px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .mini-card-desc { color: #666666; font-size: 12px; line-height: 1.4; margin: 0 0 10px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .mini-card-link { font-size: 12px; font-weight: bold; margin-top: auto; color: #000000; }
+        .cat-tabs { display: none; }
+        body { padding-bottom: 30px !important; }
 
-        /* Category Badges */
-        .cat-badge { display: inline-block; font-size: 10px; font-weight: bold; border-radius: 50px; padding: 2px 8px; margin-bottom: 6px; width: fit-content; background: #e8e8e8; color: #333; }
-
-        /* Subscribe Card */
-        .subscribe-card { background-color: #f9f9f9; border: 1px solid #eeeeee; border-radius: 15px; padding: 30px; text-align: center; margin-top: 40px; }
-        .subscribe-card-title { color: #000000; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
-        .subscribe-card-text { color: #555555; font-size: 15px; margin-bottom: 20px; }
-        .email-input-group { display: flex; gap: 10px; max-width: 340px; margin: 0 auto; justify-content: center; align-items: center; }
-        input.email-input-pill { background-color: #ffffff !important; color: #333 !important; border: 1px solid #cccccc !important; border-radius: 50px !important; padding: 10px 16px !important; flex: 1; font-size: 14px; outline: none; }
-        .email-subscribe-button { background-color: #000000 !important; color: #ffffff !important; border: none !important; border-radius: 50px !important; padding: 10px 20px !important; font-weight: bold; cursor: pointer; font-size: 14px; white-space: nowrap; }
-
-        /* Navigation Trigger Button */
-        .menu-trigger-btn { cursor:pointer; position:fixed; top:12px; left:12px; z-index:10000; background:rgba(255,255,255,0.85); border: 1px solid #ddd; border-radius:8px; padding:6px 10px; backdrop-filter:blur(4px); display: flex; align-items: center; justify-content: center; }
-
-        /* ==========================================================================
-           === 2. DARK MODE STYLES (Pure Dark & Gray - No Orange) ===
-           ========================================================================== */
-        body.dark-mode {
-            background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A) !important;
-            background-attachment: fixed !important;
-            color: #b3b3b3;
+        /* === HERO SECTION === */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('/images/hero-bg.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 0 0 24px 24px;
+            padding-bottom: 40px;
+            padding-top: 75px;
+            border-bottom: 1px solid #2a2a2a;
         }
-        body.dark-mode .hero { background-image: linear-gradient(rgba(10, 5, 30, 0.75), rgba(10, 5, 30, 0.75)), url('/images/hero-bg.webp'); }
-        body.dark-mode .hero h1 { color: #ffffff; }
-        body.dark-mode .hero p { color: #bbbbbb; }
-
-        body.dark-mode .mini-card { background-color: #1F1A3A; border-color: transparent; }
-        body.dark-mode .mini-card-img, body.dark-mode .mini-card-placeholder { background: #2d1f5e; color: #aaa; }
-        body.dark-mode .mini-card-title { color: #ffffff; }
-        body.dark-mode .mini-card-desc { color: #bbbbbb; }
-        body.dark-mode .mini-card-link { color: #ffffff; }
-        body.dark-mode .cat-badge { background: rgba(255,255,255,0.1); color: #ffffff; }
-
-        body.dark-mode .subscribe-card { background-color: #1F1A3A; border-color: transparent; }
-        body.dark-mode .subscribe-card-title { color: #ffffff; }
-        body.dark-mode .subscribe-card-text { color: #dddddd; }
-        body.dark-mode input.email-input-pill { background-color: #110A1C !important; color: #ffffff !important; border: 1px solid #444444 !important; }
-        body.dark-mode .email-subscribe-button { background-color: #ffffff !important; color: #110A1C !important; }
-
-        body.dark-mode .menu-trigger-btn { background: rgba(0,0,0,0.5); border-color: #333; }
     </style>
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="apple-touch-icon" href="/images/favicon.png">
 </head>
-<body>
+
+<body style="background-color: #121212; margin: 0;">
 
     <div class="mobile-menu-btn">
-        <!-- Menu Button (SVG Line Color dynamically syncs via CSS) -->
-        <div id="menu-btn" class="menu-trigger-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" id="menu-svg-icon"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <div id="menu-btn" style="cursor:pointer; position:fixed; top:12px; left:12px; z-index:10000; background:rgba(0,0,0,0.7); border: 1px solid #333; border-radius:8px; padding:6px 10px; backdrop-filter:blur(4px);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </div>
 
-        <!-- Sidebar Navigation Drawer -->
-        <div id="side-menu" style="display: none; background-color: #0D0D0D; position: fixed; top: 0; left: 0; width: 75%; max-width: 300px; height: 100%; z-index: 9999; padding-top: 60px; overflow-y: auto;">
+        <div id="side-menu" style="display: none; background-color: #121212; position: fixed; top: 0; left: 0; width: 75%; max-width: 300px; height: 100%; z-index: 9999; padding-top: 60px; overflow-y: auto; border-right: 1px solid #2a2a2a;">
             <div id="close-btn" style="position: absolute; top: 15px; right: 20px; font-size: 28px; color: white; cursor: pointer;">✕</div>
-            
-            <!-- Dynamic Theme Toggle Pill inside sidebar Drawer -->
-            <div style="padding: 10px 18px 14px;">
-                <button id="theme-toggle-btn" onclick="toggleTheme()" style="width:100%; padding:11px; border-radius:50px; border:none; font-weight:bold; cursor:pointer; background:#ffffff; color:#000000; font-size:14px; transition: 0.2s;">☀️ Light Mode</button>
-            </div>
-
             <div style="padding: 0 18px 16px; border-bottom: 1px solid #2a2a2a;">
                 <input type="text" onkeyup="searchDashboard()" id="side-search-input" placeholder="🔍 Search..." style="width:100%; box-sizing:border-box; padding:11px 16px; border-radius:50px; border:1.5px solid #444; font-size:14px; outline:none; background:#1a1a1a; color:white;">
             </div>
-            
             <a href="/home.html" style="display:block; color:white; text-decoration:none; font-size:17px; font-weight:bold; padding:16px 25px; border-bottom:1px solid #2a2a2a;">🏠 Home</a>
-            <a href="/motivation.html" style="display:block; color:white; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">🔥 Motivation</a>
-            <a href="/stories.html" style="display:block; color:white; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">📚 Seenaa</a>
-            <a href="/education.html" style="display:block; color:white; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">🎓 Gorsa</a>
-            <a href="/saved.html" style="display:block; color:white; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">⭐ Favorite</a>
+            <a href="/motivation.html" style="display:block; color:#aaa; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">🔥 Motivation</a>
+            <a href="/stories.html" style="display:block; color:#aaa; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">📚 Seenaa</a>
+            <a href="/education.html" style="display:block; color:#aaa; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">🎓 Gorsa</a>
+            <a href="/saved.html" style="display:block; color:#aaa; text-decoration:none; font-size:17px; padding:16px 25px; border-bottom:1px solid #2a2a2a;">⭐ Favorite</a>
 
             <div style="padding: 20px 25px 30px;">
-                <p style="color: #888; font-size: 12px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px;">Follow Us</p>
+                <p style="color: #666; font-size: 12px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px;">Follow Us</p>
                 <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-                    <a href="https://www.facebook.com/imalakaayoo.vision" target="_blank" style="width:42px; height:42px; background:#1877F2; border-radius:50%; display:flex; align-items:center; justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-                    <a href="https://t.me/Imala_kaayoo" target="_blank" style="width:42px; height:42px; background:#229ED9; border-radius:50%; display:flex; align-items:center; justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 7.5a2.25 2.25 0 0 0 .126 4.073l3.9 1.205 1.312 4.282a1.5 1.5 0 0 0 2.56.5l1.91-2.348 3.96 2.916a2.25 2.25 0 0 0 3.528-1.306l2.7-13.5a2.25 2.25 0 0 0-2.474-2.537zM9.9 14.85l-.738 3.43-.738-2.41 6.9-6.63-6.424 5.61z"/></svg></a>
+                    <a href="https://www.facebook.com/imalakaayoo.vision" target="_blank" style="width:42px; height:42px; background:#222; border: 1px solid #444; border-radius:50%; display:flex; align-items:center; justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                    <a href="https://t.me/Imala_kaayoo" target="_blank" style="width:42px; height:42px; background:#222; border: 1px solid #444; border-radius:50%; display:flex; align-items:center; justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 7.5a2.25 2.25 0 0 0 .126 4.073l3.9 1.205 1.312 4.282a1.5 1.5 0 0 0 2.56.5l1.91-2.348 3.96 2.916a2.25 2.25 0 0 0 3.528-1.306l2.7-13.5a2.25 2.25 0 0 0-2.474-2.537zM9.9 14.85l-.738 3.43-.738-2.41 6.9-6.63-6.424 5.61z"/></svg></a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="hero">
-        <h1 id="hero-main-title">JIREENYA SIMACHUUFI 🫂</h1>
-        <p>Baga nagaan Dhufte!🙏</p>
+        <h1 style="color:#ffffff; font-size:2em; text-align:center; margin-top:30px; margin-bottom:10px; font-family: 'Poppins', sans-serif; font-weight: 800; letter-spacing: 0.5px;">JIREENYA SIMACHUUFI 🫂</h1>
+        <p style="text-align:center;color:#aaa;margin-bottom:10px;">Baga nagaan Dhufte!🙏</p>
     </div>
 
     <div style="padding:0 16px;">
@@ -197,46 +175,6 @@
     </div>
 
     <script>
-        // === INITIAL THEME CONFIGURATION ===
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            const body = document.body;
-            const toggleBtn = document.getElementById('theme-toggle-btn');
-            const menuSvg = document.getElementById('menu-svg-icon');
-
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-mode');
-                if (toggleBtn) {
-                    toggleBtn.innerText = "🌙 Dark Mode";
-                    toggleBtn.style.background = "#222222";
-                    toggleBtn.style.color = "#ffffff";
-                }
-                if (menuSvg) menuSvg.style.stroke = "#ffffff";
-            } else {
-                body.classList.remove('dark-mode');
-                if (toggleBtn) {
-                    toggleBtn.innerText = "☀️ Light Mode";
-                    toggleBtn.style.background = "#ffffff";
-                    toggleBtn.style.color = "#000000";
-                }
-                if (menuSvg) menuSvg.style.stroke = "#000000";
-            }
-        }
-
-        function toggleTheme() {
-            const body = document.body;
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'light');
-            } else {
-                localStorage.setItem('theme', 'dark');
-            }
-            initTheme();
-        }
-
-        // Run immediately to avoid page flashes
-        initTheme();
-
-        // === SIDE MENU CONTROLS ===
         const menuBtn = document.getElementById('menu-btn');
         const sideMenu = document.getElementById('side-menu');
         const closeBtn = document.getElementById('close-btn');
@@ -310,9 +248,6 @@
                 card.style.display = card.textContent.toLowerCase().includes(input) ? '' : 'none';
             });
         }
-
-        // Event listener ensuring icons adjust even after initial dynamic load finishes
-        window.addEventListener('DOMContentLoaded', initTheme);
     </script>
 
     <div class="subscribe-card">
@@ -327,4 +262,4 @@
     </div>
 </body>
 </html>
-                    
+    
