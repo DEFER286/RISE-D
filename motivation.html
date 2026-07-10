@@ -26,78 +26,90 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet"></noscript>
     <style>
-        body { margin: 0; padding-top: 60px; background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A); background-attachment: fixed; font-family: 'Poppins', sans-serif; }
+        /* === LIGHT MODE BY DEFAULT === */
+        body { 
+            margin: 0; 
+            padding-top: 60px; 
+            background-color: #ffffff; 
+            color: #333333; 
+            font-family: 'Poppins', sans-serif; 
+            transition: background-color 0.3s, color 0.3s;
+        }
         
-        /* Side Menu Styles for both Mobile and Desktop */
-        #menu-btn { cursor: pointer; font-size: 26px; color: #ff9800; padding: 15px; position: fixed; top: 0; left: 0; z-index: 10000; background-color: rgba(17, 10, 28, 0.8); border-bottom-right-radius: 8px; }
-        #side-menu { display: none; background-color: #0D0D0D; position: fixed; top: 0; left: 0; width: 280px; height: 100%; z-index: 9999; padding-top: 60px; box-shadow: 4px 0 15px rgba(0,0,0,0.5); transition: all 0.3s ease; }
-        #close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; color: white; cursor: pointer; }
-        #side-menu a { display: block; color: white; text-decoration: none; font-size: 18px; padding: 16px 25px; border-bottom: 1px solid #2a2a2a; transition: background 0.2s; }
-        #side-menu a:hover { background-color: #1F1A3A; color: #FF9800; }
-        #side-menu a.active { color: #FF9800; font-weight: bold; background-color: rgba(255, 152, 0, 0.1); }
+        .menu-trigger-btn { 
+            cursor: pointer; 
+            position: fixed; 
+            top: 12px; 
+            left: 12px; 
+            z-index: 10000; 
+            background: rgba(255,255,255,0.85); 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            padding: 8px 12px; 
+            backdrop-filter: blur(4px); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
 
-        /* === UNIFIED POSTS GRID === */
+        #side-menu { display: none; background-color: #0D0D0D; position: fixed; top: 0; left: 0; width: 280px; height: 100%; z-index: 9999; padding-top: 60px; box-shadow: 4px 0 15px rgba(0,0,0,0.5); }
+        #close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; color: white; cursor: pointer; }
+        #side-menu a { display: block; color: white; text-decoration: none; font-size: 18px; padding: 16px 25px; border-bottom: 1px solid #2a2a2a; }
+        #side-menu a.active { font-weight: bold; background-color: rgba(255, 255, 255, 0.1); }
+
+        .hero {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('/images/hero-bg.webp');
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            border-radius: 0 0 24px 24px; padding: 40px 20px 30px; text-align: center;
+            min-height: 100px;
+        }
+
         .unified-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-auto-rows: auto;
-            gap: 14px;
-            margin-top: 10px;
-            padding: 0 4px;
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: auto; gap: 14px; margin-top: 10px; padding: 0 4px;
         }
         @media (min-width: 768px) {
             .unified-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
         }
 
-        /* === MINI CARD === */
-        .mini-card {
-            background-color: #1F1A3A;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.2s;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
+        .mini-card { background-color: #f9f9f9; border: 1px solid #eeeeee; border-radius: 12px; overflow: hidden; transition: transform 0.2s; text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; }
         .mini-card:hover { transform: translateY(-3px); }
         
-        /* Prevent Image Layout Shift (CLS Fix) */
         .mini-card-img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; flex-shrink: 0; }
-        .mini-card-placeholder { display: flex; align-items: center; justify-content: center; font-size: 36px; background: linear-gradient(135deg,#1F1A3A,#2d1f5e); width: 100%; aspect-ratio: 16 / 9; flex-shrink: 0; }
+        .mini-card-placeholder { display: flex; align-items: center; justify-content: center; font-size: 36px; background: #e1e1e1; color: #666; width: 100%; aspect-ratio: 16 / 9; flex-shrink: 0; }
         
-        .mini-card-body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .mini-card-title { color: #fff; font-size: 13px; font-weight: bold; line-height: 1.4; margin: 0 0 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 36px; flex-shrink: 0; }
-        .mini-card-desc { color: #bbb; font-size: 12px; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 34px; flex-shrink: 0; }
-        .mini-card-link { font-size: 12px; font-weight: bold; margin-top: auto; }
+        .mini-card-body { padding: 12px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .mini-card-title { color: #000000; font-size: 14px; font-weight: bold; line-height: 1.4; margin: 0 0 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 38px; }
+        .mini-card-desc { color: #666666; font-size: 12px; line-height: 1.4; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-height: 34px; }
+        .mini-card-link { font-size: 12px; font-weight: bold; margin-top: auto; color: #000000; }
+        .cat-badge { display: inline-block; font-size: 10px; font-weight: bold; border-radius: 50px; padding: 2px 8px; margin-bottom: 6px; width: fit-content; background: #e8e8e8; color: #333; }
 
-        /* === CATEGORY BADGE === */
-        .cat-badge { display: inline-block; font-size: 11px; font-weight: bold; border-radius: 50px; padding: 3px 10px; margin-bottom: 6px; }
-        .badge-motivation { background: rgba(255,152,0,0.2); color: #FF9800; }
+        .subscribe-card { background-color: #f9f9f9; border: 1px solid #eeeeee; border-radius: 15px; padding: 30px; text-align: center; margin-top: 20px; }
+        input.email-input-pill { background-color: white !important; color: #333 !important; border: 1px solid #ccc !important; border-radius: 50px !important; padding: 10px 15px; width: 60%; font-size: 14px; outline: none; }
+        .email-subscribe-button { background-color: #000000 !important; color: white !important; border: none !important; border-radius: 50px !important; padding: 10px 18px; font-weight: bold; cursor: pointer; font-size: 14px; }
 
-        /* === HERO === */
-        .hero {
-            background-image:
-                linear-gradient(rgba(10, 5, 30, 0.65), rgba(10, 5, 30, 0.65)),
-                url('/images/hero-bg.webp');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-radius: 0 0 24px 24px;
-            padding: 80px 20px 30px;
-            text-align: center;
-        }
-
-        /* === LOADING === */
         .loading-msg { text-align: center; color: #888; padding: 40px 0; font-size: 15px; }
+
+        /* === 2. DARK MODE STYLES === */
+        body.dark-mode { background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A) !important; background-attachment: fixed !important; color: #b3b3b3; }
+        body.dark-mode .menu-trigger-btn { background: rgba(0,0,0,0.5); border-color: #333; }
+        body.dark-mode .hero { background-image: linear-gradient(rgba(10, 5, 30, 0.75), rgba(10, 5, 30, 0.75)), url('/images/hero-bg.webp'); }
+        body.dark-mode .mini-card { background-color: #1F1A3A; border-color: transparent; }
+        body.dark-mode .mini-card-placeholder { background: #2d1f5e; color: #aaa; }
+        body.dark-mode .mini-card-title { color: #ffffff; }
+        body.dark-mode .mini-card-desc { color: #bbbbbb; }
+        body.dark-mode .mini-card-link { color: #ffffff; }
+        body.dark-mode .cat-badge { background: rgba(255,255,255,0.1); color: #ffffff; }
+        body.dark-mode .subscribe-card { background-color: #1F1A3A; border-color: transparent; }
+        body.dark-mode input.email-input-pill { background-color: #110A1C !important; color: #ffffff !important; border: 1px solid #444 !important; }
+        body.dark-mode .email-subscribe-button { background-color: #ffffff !important; color: #110A1C !important; }
     </style>
 </head>
-
 <body>
-
-    <!-- Side Menu Only for both Mobile & Desktop -->
-    <div id="menu-btn">☰</div>
+    <div id="menu-btn" class="menu-trigger-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" id="menu-svg-icon"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </div>
+    
     <div id="side-menu">
         <div id="close-btn">✕</div>
         <a href="/home.html">Home</a>
@@ -107,39 +119,43 @@
         <a href="/saved.html">🔖 saved </a>
     </div>
 
-    <!-- Hero -->
     <div class="hero">
-        <h1 style="color:#FF9800;font-size:2em;margin:0 0 10px;font-family:'Poppins',sans-serif;font-weight:800;">🔥 Motivational Speech</h1>
-        <p style="color:#ddd;margin:0;">Sagalee onnachiisoo fi jechoottan jajjabeessoo asitti argattu.</p>
+        <h1 style="color:inherit; font-size:2em; margin:0 0 10px; font-weight:800;">🔥 Motivation</h1>
+        <p style="color:inherit; opacity: 0.8; margin:0;">Sagalee onnachiisoo fi jechoottan jajjabeessoo asitti argattu.</p>
     </div>
 
-    <!-- Cards Grid -->
     <div style="padding:16px;">
         <div class="unified-grid" id="unified-grid">
             <p class="loading-msg" id="loading-msg">Fe'amaa jira...</p>
         </div>
     </div>
 
-    <!-- Subscribe Card -->
     <div style="padding:0 16px 20px;">
-        <div style="background-color:#1F1A3A;border-top:5px solid white;border-radius:15px;padding:30px;text-align:center;margin-top:20px;">
-            <div style="color:white;font-size:20px;font-weight:bold;margin-bottom:10px;">📩 Subscribe</div>
-            <p style="color:#ddd;font-size:16px;margin-bottom:20px;">Enter your Email</p>
-            <form action="https://formspree.io/f/xbdbaolp" method="POST" style="display:flex;gap:10px;width:90%;max-width:320px;margin:0 auto;justify-content:center;align-items:center;">
-                <input type="email" name="email" placeholder="email..." required style="background-color:white;color:#333;border:1px solid #ddd;border-radius:50px;padding:10px 15px;width:60%;font-size:14px;">
-                <button type="submit" style="background-color:#FF9800;color:white;border:none;border-radius:50px;padding:10px 18px;font-weight:bold;cursor:pointer;font-size:14px;">Subscribe</button>
+        <div class="subscribe-card">
+            <div style="color:inherit; font-size:20px; font-weight:bold; margin-bottom:10px;">📩 Subscribe</div>
+            <p style="color:inherit; opacity: 0.8; font-size:16px; margin-bottom:20px;">Enter your Email</p>
+            <form action="https://formspree.io/f/xbdbaolp" method="POST" style="display:flex; gap:10px; width:90%; max-width:320px; margin:0 auto; justify-content:center; align-items:center;">
+                <input type="email" name="email" class="email-input-pill" placeholder="email..." required>
+                <button type="submit" class="email-subscribe-button">Subscribe</button>
             </form>
         </div>
     </div>
 
-    <!-- Mobile Search Modal -->
-    <div id="mobile-search-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:16px;">
-        <input type="text" onkeyup="searchCards()" id="mobile-search-input" placeholder="Search..." style="width:80%;padding:14px 20px;border-radius:50px;border:2px solid #FF9800;font-size:16px;outline:none;background:#1F1A3A;color:white;">
-        <button onclick="document.getElementById('mobile-search-modal').style.display='none';" style="background:#FF9800;border:none;color:#111;padding:10px 28px;border-radius:50px;font-weight:bold;font-size:15px;cursor:pointer;">Close</button>
-    </div>
-
     <script>
-        // Mobile menu
+        // Synchronize dark/light toggle state with dynamic elements
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const menuSvg = document.getElementById('menu-svg-icon');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                if (menuSvg) menuSvg.style.stroke = "#ffffff";
+            } else {
+                document.body.classList.remove('dark-mode');
+                if (menuSvg) menuSvg.style.stroke = "#000000";
+            }
+        }
+        initTheme();
+
         document.getElementById('menu-btn').addEventListener('click', () => { document.getElementById('side-menu').style.display = 'block'; });
         document.getElementById('close-btn').addEventListener('click', () => { document.getElementById('side-menu').style.display = 'none'; });
 
@@ -147,8 +163,6 @@
             const raw = item.description || item.body || '';
             const plain = raw.replace(/<[^>]*>/g, ' ').replace(/#{1,6}\s*/g, '').replace(/\*{1,2}([^*]*)\*{1,2}/g, '$1').replace(/[-•*]\s+/g, ' ').replace(/\\n/g, ' ').replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
             const desc = plain.substring(0, 80) + (plain.length > 80 ? '...' : '');
-            
-            // Fixed width and height attributes to match aspect ratio and stop shifts
             const imgHTML = item.image
                 ? `<img src="${item.image}" class="mini-card-img" alt="${item.title}" loading="lazy" width="400" height="225" decoding="async" onerror="this.outerHTML='<div class=mini-card-placeholder>🔥</div>'">`
                 : `<div class="mini-card-placeholder">🔥</div>`;
@@ -156,10 +170,10 @@
                 <a href="/motivation/${item.slug}" class="mini-card">
                     ${imgHTML}
                     <div class="mini-card-body">
-                        <span class="cat-badge badge-motivation">🔥 Motivation</span>
+                        <span class="cat-badge">🔥 Motivation</span>
                         <h3 class="mini-card-title">${item.title}</h3>
                         <p class="mini-card-desc">${desc}</p>
-                        <span class="mini-card-link" style="color:#FF9800;">Dubbisi ➔</span>
+                        <span class="mini-card-link">Dubbisi ➔</span>
                     </div>
                 </a>`;
         }
@@ -182,13 +196,6 @@
             .catch(() => {
                 document.getElementById('unified-grid').innerHTML = '<p class="loading-msg">Rakkoo uumame. Irra deebi\'ii yaali.</p>';
             });
-
-        function searchCards() {
-            const val = document.getElementById('mobile-search-input')?.value.toLowerCase() || '';
-            document.querySelectorAll('.mini-card').forEach(card => {
-                card.style.display = card.textContent.toLowerCase().includes(val) ? '' : 'none';
-            });
-        }
     </script>
 </body>
 </html>
