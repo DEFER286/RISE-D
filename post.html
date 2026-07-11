@@ -157,25 +157,21 @@
         let itemID = category && slug ? (category + "-" + slug) : null;
 
         // "X" (close) akka bakka namichi dhufee sanatti deebi'u godhu:
-        // - Yoo home.html irraa dhufe ta'e -> gara home.html tti deebi'a
-        // - Yoo kutaa (motivation/stories/education) irraa dhufe ta'e -> gara kutaa sanatti deebi'a
-        // - Yoo referrer hin beekamne (fkn link kallattiin ykn share irraa baname) -> kutaa (category) tti deebi'a (fallback)
+        // sessionStorage keessatti 'postSource' (home.html ykn category page irratti
+        // card cuqaannaan set godhama) ilaalla - kunis document.referrer caalaa
+        // amanamaadha (referrer yeroo baay'ee duwwaa ta'a).
+        // - postSource === 'home' -> gara home.html tti deebi'a
+        // - kan biraa hunda (category irraa, direct link, share, fi kkf) -> gara kutaa (category) tti deebi'a
         const validCategories = ['motivation', 'stories', 'education'];
         const closeLink = document.getElementById('close-btn-link');
         if (closeLink) {
-            let cameFromHome = false;
-            try {
-                const referrerPath = new URL(document.referrer).pathname;
-                cameFromHome = referrerPath === '/' || referrerPath === '/home.html' || referrerPath.endsWith('/home.html');
-            } catch (e) {
-                cameFromHome = false;
-            }
-
-            if (cameFromHome) {
+            const postSource = sessionStorage.getItem('postSource');
+            if (postSource === 'home') {
                 closeLink.href = '/home.html';
             } else if (category && validCategories.includes(category)) {
                 closeLink.href = `/${category}.html`;
             }
+            sessionStorage.removeItem('postSource');
         }
         
         if (slug && category !== null) {
@@ -322,8 +318,6 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                 btn.innerHTML = "❤️ saved"; 
                 btn.style.background = isLight ? "#000000" : "#ffffff"; 
                 btn.style.color = isLight ? "#ffffff" : "#000000"; 
-                btn.style.background = isLight ? "#000000" : "#ffffff"; 
-                btn.style.color = isLight ? "#ffffff" : "#000000"; 
                 btn.style.borderColor = isLight ? "#000000" : "#ffffff";
             } else { 
                 btn.innerHTML = "🔖 save"; 
@@ -432,6 +426,7 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                 const card = document.createElement('a');
                 card.href = `/${item.cat}/${item.slug}`; 
                 card.className = 'related-card';
+                card.addEventListener('click', () => sessionStorage.setItem('postSource', 'category'));
                 card.innerHTML = `
                     <div class="related-card-badge">${catLabels[item.cat] || ''}</div>
                     <div class="related-card-title">${item.title}</div>
