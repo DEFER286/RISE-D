@@ -34,6 +34,18 @@
     <meta name="twitter:image" content="https://risetoday.vercel.app/images/og-image.webp">
   
     <link rel="canonical" href="https://risetoday.vercel.app/home.html" />
+
+    <!-- === PERFORMANCE: Dursanii JSON data fetch jalqabuu (LCP/FCP saffisiisuuf) === -->
+    <!-- Fetch-ii kun HTML parse godhamaa jiru wajjin walqixa (parallel) jalqaba -
+         DOM ready ta'uu hin eegu, JS gadii render godhu dursee. Result-ii isaa
+         (__risetodayDataPromises), page gadi jiru script-n itti fayyadama. -->
+    <script>
+        window.__risetodayDataPromises = {
+            motivation: fetch('/data/motivation.json').then(r => r.json()).catch(() => null),
+            stories: fetch('/data/stories.json').then(r => r.json()).catch(() => null),
+            education: fetch('/data/education.json').then(r => r.json()).catch(() => null)
+        };
+    </script>
     
     <style>
         /* === DEFAULT: LIGHT MODE (Mata-duree Gurraacha, text Gray, duubbee Adii) === */
@@ -319,7 +331,7 @@
             const priorityAttr = isAboveFold ? 'fetchpriority="high"' : 'fetchpriority="low"';
 
             const imgHTML = item.image
-                ? `<img src="${item.image}" class="mini-card-img" alt="${item.title}" width="400" height="250" loading="${loadingAttr}" ${priorityAttr} decoding="async" onerror="this.className='mini-card-placeholder';this.outerHTML='<div class=mini-card-placeholder>${emoji}</div>'">`
+                ? `<img src="${item.image}" class="mini-card-img" alt="${item.title}" loading="${loadingAttr}" ${priorityAttr} decoding="async" onerror="this.className='mini-card-placeholder';this.outerHTML='<div class=mini-card-placeholder>${emoji}</div>'">`
                 : `<div class="mini-card-placeholder">${emoji}</div>`;
                 
             const badgeClass = cat === 'motivation' ? 'badge-motivation' : cat === 'stories' ? 'badge-stories' : 'badge-education';
@@ -361,15 +373,17 @@
             }
         }
 
-        const paths = [
-            { cat: 'motivation', url: '/data/motivation.json' },
-            { cat: 'stories', url: '/data/stories.json' },
-            { cat: 'education', url: '/data/education.json' }
-        ];
+        // Fetch-oonni kun duraan (<head> keessatti) jalqabamanii turan - amma
+        // result-ii isaanii qofa fudhanna, fetch haaraa hin jalqabnu (LCP saffisiisuuf).
+        const promises = window.__risetodayDataPromises || {
+            motivation: fetch('/data/motivation.json').then(r => r.json()).catch(() => null),
+            stories: fetch('/data/stories.json').then(r => r.json()).catch(() => null),
+            education: fetch('/data/education.json').then(r => r.json()).catch(() => null)
+        };
 
-        paths.forEach(p => {
-            fetch(p.url).then(r => r.json()).then(data => {
-                if (data.items) data.items.forEach((item, i) => allPosts.push({ cat: p.cat, item, idx: i }));
+        ['motivation', 'stories', 'education'].forEach(cat => {
+            promises[cat].then(data => {
+                if (data && data.items) data.items.forEach((item, i) => allPosts.push({ cat, item, idx: i }));
                 tryRender();
             }).catch(() => tryRender());
         });
@@ -390,8 +404,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-                    
