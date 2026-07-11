@@ -84,25 +84,19 @@
         .mini-card-link { font-size: 12px; font-weight: bold; margin-top: auto; color: #000000; }
         .cat-badge { display: inline-block; font-size: 10px; font-weight: bold; border-radius: 50px; padding: 2px 8px; margin-bottom: 6px; width: fit-content; background: #e8e8e8; color: #333; }
 
-        .subscribe-card { background-color: #f9f9f9; border: 1px solid #eeeeee; border-radius: 15px; padding: 30px; text-align: center; margin-top: 20px; }
-        input.email-input-pill { background-color: white !important; color: #333 !important; border: 1px solid #ccc !important; border-radius: 50px !important; padding: 10px 15px; width: 60%; font-size: 14px; outline: none; }
-        .email-subscribe-button { background-color: #000000 !important; color: white !important; border: none !important; border-radius: 50px !important; padding: 10px 18px; font-weight: bold; cursor: pointer; font-size: 14px; }
 
         .loading-msg { text-align: center; color: #888; padding: 40px 0; font-size: 15px; }
 
         /* === 2. DARK MODE STYLES === */
-        body.dark-mode { background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A) !important; background-attachment: fixed !important; color: #b3b3b3; }
+        body.dark-mode { background: #000000 !important; background-attachment: fixed !important; color: #b3b3b3; }
         body.dark-mode .menu-trigger-btn { background: rgba(0,0,0,0.5); border-color: #333; }
-        body.dark-mode .hero { background-image: linear-gradient(rgba(10, 5, 30, 0.75), rgba(10, 5, 30, 0.75)), url('/images/hero-bg.webp'); }
-        body.dark-mode .mini-card { background-color: #1F1A3A; border-color: transparent; }
-        body.dark-mode .mini-card-placeholder { background: #2d1f5e; color: #aaa; }
+        body.dark-mode .hero { background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('/images/hero-bg.webp'); }
+        body.dark-mode .mini-card { background-color: #1a1a1a; border-color: transparent; }
+        body.dark-mode .mini-card-placeholder { background: #2a2a2a; color: #aaa; }
         body.dark-mode .mini-card-title { color: #ffffff; }
         body.dark-mode .mini-card-desc { color: #bbbbbb; }
         body.dark-mode .mini-card-link { color: #ffffff; }
         body.dark-mode .cat-badge { background: rgba(255,255,255,0.1); color: #ffffff; }
-        body.dark-mode .subscribe-card { background-color: #1F1A3A; border-color: transparent; }
-        body.dark-mode input.email-input-pill { background-color: #110A1C !important; color: #ffffff !important; border: 1px solid #444 !important; }
-        body.dark-mode .email-subscribe-button { background-color: #ffffff !important; color: #110A1C !important; }
     </style>
 </head>
 <body>
@@ -127,17 +121,6 @@
     <div style="padding:16px;">
         <div class="unified-grid" id="unified-grid">
             <p class="loading-msg" id="loading-msg">Fe'amaa jira...</p>
-        </div>
-    </div>
-
-    <div style="padding:0 16px 20px;">
-        <div class="subscribe-card">
-            <div style="color:inherit; font-size:20px; font-weight:bold; margin-bottom:10px;">📩 Subscribe</div>
-            <p style="color:inherit; opacity: 0.8; font-size:16px; margin-bottom:20px;">Enter your Email</p>
-            <form action="https://formspree.io/f/xbdbaolp" method="POST" style="display:flex; gap:10px; width:90%; max-width:320px; margin:0 auto; justify-content:center; align-items:center;">
-                <input type="email" name="email" class="email-input-pill" placeholder="email..." required>
-                <button type="submit" class="email-subscribe-button">Subscribe</button>
-            </form>
         </div>
     </div>
 
