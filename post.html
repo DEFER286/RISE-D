@@ -156,12 +156,26 @@
         const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
         let itemID = category && slug ? (category + "-" + slug) : null;
 
-        // "X" (close) akka kutaa duraan turan (motivation/stories/education) tti
-        // deebi'u godhu - yoo kutaan hin beekamne qofa gara home.html tti deebi'a.
+        // "X" (close) akka bakka namichi dhufee sanatti deebi'u godhu:
+        // - Yoo home.html irraa dhufe ta'e -> gara home.html tti deebi'a
+        // - Yoo kutaa (motivation/stories/education) irraa dhufe ta'e -> gara kutaa sanatti deebi'a
+        // - Yoo referrer hin beekamne (fkn link kallattiin ykn share irraa baname) -> kutaa (category) tti deebi'a (fallback)
         const validCategories = ['motivation', 'stories', 'education'];
         const closeLink = document.getElementById('close-btn-link');
-        if (closeLink && category && validCategories.includes(category)) {
-            closeLink.href = `/${category}.html`;
+        if (closeLink) {
+            let cameFromHome = false;
+            try {
+                const referrerPath = new URL(document.referrer).pathname;
+                cameFromHome = referrerPath === '/' || referrerPath === '/home.html' || referrerPath.endsWith('/home.html');
+            } catch (e) {
+                cameFromHome = false;
+            }
+
+            if (cameFromHome) {
+                closeLink.href = '/home.html';
+            } else if (category && validCategories.includes(category)) {
+                closeLink.href = `/${category}.html`;
+            }
         }
         
         if (slug && category !== null) {
@@ -308,6 +322,8 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                 btn.innerHTML = "❤️ saved"; 
                 btn.style.background = isLight ? "#000000" : "#ffffff"; 
                 btn.style.color = isLight ? "#ffffff" : "#000000"; 
+                btn.style.background = isLight ? "#000000" : "#ffffff"; 
+                btn.style.color = isLight ? "#ffffff" : "#000000"; 
                 btn.style.borderColor = isLight ? "#000000" : "#ffffff";
             } else { 
                 btn.innerHTML = "🔖 save"; 
@@ -324,7 +340,7 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                 navigator.share({ title: title, url: shareUrl }).catch(() => {});
             } else {
                 navigator.clipboard.writeText(shareUrl);
-       alert('Liinkiin barruu kanaa copy ta\'eera! ↗');
+                alert('Liinkiin barruu kanaa copy ta\'eera! ↗');
             }
         }
 
