@@ -19,6 +19,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" media="print" onload="this.media='all'">
 
+    <!-- === PERFORMANCE: Suuraawwan (Unsplash/Pexels) irratti dursanii connection banuu ===
+         Kun DNS lookup + TLS handshake HTML parse-ii waliin walqixa (parallel)
+         jalqabsiisa, image fetch-ii yeroo gaba'uu (LCP) saffisiisuuf. -->
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="preconnect" href="https://images.pexels.com" crossorigin>
+
     <!-- TELEGRAM & SOCIAL MEDIA PREVIEW TAGS -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="RISE TODAY - Muldhata Kee Dhugoomsi:" />
@@ -318,6 +324,34 @@
 
         let allPosts = [];
 
+        // Suuraawwan Unsplash/Pexels irraa dhufan, dhaabbii guddaa (uncompressed/full-res)
+        // dhufu waan ta'eef, query parameters dabaluun size fi quality xiqqeessina -
+        // kunis "Improve image delivery" savings-ii (KiB hedduu) furuu gaha.
+        // Card mini-card irratti karaa dheeraa hin barbaachifne, kanaafuu width ~600px, quality ~70 gaha.
+        // HUBACHIISA: site kun static HTML/JS (Next.js miti) waan ta'eef, /_vercel/image
+        // (kan Next.js qofa keessatti hojjetu) hin fayyadamnu - static site irratti 404 kenna.
+        function optimizeImageUrl(url) {
+            if (!url) return url;
+            try {
+                if (url.includes('images.unsplash.com')) {
+                    const u = new URL(url);
+                    u.searchParams.set('auto', 'format');
+                    u.searchParams.set('fit', 'crop');
+                    u.searchParams.set('w', '600');
+                    u.searchParams.set('q', '70');
+                    return u.toString();
+                }
+                if (url.includes('images.pexels.com')) {
+                    const u = new URL(url);
+                    u.searchParams.set('auto', 'compress');
+                    u.searchParams.set('cs', 'tinysrgb');
+                    u.searchParams.set('w', '600');
+                    return u.toString();
+                }
+            } catch (e) { /* URL malformed - fallback to original */ }
+            return url;
+        }
+
         function buildMiniCard(item, cat, index) {
             const raw = item.description || item.body || '';
             const plain = raw.replace(/<[^>]*>/g, ' ').replace(/#{1,6}\s*/g, '').replace(/\*{1,2}([^*]*)\*{1,2}/g, '$1').replace(/\s+/g, ' ').trim();
@@ -329,9 +363,10 @@
             const isAboveFold = index < 4;
             const loadingAttr = isAboveFold ? 'eager' : 'lazy';
             const priorityAttr = isAboveFold ? 'fetchpriority="high"' : 'fetchpriority="low"';
+            const optimizedSrc = optimizeImageUrl(item.image);
 
             const imgHTML = item.image
-                ? `<img src="${item.image}" class="mini-card-img" alt="${item.title}" loading="${loadingAttr}" ${priorityAttr} decoding="async" onerror="this.className='mini-card-placeholder';this.outerHTML='<div class=mini-card-placeholder>${emoji}</div>'">`
+                ? `<img src="${optimizedSrc}" class="mini-card-img" alt="${item.title}" sizes="(min-width: 768px) 33vw, 50vw" loading="${loadingAttr}" ${priorityAttr} decoding="async" onerror="this.className='mini-card-placeholder';this.outerHTML='<div class=mini-card-placeholder>${emoji}</div>'">`
                 : `<div class="mini-card-placeholder">${emoji}</div>`;
                 
             const badgeClass = cat === 'motivation' ? 'badge-motivation' : cat === 'stories' ? 'badge-stories' : 'badge-education';
@@ -357,6 +392,17 @@
         function renderGrid() {
             const grid = document.getElementById('unified-grid');
             grid.innerHTML = allPosts.map((p, i) => buildMiniCard(p.item, p.cat, i)).join('');
+
+            // Card 1ffaa (LCP element) suuraa isaa preload godhuu - browser-n dursee
+            // (parallel-tti) download jalqabu, DOM-tti erga dabalamee eeguu utuu hin ta'in.
+            if (allPosts.length > 0 && allPosts[0].item.image) {
+                const preloadLink = document.createElement('link');
+                preloadLink.rel = 'preload';
+                preloadLink.as = 'image';
+                preloadLink.href = optimizeImageUrl(allPosts[0].item.image);
+                preloadLink.fetchPriority = 'high';
+                document.head.appendChild(preloadLink);
+            }
         }
 
         let loaded = 0;
@@ -404,3 +450,7 @@
     </script>
 </body>
 </html>
+
+
+
+                    
