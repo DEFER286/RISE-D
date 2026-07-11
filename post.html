@@ -15,102 +15,44 @@
     <meta name="telegram:channel" content="@imala_kaayoo">
 
     <style>
-        /* === DEFAULT: LIGHT MODE (Mata-duree Gurraacha, text Gray, duubbee Adii) === */
-        body { 
-            background-color: #ffffff; 
-            color: #4a4a4a; /* Barreeffama gray akkuma suuraa irratti argamu */
-            font-family: Arial, sans-serif; 
-            padding: 20px; 
-            transition: background-color 0.3s, color 0.3s;
-        }
-        
+        body { background-color: #000000; color: white; font-family: Arial, sans-serif; padding: 20px; }
         .post-container { max-width: 800px; margin: auto; position: relative; padding-top: 40px; }
-        
-        /* Close Button X */
-        .close-btn { position: absolute; top: 0px; right: 5px; font-size: 35px; color: #000000; text-decoration: none; font-weight: bold; line-height: 1; transition: 0.2s; }
-        .close-btn:hover { color: #555555; }
-        
-        h1 { color: #000000; transition: color 0.3s; } /* Mata-duree Gurraacha */
-        .date { color: #666666; font-size: 14px; transition: color 0.3s; }
-        
+        .close-btn { position: absolute; top: 0px; right: 5px; font-size: 35px; color: #ffffff; text-decoration: none; font-weight: bold; line-height: 1; transition: 0.2s; }
+        .close-btn:hover { color: #cccccc; }
+        h1 { color: #ffffff; }
+        .date { color: #ddd; font-size: 14px; }
         .author-section { display:flex; align-items:center; gap:10px; margin-bottom:1rem; }
-        .author-photo { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid #333333; flex-shrink:0; transition: border-color 0.3s; }
+        .author-photo { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid #ffffff; flex-shrink:0; }
         @media (max-width: 600px) { .author-photo { width:35px; height:35px; } .date { font-size:12px; } }
-        
-        .content { font-size: 18px; line-height: 1.6; margin-top: 20px; color: #1a1a1a; transition: color 0.3s; }
-        img:not(.author-photo) { display: block; max-width: 100%; height: auto; max-height: 450px; width: 100%; object-fit: cover; margin: 0 auto 20px auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .content { font-size: 18px; line-height: 1.6; margin-top: 20px; }
+        img:not(.author-photo) { display: block; max-width: 100%; height: auto; max-height: 450px; width: 100%; object-fit: cover; margin: 0 auto 20px auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
         /* === INTERACTION BUTTONS STYLE === */
-        .reaction-btn { background:#f0f2f5; border:1px solid #ddd; color:#333; padding:10px 18px; margin:5px; border-radius:20px; cursor:pointer; font-size:14px; transition: 0.2s ease; }
-        .reaction-btn:hover { background: #e4e6eb; }
+        .reaction-btn { background:#222; border:1px solid #444; color:#fff; padding:10px 18px; margin:5px; border-radius:20px; cursor:pointer; font-size:14px; transition: 0.2s ease; }
+        .reaction-btn:hover { background: #333; }
         
         /* === SUBSCRIBE style === */
-        .subscribe-inline { margin-top: 50px; padding-top: 28px; border-top: 1px solid #eeeeee; text-align: center; }
-        .subscribe-inline-heading { color: #000000; font-size: 17px; font-weight: bold; margin-bottom: 6px; }
-        .subscribe-inline-text { color: #666; font-size: 14px; margin-bottom: 18px; }
+        .subscribe-inline { margin-top: 50px; padding-top: 28px; border-top: 1px solid #444; text-align: center; }
+        .subscribe-inline-heading { color: #ffffff; font-size: 17px; font-weight: bold; margin-bottom: 6px; }
+        .subscribe-inline-text { color: #999; font-size: 14px; margin-bottom: 18px; }
         .subscribe-form { display: flex; gap: 10px; max-width: 380px; margin: 0 auto; }
-        .subscribe-input { flex: 1; background-color: #f5f5f5 !important; color: #333 !important; border: 1px solid #ccc !important; border-radius: 6px !important; padding: 10px 14px !important; font-size: 14px; outline: none; }
-        .subscribe-input::placeholder { color: #888; }
-        .subscribe-input:focus { border-color: #333333 !important; }
-        .subscribe-btn { background-color: #333333; color: white; border: none; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; font-size: 14px; white-space: nowrap; transition: background 0.2s; }
-        .subscribe-btn:hover { background-color: #000000; }
-
-        /* === COMMENT SECTION STYLE === */
-        .comment-box { background:#f9f9f9; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #333; }
-        .comment-input-field { width:100%; background:#f5f5f5; border:1px solid #ccc; color:#333; border-radius:8px; padding:10px; font-size:14px; margin-bottom:10px; box-sizing:border-box; outline:none; }
-        .comment-submit-btn { background:#333333; color:#fff; border:none; padding:10px 24px; border-radius:20px; font-weight:bold; cursor:pointer; font-size:14px; }
+        .subscribe-input { flex: 1; background-color: #1a1a1a !important; color: white !important; border: 1px solid #555 !important; border-radius: 6px !important; padding: 10px 14px !important; font-size: 14px; outline: none; }
+        .subscribe-input::placeholder { color: #777; }
+        .subscribe-input:focus { border-color: #ffffff !important; }
+        .subscribe-btn { background-color: #ffffff; color: #000000; border: none; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; font-size: 14px; white-space: nowrap; transition: background 0.2s; }
+        .subscribe-btn:hover { background-color: #cccccc; }
 
         /* === RELATED POSTS === */
-        .related-section { margin-top: 40px; padding-top: 30px; border-top: 2px solid #eeeeee; }
-        .related-title { color: #000000; font-size: 20px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .related-section { margin-top: 40px; padding-top: 30px; border-top: 2px solid #333; }
+        .related-title { color: #ffffff; font-size: 20px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
         .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 600px) { .related-grid { grid-template-columns: 1fr; } }
-        .related-card { background-color: #f9f9f9; border-radius: 12px; border-left: 5px solid #333333; padding: 16px; text-decoration: none; color: #4a4a4a; display: block; transition: transform 0.2s, background-color 0.3s; border: 1px solid #eee; }
+        .related-card { background-color: #1a1a1a; border-radius: 12px; border-left: 5px solid #ffffff; padding: 16px; text-decoration: none; color: white; display: block; transition: transform 0.2s; }
         .related-card:hover { transform: translateY(-3px); }
-        .related-card-badge { font-size: 11px; color: #777; margin-bottom: 6px; }
-        .related-card-title { font-size: 15px; font-weight: bold; color: #000; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .related-card-desc { font-size: 13px; color: #666; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .related-card-link { color: #333333; font-size: 13px; font-weight: bold; margin-top: 10px; display: inline-block; }
-
-
-        /* ==========================================================================
-           === 2. DARK MODE STYLES (Yoo Class 'dark-mode' active ta'e) ===
-           ========================================================================== */
-        body.dark-mode {
-            background: linear-gradient(135deg, #110A1C, #1A0D2E, #0A1C2A) !important;
-            background-attachment: fixed !important;
-            color: #b3b3b3;
-        }
-        body.dark-mode .close-btn { color: #ffffff; }
-        body.dark-mode .close-btn:hover { color: #ff9800; }
-        body.dark-mode h1 { color: #ffffff; }
-        body.dark-mode .date { color: #ddd; }
-        body.dark-mode .author-photo { border-color: #ff9800; }
-        body.dark-mode .content { color: #ffffff; }
-        body.dark-mode img:not(.author-photo) { box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-
-        body.dark-mode .reaction-btn { background:#222; border:1px solid #444; color:#fff; }
-        body.dark-mode .reaction-btn:hover { background: #333; }
-
-        body.dark-mode .subscribe-inline { border-top: 1px solid #444; }
-        body.dark-mode .subscribe-inline-heading { color: #ffffff; }
-        body.dark-mode .subscribe-inline-text { color: #999; }
-        body.dark-mode .subscribe-input { background-color: #2a1e4a !important; color: white !important; border: 1px solid #555 !important; }
-        body.dark-mode .subscribe-input:focus { border-color: #FF9800 !important; }
-        body.dark-mode .subscribe-btn { background-color: #FF9800; color: white; }
-        body.dark-mode .subscribe-btn:hover { background-color: #e08700; }
-
-        body.dark-mode .comment-box { background:#1F1A3A; border-left: 3px solid #FF9800; }
-        body.dark-mode .comment-input-field { background:#1F1A3A; border:1px solid #444; color:#fff; }
-        body.dark-mode .comment-submit-btn { background:#FF9800; color:#000; }
-
-        body.dark-mode .related-section { border-top: 2px solid #333; }
-        body.dark-mode .related-title { color: #FF9800; }
-        body.dark-mode .related-card { background-color: #1F1A3A; border-left: 5px solid #FF9800; color: white; border-color: transparent; }
-        body.dark-mode .related-card-badge { color: #888; }
-        body.dark-mode .related-card-title { color: #fff; }
-        body.dark-mode .related-card-desc { color: #aaa; }
-        body.dark-mode .related-card-link { color: #FF9800; }
+        .related-card-badge { font-size: 11px; color: #888; margin-bottom: 6px; }
+        .related-card-title { font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .related-card-desc { font-size: 13px; color: #aaa; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .related-card-link { color: #ffffff; font-size: 13px; font-weight: bold; margin-top: 10px; display: inline-block; }
     </style>
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -136,12 +78,12 @@
 
         <!-- Comment Section -->
         <div id="comment-section" style="display:none; margin-top:30px; padding-top:20px; border-top:1px solid #333;">
-            <h3 id="comment-heading-title" style="font-size:16px; margin-bottom:16px;">💬 Yaada Kenname (<span id="comment-heading-count">0</span>)</h3>
+            <h3 style="color:#ffffff; font-size:16px; margin-bottom:16px;">💬 Yaada Kenname (<span id="comment-heading-count">0</span>)</h3>
             <div id="comment-list"></div>
             <div style="margin-top:16px;">
-                <input id="comment-name" type="text" placeholder="Maqaa kee..." class="comment-input-field">
-                <textarea id="comment-text" placeholder="Yaada kee barreessi..." class="comment-input-field" style="resize:none; height:80px;"></textarea>
-                <button onclick="submitComment()" class="comment-submit-btn">Post Comment</button>
+                <input id="comment-name" type="text" placeholder="Maqaa kee..." style="width:100%;background:#1a1a1a;border:1px solid #444;color:#fff;border-radius:8px;padding:10px;font-size:14px;margin-bottom:10px;box-sizing:border-box;outline:none;">
+                <textarea id="comment-text" placeholder="Yaada kee barreessi..." style="width:100%;background:#1a1a1a;border:1px solid #444;color:#fff;border-radius:8px;padding:10px;font-size:14px;margin-bottom:10px;box-sizing:border-box;outline:none;resize:none;height:80px;"></textarea>
+                <button onclick="submitComment()" style="background:#ffffff;color:#000;border:none;padding:10px 24px;border-radius:20px;font-weight:bold;cursor:pointer;font-size:14px;">Post Comment</button>
             </div>
         </div>
 
@@ -155,18 +97,12 @@
         </div>
 
         <div class="related-section" id="related-section" style="display:none;">
-            <div class="related-title" id="related-main-title">📖 Barruulee Biroo Dubbisi</div>
+            <div class="related-title">📖 Barruulee Biroo Dubbisi</div>
             <div class="related-grid" id="related-grid"></div>
         </div>
     </div>
 
     <script>
-        // === SYNCHRONIZE WITH HOME THEME ===
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-        }
-
         const urlParams = new URLSearchParams(window.location.search);
         let slug = urlParams.get('slug'); 
         let category = urlParams.get('cat');
@@ -195,16 +131,20 @@
                         const cleanText = (post.body || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
                         const shortDesc = cleanText.substring(0, 150) + "...";
 
-                        let metaDesc = document.querySelector('meta[name="description"]');
-                        if (!metaDesc) {
-                            metaDesc = document.createElement('meta');
-                            metaDesc.setAttribute('name', 'description');
-                            document.head.appendChild(metaDesc);
-                        }
+                        // Meta description duraan ijaarame argachuu ykn haaraa uumuu
+let metaDesc = document.querySelector('meta[name="description"]');
+if (!metaDesc) {
+    metaDesc = document.createElement('meta');
+    metaDesc.setAttribute('name', 'description');
+    document.head.appendChild(metaDesc);
+}
 
-                        const finalDesc = post.description && post.description.trim() !== "" ? post.description : shortDesc;
-                        metaDesc.setAttribute('content', finalDesc);
-                        document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
+// Yoo admin panel irratti guuttee jirta ta'e isa nuyi uumne (post.description) fudhata, yoo duwwaa ta'e immoo shortDesc (ofumaan kan cite) sana fayyadama.
+const finalDesc = post.description && post.description.trim() !== "" ? post.description : shortDesc;
+
+// Amma bakkoota hundatti ergi
+metaDesc.setAttribute('content', finalDesc);
+document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
 
                         if (post.image) {
                             document.getElementById('meta-og-image').setAttribute('content', window.location.origin + post.image);
@@ -220,16 +160,16 @@
                         
                         const wordCount = cleanText.split(' ').filter(w => w.length > 0).length;
                         const minutes = Math.ceil(wordCount / 200);
-                        document.getElementById('post-date').innerHTML = `<a href="/about.html" style="color:inherit; text-decoration:none;"><strong>by Defera</strong></a> · ${formatted} · ${minutes} min read`;
+                        document.getElementById('post-date').innerHTML = `<a href="/about.html" style="color:#fff; text-decoration:none;"><strong>by Defera</strong></a> · ${formatted} · ${minutes} min read`;
 
                         let parsedBody = post.body.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
                         parsedBody = parsedBody.replace(/\n/g, '<br>');
                         document.getElementById('post-content').innerHTML = parsedBody;
 
-                        // Toolbar dynamically inject gochuu
+                        // Toolbar dynamically inject gochuu (Reaction + Saved + Share + Comment)
                         document.getElementById('dynamic-action-toolbar').innerHTML = `
-                        <div style="margin:40px 0 20px 0; padding-top:20px; border-top:1px solid #ccc; text-align:center;" id="action-toolbar-border">
-                            <p style="color:#666; font-size:14px; margin-bottom:15px;" id="toolbar-text">What do you think?</p>
+                        <div style="margin:40px 0 20px 0; padding-top:20px; border-top:1px solid #333; text-align:center;">
+                            <p style="color:#888; font-size:14px; margin-bottom:15px;">What do you think?</p>
                             <button onclick="handleReaction('like')" class="reaction-btn">👍 <span id="like-count">0</span></button>
                             <button onclick="handleReaction('love')" class="reaction-btn">❤️ <span id="love-count">0</span></button>
                             <button onclick="handleReaction('funny')" class="reaction-btn">😂 <span id="funny-count">0</span></button>
@@ -238,9 +178,7 @@
                             <button onclick="toggleComments()" class="reaction-btn">💬 <span id="comment-count">0</span> Comments</button>
                         </div>`;
 
-                        // Dynamic borders adjust parameters according to mode
-                        adjustDynamicUI();
-
+                        // Data duraan kufame fiduu
                         loadReactions();
                         updateSaveButtonVisual();
                         loadComments();
@@ -264,24 +202,12 @@
                 .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
         }
 
-        function adjustDynamicUI() {
-            const isDark = document.body.classList.contains('dark-mode');
-            const toolbarBorder = document.getElementById('action-toolbar-border');
-            const toolbarText = document.getElementById('toolbar-text');
-            const commentSection = document.getElementById('comment-section');
-            const commentTitle = document.getElementById('comment-heading-title');
-
-            if (toolbarBorder) toolbarBorder.style.borderColor = isDark ? "#333" : "#ccc";
-            if (toolbarText) toolbarText.style.color = isDark ? "#888" : "#666";
-            if (commentSection) commentSection.style.borderColor = isDark ? "#333" : "#eee";
-            if (commentTitle) commentTitle.style.color = isDark ? "#FF9800" : "#000000";
-        }
-
         /* === REACTIONS LOGIC === */
         function handleReaction(type) {
             if (!itemID) return;
             let userReactedKey = `reacted_${itemID}`;
             
+            // User-riin tokko al tokko qofa akka reaction laatu gochuuf
             if (localStorage.getItem(userReactedKey)) {
                 alert("Duraan reaction laataniittu! 😊");
                 return;
@@ -291,7 +217,7 @@
             let count = parseInt(localStorage.getItem(key)) || 0;
             count++;
             localStorage.setItem(key, count);
-            localStorage.setItem(userReactedKey, type);
+            localStorage.setItem(userReactedKey, type); // kan cuqaase galmeessi
             
             document.getElementById(`${type}-count`).innerText = count;
         }
@@ -328,19 +254,18 @@
             let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
             const btn = document.getElementById('save-btn');
             if (!btn) return;
-                        const isSaved = savedArticles.some(a => a.id === itemID);
-            const isDark = document.body.classList.contains('dark-mode');
-
+            
+            const isSaved = savedArticles.some(a => a.id === itemID);
             if (isSaved) { 
                 btn.innerHTML = "❤️ saved"; 
-                btn.style.background = isDark ? "#FF9800" : "#333333"; 
-                btn.style.color = "#ffffff"; 
-                btn.style.borderColor = isDark ? "#FF9800" : "#333333";
+                btn.style.background = "#ffffff"; 
+                btn.style.color = "#000000"; 
+                btn.style.borderColor = "#ffffff";
             } else { 
                 btn.innerHTML = "🔖 save"; 
-                btn.style.background = isDark ? "#222" : "#f0f2f5"; 
-                btn.style.color = isDark ? "#FF9800" : "#333333"; 
-                btn.style.borderColor = isDark ? "#444" : "#ddd";
+                btn.style.background = "#222"; 
+                btn.style.color = "#ffffff"; 
+                btn.style.borderColor = "#444";
             }
         }
 
@@ -396,8 +321,8 @@
             
             comments.forEach(c => {
                 const div = document.createElement('div');
-                div.className = 'comment-box';
-                div.innerHTML = `<strong>${c.name}</strong><p style="margin:6px 0 0; font-size:14px; color:inherit;">${c.text}</p>`;
+                div.style.cssText = 'background:#1a1a1a; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #ffffff;';
+                div.innerHTML = `<strong style="color:#ffffff;">${c.name}</strong><p style="color:#ccc; margin:6px 0 0; font-size:14px;">${c.text}</p>`;
                 list.appendChild(div);
             });
 
@@ -427,7 +352,7 @@
                 
                 displayRelated(related.slice(0, 3));
             });
-        }
+          }
 
         function displayRelated(items) {
             if (items.length === 0) return;
@@ -446,14 +371,7 @@
                 grid.appendChild(card);
             });
             document.getElementById('related-section').style.display = 'block';
-            
-            // Adjust headings for related section based on theme
-            const isDark = document.body.classList.contains('dark-mode');
-            const relatedTitle = document.getElementById('related-main-title');
-            if (relatedTitle) relatedTitle.style.color = isDark ? "#FF9800" : "#000000";
         }
     </script>
 </body>
 </html>
-
-            
