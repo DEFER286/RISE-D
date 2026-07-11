@@ -98,7 +98,7 @@
     </script>
 
     <div class="post-container" itemscope itemtype="http://schema.org/Article">
-        <a href="/home.html" class="close-btn" title="Gara Dashboarditti Deebi'i">&times;</a>
+        <a href="/home.html" id="close-btn-link" class="close-btn" title="Gara Duubatti Deebi'i">&times;</a>
         <h1 id="post-title" itemprop="headline">Loading...</h1>
         
         <div class="author-section">
@@ -155,6 +155,14 @@
 
         const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
         let itemID = category && slug ? (category + "-" + slug) : null;
+
+        // "X" (close) akka kutaa duraan turan (motivation/stories/education) tti
+        // deebi'u godhu - yoo kutaan hin beekamne qofa gara home.html tti deebi'a.
+        const validCategories = ['motivation', 'stories', 'education'];
+        const closeLink = document.getElementById('close-btn-link');
+        if (closeLink && category && validCategories.includes(category)) {
+            closeLink.href = `/${category}.html`;
+        }
         
         if (slug && category !== null) {
             fetch(`/data/${category}.json`)
@@ -316,7 +324,7 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                 navigator.share({ title: title, url: shareUrl }).catch(() => {});
             } else {
                 navigator.clipboard.writeText(shareUrl);
-                alert('Liinkiin barruu kanaa copy ta\'eera! ↗');
+       alert('Liinkiin barruu kanaa copy ta\'eera! ↗');
             }
         }
 
@@ -326,7 +334,7 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
             section.style.display = section.style.display === 'none' ? 'block' : 'none';
             if(section.style.display === 'block') {
                 section.scrollIntoView({ behavior: 'smooth' });
-         }
+            }
         }
 
         function submitComment() {
