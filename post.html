@@ -53,11 +53,49 @@
         .related-card-title { font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .related-card-desc { font-size: 13px; color: #aaa; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .related-card-link { color: #ffffff; font-size: 13px; font-weight: bold; margin-top: 10px; display: inline-block; }
+
+        /* ==========================================================================
+           === LIGHT MODE OVERRIDES (yoo body.light-mode jiraate) ===
+           Kun home.html waliin walsimuuf: home.html irratti "light" default,
+           post.html irratti immoo "dark" default waan ta'eef, asirratti class
+           addaa (.light-mode) fayyadamna localStorage theme kan 'light' ta'e
+           yeroo argamu.
+           ========================================================================== */
+        body.light-mode { background-color: #ffffff; color: #333; }
+        body.light-mode .close-btn { color: #000000; }
+        body.light-mode .close-btn:hover { color: #555555; }
+        body.light-mode h1 { color: #000000; }
+        body.light-mode .date { color: #555; }
+        body.light-mode .author-photo { border-color: #000000; }
+        body.light-mode .reaction-btn { background:#f0f0f0; border:1px solid #ccc; color:#000; }
+        body.light-mode .reaction-btn:hover { background: #e0e0e0; }
+        body.light-mode .subscribe-inline { border-top-color: #ccc; }
+        body.light-mode .subscribe-inline-heading { color: #000000; }
+        body.light-mode .subscribe-inline-text { color: #666; }
+        body.light-mode .subscribe-input { background-color: #f5f5f5 !important; color: #000 !important; border-color: #ccc !important; }
+        body.light-mode .subscribe-input::placeholder { color: #999; }
+        body.light-mode .subscribe-input:focus { border-color: #000000 !important; }
+        body.light-mode .subscribe-btn { background-color: #000000; color: #ffffff; }
+        body.light-mode .subscribe-btn:hover { background-color: #333333; }
+        body.light-mode .related-section { border-top-color: #ccc; }
+        body.light-mode .related-title { color: #000000; }
+        body.light-mode .related-card { background-color: #f9f9f9; border-left-color: #000000; color: #333; }
+        body.light-mode .related-card-title { color: #000; }
+        body.light-mode #comment-section { border-top-color: #ccc !important; }
+        body.light-mode #comment-section h3 { color: #000000 !important; }
+        body.light-mode #comment-name, body.light-mode #comment-text { background:#f5f5f5 !important; color:#000 !important; border-color:#ccc !important; }
     </style>
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="apple-touch-icon" href="/images/favicon.png">
 </head>
 <body>
+    <script>
+        // Post.html-rratti "dark" default; yoo home.html irratti "light" filatan,
+        // localStorage keessatti theme='light' waan ta'eef, asittis walsimsiisna.
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+        }
+    </script>
 
     <div class="post-container" itemscope itemtype="http://schema.org/Article">
         <a href="/home.html" class="close-btn" title="Gara Dashboarditti Deebi'i">&times;</a>
@@ -160,7 +198,8 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                         
                         const wordCount = cleanText.split(' ').filter(w => w.length > 0).length;
                         const minutes = Math.ceil(wordCount / 200);
-                        document.getElementById('post-date').innerHTML = `<a href="/about.html" style="color:#fff; text-decoration:none;"><strong>by Defera</strong></a> · ${formatted} · ${minutes} min read`;
+                        const authorColor = document.body.classList.contains('light-mode') ? '#000' : '#fff';
+                        document.getElementById('post-date').innerHTML = `<a href="/about.html" style="color:${authorColor}; text-decoration:none;"><strong>by Defera</strong></a> · ${formatted} · ${minutes} min read`;
 
                         let parsedBody = post.body.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
                         parsedBody = parsedBody.replace(/\n/g, '<br>');
@@ -255,17 +294,18 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
             const btn = document.getElementById('save-btn');
             if (!btn) return;
             
+            const isLight = document.body.classList.contains('light-mode');
             const isSaved = savedArticles.some(a => a.id === itemID);
             if (isSaved) { 
                 btn.innerHTML = "❤️ saved"; 
-                btn.style.background = "#ffffff"; 
-                btn.style.color = "#000000"; 
-                btn.style.borderColor = "#ffffff";
+                btn.style.background = isLight ? "#000000" : "#ffffff"; 
+                btn.style.color = isLight ? "#ffffff" : "#000000"; 
+                btn.style.borderColor = isLight ? "#000000" : "#ffffff";
             } else { 
                 btn.innerHTML = "🔖 save"; 
-                btn.style.background = "#222"; 
-                btn.style.color = "#ffffff"; 
-                btn.style.borderColor = "#444";
+                btn.style.background = isLight ? "#f0f0f0" : "#222"; 
+                btn.style.color = isLight ? "#000000" : "#ffffff"; 
+                btn.style.borderColor = isLight ? "#ccc" : "#444";
             }
         }
 
@@ -286,7 +326,7 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
             section.style.display = section.style.display === 'none' ? 'block' : 'none';
             if(section.style.display === 'block') {
                 section.scrollIntoView({ behavior: 'smooth' });
-            }
+         }
         }
 
         function submitComment() {
@@ -321,8 +361,13 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
             
             comments.forEach(c => {
                 const div = document.createElement('div');
-                div.style.cssText = 'background:#1a1a1a; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #ffffff;';
-                div.innerHTML = `<strong style="color:#ffffff;">${c.name}</strong><p style="color:#ccc; margin:6px 0 0; font-size:14px;">${c.text}</p>`;
+                const isLight = document.body.classList.contains('light-mode');
+                div.style.cssText = isLight
+                    ? 'background:#f5f5f5; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #000000;'
+                    : 'background:#1a1a1a; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #ffffff;';
+                const nameColor = isLight ? '#000000' : '#ffffff';
+                const textColor = isLight ? '#333' : '#ccc';
+                div.innerHTML = `<strong style="color:${nameColor};">${c.name}</strong><p style="color:${textColor}; margin:6px 0 0; font-size:14px;">${c.text}</p>`;
                 list.appendChild(div);
             });
 
@@ -352,7 +397,7 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                 
                 displayRelated(related.slice(0, 3));
             });
-          }
+        }
 
         function displayRelated(items) {
             if (items.length === 0) return;
