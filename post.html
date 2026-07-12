@@ -245,13 +245,11 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                             readArticles.push(itemID);
                             localStorage.setItem('readArticlesList', JSON.stringify(readArticles));
                         }
-
-                        if (post.image) {
-                            document.getElementById('post-image-container').innerHTML =
-                                `<img src="${post.image}" alt="${post.title}" itemprop="image" loading="lazy" decoding="async" style="width:100%; height:auto; max-height:450px; object-fit:cover; border-radius:12px; display:block; margin:0 auto;">`;
-                        }
-
-                        loadRelatedPosts(data.items, slug, category);
+                     if (post.image) {
+                   document.getElementById('post-image-container').innerHTML = 
+                 `<img src="${post.image}" alt="${post.title}" itemprop="image" fetchpriority="high" style="width:100%; height:auto; max-height:450px; object-fit:cover; border-radius:12px; display:block; margin:0 auto;">`;
+                     }
+                       loadRelatedPosts(data.items, slug, category);
                     } else {
                         document.getElementById('post-title').innerText = "Barruun hin argamne!";
                     }
