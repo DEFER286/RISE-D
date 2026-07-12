@@ -2,27 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rise-d.vercel.app/</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
     <loc>https://rise-d.vercel.app/motivation.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://rise-d.vercel.app/stories.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://rise-d.vercel.app/education.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://rise-d.vercel.app/about.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <priority>0.60</priority>
   </url>
   <url>
@@ -133,6 +133,11 @@
   <url>
     <loc>https://rise-d.vercel.app/stories/fiigichaa-milkaa'inaa</loc>
     <lastmod>2026-06-28</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://rise-d.vercel.app/stories/humna-obsa</loc>
+    <lastmod>2026-07-15</lastmod>
     <priority>0.70</priority>
   </url>
   <url>
