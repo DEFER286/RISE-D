@@ -90,6 +90,7 @@
 </head>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 
 <script>
   const firebaseConfig = {
@@ -106,6 +107,20 @@
     firebase.initializeApp(firebaseConfig);
   }
   const db = firebase.firestore();
+
+  // === ANONYMOUS AUTH: nama tokkoo tokkoon addaan baasuuf (reaction 1x, save kan isaanii) ===
+  // Hubadhu: "Anonymous" sign-in Firebase Console > Authentication keessatti banamuu qaba.
+  let currentUser = null;
+  let authReadyResolve;
+  const authReady = new Promise(resolve => { authReadyResolve = resolve; });
+
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      currentUser = user;
+      authReadyResolve(user);
+    }
+  });
+  firebase.auth().signInAnonymously().catch(err => console.error("Auth dogoggora:", err));
 </script>
 <body>
     <script>
@@ -254,10 +269,12 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                             <button onclick="toggleComments()" class="reaction-btn">💬 <span id="comment-count">0</span> Comments</button>
                         </div>`;
 
-                        // Data duraan kufame fiduu
-                        loadReactions();
-                        updateSaveButtonVisual();
-                        loadComments();
+                        // Data duraan kufame fiduu (Firestore realtime - auth eeggachuun)
+                        authReady.then(() => {
+                            initReactions();
+                            initSaveButton();
+                            initComments();
+                        });
 
                         let readArticles = JSON.parse(localStorage.getItem('readArticlesList')) || [];
                         if (!readArticles.includes(itemID)) {
@@ -276,70 +293,113 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                 .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
         }
 
-        /* === REACTIONS LOGIC === */
+        /* === REACTIONS LOGIC (Firestore realtime) ===
+           Sanduuqa: reactions/{itemID}  → fields: like, love, funny (lakkoofsa waliigalaa)
+           Subcollection: reactions/{itemID}/reactedUsers/{uid} → eenyu akka duraan laate galmeessuuf
+        */
+        let userAlreadyReacted = false;
+
+        function initReactions() {
+            if (!itemID || !currentUser) return;
+            const reactionRef = db.collection('reactions').doc(itemID);
+
+            // Lakkoofsa reaction-ii realtime-iin fudhachuu (nama biraa reaction yoo laate, hatattamaan haaromfama)
+            reactionRef.onSnapshot(doc => {
+                const data = doc.exists ? doc.data() : {};
+                ['like', 'love', 'funny'].forEach(type => {
+                    const el = document.getElementById(`${type}-count`);
+                    if (el) el.innerText = data[type] || 0;
+                });
+            }, err => console.error("Reaction dubbisuu dogoggora:", err));
+
+            // Namichi kun (uid kana) duraan reaction laateeraa ilaaluu
+            reactionRef.collection('reactedUsers').doc(currentUser.uid).get()
+                .then(doc => { userAlreadyReacted = doc.exists; })
+                .catch(err => console.error(err));
+        }
+
         function handleReaction(type) {
-            if (!itemID) return;
-            let userReactedKey = `reacted_${itemID}`;
-            
-            // User-riin tokko al tokko qofa akka reaction laatu gochuuf
-            if (localStorage.getItem(userReactedKey)) {
+            if (!itemID || !currentUser) return;
+
+            if (userAlreadyReacted) {
                 alert("Duraan reaction laataniittu! 😊");
                 return;
             }
 
-            let key = `reaction_${itemID}_${type}`;
-            let count = parseInt(localStorage.getItem(key)) || 0;
-            count++;
-            localStorage.setItem(key, count);
-            localStorage.setItem(userReactedKey, type); // kan cuqaase galmeessi
-            
-            document.getElementById(`${type}-count`).innerText = count;
-        }
+            const reactionRef = db.collection('reactions').doc(itemID);
+            const userReactionRef = reactionRef.collection('reactedUsers').doc(currentUser.uid);
 
-        function loadReactions() {
-            if (!itemID) return;
-            ['like','love','funny'].forEach(type => {
-                let count = localStorage.getItem(`reaction_${itemID}_${type}`) || 0;
-                let el = document.getElementById(`${type}-count`);
-                if (el) el.innerText = count;
+            db.runTransaction(t => {
+                return t.get(userReactionRef).then(userDoc => {
+                    if (userDoc.exists) {
+                        throw new Error('already-reacted');
+                    }
+                    t.set(reactionRef, { [type]: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+                    t.set(userReactionRef, { type: type, date: firebase.firestore.FieldValue.serverTimestamp() });
+                });
+            }).then(() => {
+                userAlreadyReacted = true;
+            }).catch(err => {
+                if (err.message === 'already-reacted') {
+                    userAlreadyReacted = true;
+                    alert("Duraan reaction laataniittu! 😊");
+                } else {
+                    console.error("Reaction galmeessuu dogoggora:", err);
+                }
             });
         }
 
-        /* === SAVE TO LOCALSTORAGE LOGIC === */
+        /* === SAVE LOGIC (Firestore realtime) ===
+           Sanduuqa: savedArticles/{uid}_{itemID} → fields: uid, itemID, title, url, date
+           Hubadhu: kun uid (anonymous auth) waliin walqabsiifama - waan ta'eef gara
+           device biraatti yoo ce'an, save-oonni walfakkaataa hin ta'u (login dhugaa
+           yoo hin jiraanne). Garuu localStorage caalaa amanamaadha, browser data
+           haqamnaan hin badu.
+        */
+        let isSavedState = false;
+
+        function initSaveButton() {
+            if (!itemID || !currentUser) return;
+            const saveRef = db.collection('savedArticles').doc(`${currentUser.uid}_${itemID}`);
+            saveRef.onSnapshot(doc => {
+                isSavedState = doc.exists;
+                updateSaveButtonVisual();
+            }, err => console.error("Save dubbisuu dogoggora:", err));
+        }
+
         function toggleSaveArticle() {
-            if (!itemID) return;
-            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-            const currentUrl = window.location.pathname + window.location.search; 
-            let title = document.getElementById('post-title')?.innerText || "Rise Today Article";
-            
-            const index = savedArticles.findIndex(a => a.id === itemID);
-            if (index === -1) {
-                savedArticles.push({ id: itemID, title: title, url: currentUrl });
-                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
+            if (!itemID || !currentUser) return;
+            const saveRef = db.collection('savedArticles').doc(`${currentUser.uid}_${itemID}`);
+            const currentUrl = window.location.pathname + window.location.search;
+            const title = document.getElementById('post-title')?.innerText || "Rise Today Article";
+
+            if (isSavedState) {
+                saveRef.delete().catch(err => console.error("Save haquu dogoggora:", err));
             } else {
-                savedArticles.splice(index, 1);
-                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
+                saveRef.set({
+                    uid: currentUser.uid,
+                    itemID: itemID,
+                    title: title,
+                    url: currentUrl,
+                    date: firebase.firestore.FieldValue.serverTimestamp()
+                }).catch(err => console.error("Save galmeessuu dogoggora:", err));
             }
-            updateSaveButtonVisual();
         }
 
         function updateSaveButtonVisual() {
-            if (!itemID) return;
-            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
             const btn = document.getElementById('save-btn');
             if (!btn) return;
-            
+
             const isLight = document.body.classList.contains('light-mode');
-            const isSaved = savedArticles.some(a => a.id === itemID);
-            if (isSaved) { 
-                btn.innerHTML = "❤️ saved"; 
-                btn.style.background = isLight ? "#000000" : "#ffffff"; 
-                btn.style.color = isLight ? "#ffffff" : "#000000"; 
+            if (isSavedState) {
+                btn.innerHTML = "❤️ saved";
+                btn.style.background = isLight ? "#000000" : "#ffffff";
+                btn.style.color = isLight ? "#ffffff" : "#000000";
                 btn.style.borderColor = isLight ? "#000000" : "#ffffff";
-            } else { 
-                btn.innerHTML = "🔖 save"; 
-                btn.style.background = isLight ? "#f0f0f0" : "#222"; 
-                btn.style.color = isLight ? "#000000" : "#ffffff"; 
+            } else {
+                btn.innerHTML = "🔖 save";
+                btn.style.background = isLight ? "#f0f0f0" : "#222";
+                btn.style.color = isLight ? "#000000" : "#ffffff";
                 btn.style.borderColor = isLight ? "#ccc" : "#444";
             }
         }
@@ -355,7 +415,9 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
             }
         }
 
-        /* === COMMENTS WITH LOCALSTORAGE === */
+        /* === COMMENTS (Firestore realtime) ===
+           Sanduuqa: comments → fields: itemID, name, text, date (serverTimestamp)
+        */
         function toggleComments() {
             const section = document.getElementById('comment-section');
             section.style.display = section.style.display === 'none' ? 'block' : 'none';
@@ -373,21 +435,35 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                 return;
             }
 
-            let comments = JSON.parse(localStorage.getItem(`comments_${itemID}`)) || [];
-            const newComment = { name, text, date: new Date().toISOString() };
-            comments.push(newComment);
-            localStorage.setItem(`comments_${itemID}`, JSON.stringify(comments));
+            const btn = document.querySelector('#comment-section button[onclick="submitComment()"]');
+            if (btn) btn.disabled = true;
 
-            document.getElementById('comment-name').value = '';
-            document.getElementById('comment-text').value = '';
-
-            renderComments(comments);
+            db.collection('comments').add({
+                itemID: itemID,
+                name: name,
+                text: text,
+                date: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                document.getElementById('comment-name').value = '';
+                document.getElementById('comment-text').value = '';
+            }).catch(err => {
+                console.error("Comment galmeessuu dogoggora:", err);
+                alert("Dogoggora uumame, yaadni kee hin galmoofne. Irra deebi'ii yaali.");
+            }).finally(() => {
+                if (btn) btn.disabled = false;
+            });
         }
 
-        function loadComments() {
+        // Realtime listener: yaadni namoota kaanii dhufu illee battalumatti mul'ata
+        function initComments() {
             if (!itemID) return;
-            let comments = JSON.parse(localStorage.getItem(`comments_${itemID}`)) || [];
-            renderComments(comments);
+            db.collection('comments')
+                .where('itemID', '==', itemID)
+                .orderBy('date', 'asc')
+                .onSnapshot(snapshot => {
+                    const comments = snapshot.docs.map(d => d.data());
+                    renderComments(comments);
+                }, err => console.error("Comment dubbisuu dogoggora:", err));
         }
 
         function renderComments(comments) {
