@@ -88,6 +88,25 @@
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="apple-touch-icon" href="/images/favicon.png">
 </head>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey:"AIzaSyDTqWFjdmXuPvoEnyhcuRcsiV8infSRGoU", // Key kee isa Firebase irraa kaayyadhu
+    authDomain: "rise-d.firebaseapp.com",
+    projectId: "rise-d",
+    storageBucket: "rise-d.firebasestorage.app",
+    messagingSenderId: "837804358810",
+    appId: "1:837804358810:web:f47db2ba429c3c129b7323",
+    measurementId: "G-PL5R9SXN78"
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const db = firebase.firestore();
+</script>
 <body>
     <script>
         // Post.html-rratti "dark" default; yoo home.html irratti "light" filatan,
