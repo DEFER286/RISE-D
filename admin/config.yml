@@ -7,7 +7,7 @@ media_folder: "assets/images"
 public_folder: "/assets/images"
 
 collections:
-  # Akkaataa Haaraa: Motivational Speeches hundas JSON tokko keessatti kuusuuf
+  # Motivational Speeches JSON
   - name: "motivation_data"
     label: "Motivational Speeches (JSON)"
     files:
@@ -18,6 +18,7 @@ collections:
           - label: "Tarree Barruulee Onnachiisoo"
             name: "items"
             widget: "list"
+            add_to_top: true
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
               - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: naannoo-kee-ilaali (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
@@ -26,7 +27,7 @@ collections:
               - { label: "Meta Description", name: "description", widget: "string", required: false }
               - { label: "Photo", name: "image", widget: "image", required: false }
 
-  # Inni Instructive Stories akkuma jirutti itti fufa
+  # Instructive Stories JSON
   - name: "instructive_data"
     label: "Instructive Stories (JSON)"
     files:
@@ -37,6 +38,7 @@ collections:
           - label: "Tarree Seenaawwanii (List of Stories)"
             name: "items"
             widget: "list"
+            add_to_top: true
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
               - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gatii-kee-beeki (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
@@ -45,7 +47,7 @@ collections:
               - { label: "Meta Description", name: "description", widget: "string", required: false }
               - { label: "Photo", name: "image", widget: "image", required: false }
 
-  # Kutaa Haaraa: Gorsa Barnootaa
+  # Gorsa Barnootaa JSON
   - name: "education_data"
     label: "Gorsa Barnootaa (JSON)"
     files:
@@ -56,6 +58,7 @@ collections:
           - label: "Tarree Barruulee Gorsa Barnootaa"
             name: "items"
             widget: "list"
+            add_to_top: true
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
               - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gorsa-barnootaa (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
@@ -63,3 +66,4 @@ collections:
               - { label: "Qabiyyee Barruu", name: "body", widget: "markdown" }
               - { label: "Meta Description", name: "description", widget: "string", required: false }
               - { label: "Photo", name: "image", widget: "image", required: false }
+              
