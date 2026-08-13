@@ -8,41 +8,6 @@
       gtag('js', new Date());
       gtag('config', 'G-KE3FRR2XHP');
     </script>
-
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script>
-      const firebaseConfig = {
-        apiKey:"AIzaSyDTqWFjdmXuPvoEnyhcuRcsiV8infSRGoU",
-        authDomain: "rise-d.firebaseapp.com",
-        projectId: "rise-d",
-        storageBucket: "rise-d.firebasestorage.app",
-        messagingSenderId: "837804358810",
-        appId: "1:837804358810:web:f47db2ba429c3c129b7323",
-        measurementId: "G-PL5R9SXN78"
-      };
-
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-      }
-      const db = firebase.firestore();
-
-      // uid kana post.html irratti save godhe waliin walqixa ta'uu qaba,
-      // kanaafuu same-origin (domain tokkicha) irratti ta'uu isaa mirkaneessi.
-      let currentUser = null;
-      let authReadyResolve;
-      const authReady = new Promise(resolve => { authReadyResolve = resolve; });
-
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          currentUser = user;
-          authReadyResolve(user);
-        }
-      });
-      firebase.auth().signInAnonymously().catch(err => console.error("Auth dogoggora:", err));
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RISE TODAY - Saved</title>
@@ -285,44 +250,33 @@
             });
         }
 
-        // Barruulee ol-kaa'aman Firestore irraa realtime-iin fudhachuu
-        // (uid post.html irratti save godhame waliin wal-simsiisuun)
-        authReady.then(() => {
+        document.addEventListener("DOMContentLoaded", function() {
             const container = document.getElementById("saved-articles-container");
+            const message = document.getElementById("no-saved-message");
 
-            db.collection('savedArticles')
-                .where('uid', '==', currentUser.uid)
-                .orderBy('date', 'desc')
-                .onSnapshot(snapshot => {
-                    container.innerHTML = '';
+            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
 
-                    if (snapshot.empty) {
-                        container.innerHTML = `<p id="no-saved-message">Ammaaf barruun ol-kaa'ame hin jiru.</p>`;
-                        return;
-                    }
+            if (savedArticles.length > 0) {
+                if (message) message.remove();
 
-                    snapshot.forEach(doc => {
-                        const article = doc.data();
-                        const card = document.createElement("a");
-                        card.href = article.url;
-                        card.className = "saved-card";
-                        // Yeroo card kana cuqaasan, X button post.html irratti
-                        // gara /saved.html tti akka deebi'u godha.
-                        card.addEventListener('click', () => sessionStorage.setItem('postSource', 'saved'));
+                savedArticles.forEach(article => {
+                    const card = document.createElement("a");
+                    card.href = article.url;
+                    card.className = "saved-card";
+                    // Yeroo card kana cuqaasan, X button post.html irratti
+                    // gara /saved.html tti akka deebi'u godha.
+                    card.addEventListener('click', () => sessionStorage.setItem('postSource', 'saved'));
 
-                        card.innerHTML = `
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="saved-card-title">${article.title}</span>
-                                <span class="saved-card-arrow">➔</span>
-                            </div>
-                        `;
+                    card.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="saved-card-title">${article.title}</span>
+                            <span class="saved-card-arrow">➔</span>
+                        </div>
+                    `;
 
-                        container.appendChild(card);
-                    });
-                }, err => {
-                    console.error("Saved articles dubbisuu dogoggora:", err);
-                    container.innerHTML = `<p id="no-saved-message">Dogoggorri uumameera, irra deebi'ii yaali.</p>`;
+                    container.appendChild(card);
                 });
+            }
         });
 
         function searchSaved() {
@@ -335,4 +289,5 @@
 
 </body>
 </html>
-                
+
+            
