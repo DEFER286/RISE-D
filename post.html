@@ -54,13 +54,7 @@
         .related-card-desc { font-size: 13px; color: #aaa; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .related-card-link { color: #ffffff; font-size: 13px; font-weight: bold; margin-top: 10px; display: inline-block; }
 
-        /* ==========================================================================
-           === LIGHT MODE OVERRIDES (yoo body.light-mode jiraate) ===
-           Kun home.html waliin walsimuuf: home.html irratti "light" default,
-           post.html irratti immoo "dark" default waan ta'eef, asirratti class
-           addaa (.light-mode) fayyadamna localStorage theme kan 'light' ta'e
-           yeroo argamu.
-           ========================================================================== */
+        /* === LIGHT MODE OVERRIDES === */
         body.light-mode { background-color: #ffffff; color: #333; }
         body.light-mode .close-btn { color: #000000; }
         body.light-mode .close-btn:hover { color: #555555; }
@@ -85,40 +79,17 @@
         body.light-mode #comment-section h3 { color: #000000 !important; }
         body.light-mode #comment-name, body.light-mode #comment-text { background:#f5f5f5 !important; color:#000 !important; border-color:#ccc !important; }
     </style>
+    
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="apple-touch-icon" href="/images/favicon.png">
-    <!-- 1. Library Supabase CDN -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- 2. Faayila JS haaraa uumte sana -->
-<script src="supabase-config.js"></script>
-    
-  <!-- 3. Faayila Logic Kee (app.js) -->
-  <script src="app.js"></script>
+    <!-- Supabase CDN & Configuration Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="app.js"></script>
 </head>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey:"AIzaSyDTqWFjdmXuPvoEnyhcuRcsiV8infSRGoU", // Key kee isa Firebase irraa kaayyadhu
-    authDomain: "rise-d.firebaseapp.com",
-    projectId: "rise-d",
-    storageBucket: "rise-d.firebasestorage.app",
-    messagingSenderId: "837804358810",
-    appId: "1:837804358810:web:f47db2ba429c3c129b7323",
-    measurementId: "G-PL5R9SXN78"
-  };
-
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-  const db = firebase.firestore();
-</script>
 <body>
     <script>
-        // Post.html-rratti "dark" default; yoo home.html irratti "light" filatan,
-        // localStorage keessatti theme='light' waan ta'eef, asittis walsimsiisna.
         if (localStorage.getItem('theme') === 'light') {
             document.body.classList.add('light-mode');
         }
@@ -138,7 +109,7 @@
         <div id="post-image-container"></div>
         <div class="content" id="post-content" itemprop="articleBody"></div>
 
-        <!-- Dynamic Action Toolbar (Reaction + Saved + Share + Comment BTNs) -->
+        <!-- Dynamic Action Toolbar -->
         <div id="dynamic-action-toolbar"></div>
 
         <!-- Comment Section -->
@@ -167,6 +138,18 @@
         </div>
     </div>
 
+    <!-- Auth Modal (Sign Up / Login) -->
+    <div id="auth-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center;">
+        <div style="background:#1a1a1a; padding:30px; border-radius:12px; max-width:400px; width:90%; position:relative; color:#fff; border:1px solid #444;">
+            <span onclick="document.getElementById('auth-modal').style.display='none'" style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer; color:#aaa;">&times;</span>
+            <h3 id="auth-modal-title" style="margin-top:0; margin-bottom:20px; font-size:20px; text-align:center;">Sign In / Sign Up</h3>
+            <input id="auth-email" type="email" placeholder="Email address..." style="width:100%; background:#222; border:1px solid #555; color:#fff; border-radius:6px; padding:10px; margin-bottom:12px; box-sizing:border-box; outline:none;">
+            <input id="auth-password" type="password" placeholder="Password..." style="width:100%; background:#222; border:1px solid #555; color:#fff; border-radius:6px; padding:10px; margin-bottom:20px; box-sizing:border-box; outline:none;">
+            <button onclick="handleAuthSubmit()" style="width:100%; background:#fff; color:#000; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:14px; margin-bottom:10px;">Continue</button>
+            <p id="auth-switch-text" style="text-align:center; font-size:13px; color:#aaa; margin:0; cursor:pointer;" onclick="toggleAuthMode()">Don't have an account? Sign Up</p>
+        </div>
+    </div>
+
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         let slug = urlParams.get('slug'); 
@@ -181,14 +164,8 @@
         }
 
         const catLabels = { motivation: '🔥 Motivation', stories: '📚 Seenaa', education: '🎓 Gorsa' };
-        let itemID = category && slug ? (category + "-" + slug) : null;
+        let currentPostSlug = category && slug ? slug : null;
 
-        // "X" (close) akka bakka namichi dhufee sanatti deebi'u godhu:
-        // sessionStorage keessatti 'postSource' (home.html ykn category page irratti
-        // card cuqaannaan set godhama) ilaalla - kunis document.referrer caalaa
-        // amanamaadha (referrer yeroo baay'ee duwwaa ta'a).
-        // - postSource === 'home' -> gara home.html tti deebi'a
-        // - kan biraa hunda (category irraa, direct link, share, fi kkf) -> gara kutaa (category) tti deebi'a
         const validCategories = ['motivation', 'stories', 'education'];
         const closeLink = document.getElementById('close-btn-link');
         if (closeLink) {
@@ -214,20 +191,16 @@
                         const cleanText = (post.body || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
                         const shortDesc = cleanText.substring(0, 150) + "...";
 
-                        // Meta description duraan ijaarame argachuu ykn haaraa uumuu
-let metaDesc = document.querySelector('meta[name="description"]');
-if (!metaDesc) {
-    metaDesc = document.createElement('meta');
-    metaDesc.setAttribute('name', 'description');
-    document.head.appendChild(metaDesc);
-}
+                        let metaDesc = document.querySelector('meta[name="description"]');
+                        if (!metaDesc) {
+                            metaDesc = document.createElement('meta');
+                            metaDesc.setAttribute('name', 'description');
+                            document.head.appendChild(metaDesc);
+                        }
 
-// Yoo admin panel irratti guuttee jirta ta'e isa nuyi uumne (post.description) fudhata, yoo duwwaa ta'e immoo shortDesc (ofumaan kan cite) sana fayyadama.
-const finalDesc = post.description && post.description.trim() !== "" ? post.description : shortDesc;
-
-// Amma bakkoota hundatti ergi
-metaDesc.setAttribute('content', finalDesc);
-document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
+                        const finalDesc = post.description && post.description.trim() !== "" ? post.description : shortDesc;
+                        metaDesc.setAttribute('content', finalDesc);
+                        document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
 
                         if (post.image) {
                             document.getElementById('meta-og-image').setAttribute('content', window.location.origin + post.image);
@@ -250,7 +223,7 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                         parsedBody = parsedBody.replace(/\n/g, '<br>');
                         document.getElementById('post-content').innerHTML = parsedBody;
 
-                        // Toolbar dynamically inject gochuu (Reaction + Saved + Share + Comment)
+                        // Toolbar dynamically inject gochuu
                         document.getElementById('dynamic-action-toolbar').innerHTML = `
                         <div style="margin:40px 0 20px 0; padding-top:20px; border-top:1px solid #333; text-align:center;">
                             <p style="color:#888; font-size:14px; margin-bottom:15px;">What do you think?</p>
@@ -262,94 +235,17 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
                             <button onclick="toggleComments()" class="reaction-btn">💬 <span id="comment-count">0</span> Comments</button>
                         </div>`;
 
-                        // Data duraan kufame fiduu
-                        loadReactions();
-                        updateSaveButtonVisual();
-                        loadComments();
-
-                        let readArticles = JSON.parse(localStorage.getItem('readArticlesList')) || [];
-                        if (!readArticles.includes(itemID)) {
-                            readArticles.push(itemID);
-                            localStorage.setItem('readArticlesList', JSON.stringify(readArticles));
+                        if (post.image) {
+                            document.getElementById('post-image-container').innerHTML = 
+                            `<img src="${post.image}" alt="${post.title}" itemprop="image" fetchpriority="high" style="width:100%; height:auto; max-height:450px; object-fit:cover; border-radius:12px; display:block; margin:0 auto;">`;
                         }
-                     if (post.image) {
-                   document.getElementById('post-image-container').innerHTML = 
-                 `<img src="${post.image}" alt="${post.title}" itemprop="image" fetchpriority="high" style="width:100%; height:auto; max-height:450px; object-fit:cover; border-radius:12px; display:block; margin:0 auto;">`;
-                     }
-                       loadRelatedPosts(data.items, slug, category);
+                        
+                        loadRelatedPosts(data.items, slug, category);
                     } else {
                         document.getElementById('post-title').innerText = "Barruun hin argamne!";
                     }
                 })
                 .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
-        }
-
-        /* === REACTIONS LOGIC === */
-        function handleReaction(type) {
-            if (!itemID) return;
-            let userReactedKey = `reacted_${itemID}`;
-            
-            // User-riin tokko al tokko qofa akka reaction laatu gochuuf
-            if (localStorage.getItem(userReactedKey)) {
-                alert("Duraan reaction laataniittu! 😊");
-                return;
-            }
-
-            let key = `reaction_${itemID}_${type}`;
-            let count = parseInt(localStorage.getItem(key)) || 0;
-            count++;
-            localStorage.setItem(key, count);
-            localStorage.setItem(userReactedKey, type); // kan cuqaase galmeessi
-            
-            document.getElementById(`${type}-count`).innerText = count;
-        }
-
-        function loadReactions() {
-            if (!itemID) return;
-            ['like','love','funny'].forEach(type => {
-                let count = localStorage.getItem(`reaction_${itemID}_${type}`) || 0;
-                let el = document.getElementById(`${type}-count`);
-                if (el) el.innerText = count;
-            });
-        }
-
-        /* === SAVE TO LOCALSTORAGE LOGIC === */
-        function toggleSaveArticle() {
-            if (!itemID) return;
-            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-            const currentUrl = window.location.pathname + window.location.search; 
-            let title = document.getElementById('post-title')?.innerText || "Rise Today Article";
-            
-            const index = savedArticles.findIndex(a => a.id === itemID);
-            if (index === -1) {
-                savedArticles.push({ id: itemID, title: title, url: currentUrl });
-                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
-            } else {
-                savedArticles.splice(index, 1);
-                localStorage.setItem('savedArticlesList', JSON.stringify(savedArticles));
-            }
-            updateSaveButtonVisual();
-        }
-
-        function updateSaveButtonVisual() {
-            if (!itemID) return;
-            let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
-            const btn = document.getElementById('save-btn');
-            if (!btn) return;
-            
-            const isLight = document.body.classList.contains('light-mode');
-            const isSaved = savedArticles.some(a => a.id === itemID);
-            if (isSaved) { 
-                btn.innerHTML = "❤️ saved"; 
-                btn.style.background = isLight ? "#000000" : "#ffffff"; 
-                btn.style.color = isLight ? "#ffffff" : "#000000"; 
-                btn.style.borderColor = isLight ? "#000000" : "#ffffff";
-            } else { 
-                btn.innerHTML = "🔖 save"; 
-                btn.style.background = isLight ? "#f0f0f0" : "#222"; 
-                btn.style.color = isLight ? "#000000" : "#ffffff"; 
-                btn.style.borderColor = isLight ? "#ccc" : "#444";
-            }
         }
 
         /* === SHARE LOGIC === */
@@ -363,59 +259,13 @@ document.getElementById('meta-og-desc').setAttribute('content', finalDesc);
             }
         }
 
-        /* === COMMENTS WITH LOCALSTORAGE === */
+        /* === COMMENTS TOGGLE === */
         function toggleComments() {
             const section = document.getElementById('comment-section');
             section.style.display = section.style.display === 'none' ? 'block' : 'none';
             if(section.style.display === 'block') {
                 section.scrollIntoView({ behavior: 'smooth' });
             }
-        }
-
-        function submitComment() {
-            if (!itemID) return;
-            const name = document.getElementById('comment-name').value.trim();
-            const text = document.getElementById('comment-text').value.trim();
-            if (!name || !text) {
-                alert("Maqaa fi yaada kee guuti!");
-                return;
-            }
-
-            let comments = JSON.parse(localStorage.getItem(`comments_${itemID}`)) || [];
-            const newComment = { name, text, date: new Date().toISOString() };
-            comments.push(newComment);
-            localStorage.setItem(`comments_${itemID}`, JSON.stringify(comments));
-
-            document.getElementById('comment-name').value = '';
-            document.getElementById('comment-text').value = '';
-
-            renderComments(comments);
-        }
-
-        function loadComments() {
-            if (!itemID) return;
-            let comments = JSON.parse(localStorage.getItem(`comments_${itemID}`)) || [];
-            renderComments(comments);
-        }
-
-        function renderComments(comments) {
-            const list = document.getElementById('comment-list');
-            list.innerHTML = '';
-            
-            comments.forEach(c => {
-                const div = document.createElement('div');
-                const isLight = document.body.classList.contains('light-mode');
-                div.style.cssText = isLight
-                    ? 'background:#f5f5f5; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #000000;'
-                    : 'background:#1a1a1a; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #ffffff;';
-                const nameColor = isLight ? '#000000' : '#ffffff';
-                const textColor = isLight ? '#333' : '#ccc';
-                div.innerHTML = `<strong style="color:${nameColor};">${c.name}</strong><p style="color:${textColor}; margin:6px 0 0; font-size:14px;">${c.text}</p>`;
-                list.appendChild(div);
-            });
-
-            document.getElementById('comment-count').innerText = comments.length;
-            document.getElementById('comment-heading-count').innerText = comments.length;
         }
 
         /* === RELATED POSTS LOGIC === */
