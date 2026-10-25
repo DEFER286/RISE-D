@@ -5,7 +5,7 @@ function getPostSlug() {
     if (!slug) {
         const pathParts = window.location.pathname.split('/').filter(Boolean);
         if (pathParts.length > 0) {
-            slug = pathParts[pathParts.length - 1]; // URL irraa isa dhumaa (slug) fudhata
+            slug = pathParts[pathParts.length - 1];
         }
     }
     return slug || 'default-post';
@@ -17,21 +17,32 @@ function toggleAuthMode() {
     isSignUpMode = !isSignUpMode;
     const titleEl = document.getElementById('auth-modal-title');
     const switchEl = document.getElementById('auth-switch-text');
-    if (isSignUpMode) {
-        titleEl.innerText = "Create an Account (Sign Up)";
-        switchEl.innerText = "Already have an account? Sign In";
-    } else {
-        titleEl.innerText = "Sign In to Your Account";
-        switchEl.innerText = "Don't have an account? Sign Up";
+    if (titleEl && switchEl) {
+        if (isSignUpMode) {
+            titleEl.innerText = "Create an Account (Sign Up)";
+            switchEl.innerText = "Already have an account? Sign In";
+        } else {
+            titleEl.innerText = "Sign In to Your Account";
+            switchEl.innerText = "Don't have an account? Sign Up";
+        }
     }
 }
 
 async function handleAuthSubmit() {
-    const email = document.getElementById('auth-email').value.trim();
-    const password = document.getElementById('auth-password').value.trim();
+    const emailInput = document.getElementById('auth-email');
+    const passwordInput = document.getElementById('auth-password');
+    if (!emailInput || !passwordInput) return;
+    
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
 
     if (!email || !password) {
         alert("Maaloo Email fi Password guuti!");
+        return;
+    }
+
+    if (typeof supabase === 'undefined') {
+        alert("Supabase client is not loaded!");
         return;
     }
 
@@ -50,7 +61,8 @@ async function handleAuthSubmit() {
             alert("Rakkina Login: " + error.message);
         } else {
             alert("Milkaa'inaan seenteetta! 🎉");
-            document.getElementById('auth-modal').style.display = 'none';
+            const modal = document.getElementById('auth-modal');
+            if (modal) modal.style.display = 'none';
             loadReactions();
             loadComments();
         }
@@ -61,7 +73,6 @@ async function handleAuthSubmit() {
 async function handleReaction(type) {
     const slug = getPostSlug();
     
-    // Supabase Client jiraachuu mirkaneessuu
     if (typeof supabase === 'undefined') {
         alert("Supabase CDN hin fe'amne!");
         return;
@@ -71,8 +82,11 @@ async function handleReaction(type) {
     
     if (!user) {
         const modal = document.getElementById('auth-modal');
-        if (modal) modal.style.display = 'flex';
-        else alert("React gochuuf dursa Sign Up ykn Login godhadhu!");
+        if (modal) {
+            modal.style.display = 'flex';
+        } else {
+            alert("React gochuuf dursa Sign Up ykn Login godhadhu!");
+        }
         return;
     }
 
@@ -81,7 +95,7 @@ async function handleReaction(type) {
         .insert([{ post_slug: slug, reaction_type: type, user_id: user.id }]);
 
     if (!error) {
-        alert("Milkaa'inaan react godheetta!");
+        alert("Milkaa'inaan react godheetta! 👍");
         loadReactions();
     } else {
         alert("Rakkina: " + error.message);
@@ -119,12 +133,17 @@ async function submitComment() {
     
     if (!user) {
         const modal = document.getElementById('auth-modal');
-        if (modal) modal.style.display = 'flex';
-        else alert("Yaada kennuuf dursa Sign Up ykn Login godhadhu!");
+        if (modal) {
+            modal.style.display = 'flex';
+        } else {
+            alert("Yaada kennuuf dursa Sign Up ykn Login godhadhu!");
+        }
         return;
     }
 
-    const text = document.getElementById('comment-text').value.trim();
+    const textEl = document.getElementById('comment-text');
+    if (!textEl) return;
+    const text = textEl.value.trim();
     if (!text) {
         alert("Maaloo yaada kee barreessi!");
         return;
@@ -135,7 +154,7 @@ async function submitComment() {
         .insert([{ post_slug: slug, comment_text: text, user_email: user.email }]);
 
     if (!error) {
-        document.getElementById('comment-text').value = '';
+        textEl.value = '';
         loadComments();
     } else {
         alert("Rakkina: " + error.message);
