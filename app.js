@@ -1,19 +1,18 @@
-// Post slug fachuuf gargaaru
+// Post slug amanamummaan fiduuf
 function getPostSlug() {
     const urlParams = new URLSearchParams(window.location.search);
     let slug = urlParams.get('slug');
     if (!slug) {
         const pathParts = window.location.pathname.split('/').filter(Boolean);
-        if (pathParts.length >= 2 && pathParts[0] !== 'post.html') {
-            slug = pathParts[1];
+        if (pathParts.length > 0) {
+            slug = pathParts[pathParts.length - 1]; // URL irraa isa dhumaa (slug) fudhata
         }
     }
-    return slug || window.location.pathname;
+    return slug || 'default-post';
 }
 
 let isSignUpMode = false;
 
-// Sign In / Sign Up foomii jijjiiruuf
 function toggleAuthMode() {
     isSignUpMode = !isSignUpMode;
     const titleEl = document.getElementById('auth-modal-title');
@@ -27,7 +26,6 @@ function toggleAuthMode() {
     }
 }
 
-// Authentication (Login/SignUp) hojii irra oolchuuf
 async function handleAuthSubmit() {
     const email = document.getElementById('auth-email').value.trim();
     const password = document.getElementById('auth-password').value.trim();
@@ -62,11 +60,19 @@ async function handleAuthSubmit() {
 // === REACTIONS LOGIC ===
 async function handleReaction(type) {
     const slug = getPostSlug();
+    
+    // Supabase Client jiraachuu mirkaneessuu
+    if (typeof supabase === 'undefined') {
+        alert("Supabase CDN hin fe'amne!");
+        return;
+    }
+
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {
-        alert("React gochuuf dursa Sign Up ykn Login godhadhu!");
-        document.getElementById('auth-modal').style.display = 'flex';
+        const modal = document.getElementById('auth-modal');
+        if (modal) modal.style.display = 'flex';
+        else alert("React gochuuf dursa Sign Up ykn Login godhadhu!");
         return;
     }
 
@@ -83,15 +89,16 @@ async function handleReaction(type) {
 }
 
 async function loadReactions() {
+    if (typeof supabase === 'undefined') return;
     const slug = getPostSlug();
     const { data, error } = await supabase
         .from('reactions')
-        .select('reaction_type, post_slug');
+        .select('reaction_type, post_slug')
+        .eq('post_slug', slug);
 
     if (!error && data) {
-        const filtered = data.filter(r => r.post_slug === slug);
         let counts = { like: 0, love: 0, funny: 0 };
-        filtered.forEach(r => {
+        data.forEach(r => {
             if (counts[r.reaction_type] !== undefined) {
                 counts[r.reaction_type]++;
             }
@@ -106,11 +113,14 @@ async function loadReactions() {
 // === COMMENTS LOGIC ===
 async function submitComment() {
     const slug = getPostSlug();
+    if (typeof supabase === 'undefined') return;
+
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {
-        alert("Yaada kennuuf dursa Sign Up ykn Login godhadhu!");
-        document.getElementById('auth-modal').style.display = 'flex';
+        const modal = document.getElementById('auth-modal');
+        if (modal) modal.style.display = 'flex';
+        else alert("Yaada kennuuf dursa Sign Up ykn Login godhadhu!");
         return;
     }
 
@@ -133,19 +143,20 @@ async function submitComment() {
 }
 
 async function loadComments() {
+    if (typeof supabase === 'undefined') return;
     const slug = getPostSlug();
     const { data, error } = await supabase
         .from('comments')
         .select('*')
+        .eq('post_slug', slug)
         .order('created_at', { ascending: false });
 
     if (!error && data) {
-        const filteredComments = data.filter(c => c.post_slug === slug);
         const list = document.getElementById('comment-list');
         if (!list) return;
         list.innerHTML = '';
 
-        filteredComments.forEach(c => {
+        data.forEach(c => {
             const div = document.createElement('div');
             const isLight = document.body.classList.contains('light-mode');
             div.style.cssText = isLight
@@ -159,8 +170,8 @@ async function loadComments() {
 
         const countEl = document.getElementById('comment-count');
         const headingCountEl = document.getElementById('comment-heading-count');
-        if (countEl) countEl.innerText = filteredComments.length;
-        if (headingCountEl) headingCountEl.innerText = filteredComments.length;
+        if (countEl) countEl.innerText = data.length;
+        if (headingCountEl) headingCountEl.innerText = data.length;
     }
 }
 
@@ -203,7 +214,6 @@ function updateSaveButtonVisual() {
     }
 }
 
-// Yeroo fuulli banamu ragaan akka fe'amu gochuu
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         loadReactions();
