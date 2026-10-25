@@ -29,168 +29,191 @@ function toggleAuthMode() {
 }
 
 async function handleAuthSubmit() {
-    const emailInput = document.getElementById('auth-email');
-    const passwordInput = document.getElementById('auth-password');
-    if (!emailInput || !passwordInput) return;
-    
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
+    try {
+        const emailInput = document.getElementById('auth-email');
+        const passwordInput = document.getElementById('auth-password');
+        if (!emailInput || !passwordInput) return;
+        
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
 
-    if (!email || !password) {
-        alert("Maaloo Email fi Password guuti!");
-        return;
-    }
-
-    if (typeof supabase === 'undefined') {
-        alert("Supabase client is not loaded!");
-        return;
-    }
-
-    if (isSignUpMode) {
-        const { data, error } = await supabase.auth.signUp({ email, password });
-        if (error) {
-            alert("Rakkina Sign Up: " + error.message);
-        } else {
-            alert("Galmeen milkaa'e! Amma login gochuu dandeessa.");
-            isSignUpMode = false;
-            toggleAuthMode();
+        if (!email || !password) {
+            alert("Maaloo Email fi Password guuti!");
+            return;
         }
-    } else {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) {
-            alert("Rakkina Login: " + error.message);
-        } else {
-            alert("Milkaa'inaan seenteetta! 🎉");
-            const modal = document.getElementById('auth-modal');
-            if (modal) modal.style.display = 'none';
-            loadReactions();
-            loadComments();
+
+        if (typeof supabase === 'undefined') {
+            alert("Supabase client is not loaded!");
+            return;
         }
+
+        if (isSignUpMode) {
+            const { data, error } = await supabase.auth.signUp({ email, password });
+            if (error) {
+                alert("Rakkina Sign Up: " + error.message);
+            } else {
+                alert("Galmeen milkaa'e! Amma login gochuu dandeessa.");
+                isSignUpMode = false;
+                toggleAuthMode();
+            }
+        } else {
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) {
+                alert("Rakkina Login: " + error.message);
+            } else {
+                alert("Milkaa'inaan seenteetta! 🎉");
+                const modal = document.getElementById('auth-modal');
+                if (modal) modal.style.display = 'none';
+                loadReactions();
+                loadComments();
+            }
+        }
+    } catch (err) {
+        console.error("Auth error:", err);
     }
 }
 
 // === REACTIONS LOGIC ===
 async function handleReaction(type) {
-    const slug = getPostSlug();
-    
-    if (typeof supabase === 'undefined') {
-        alert("Supabase CDN hin fe'amne!");
-        return;
-    }
-
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    if (!user) {
-        const modal = document.getElementById('auth-modal');
-        if (modal) {
-            modal.style.display = 'flex';
-        } else {
-            alert("React gochuuf dursa Sign Up ykn Login godhadhu!");
+    try {
+        const slug = getPostSlug();
+        
+        if (typeof supabase === 'undefined') {
+            alert("Supabase CDN hin fe'amne!");
+            return;
         }
-        return;
-    }
 
-    const { data, error } = await supabase
-        .from('reactions')
-        .insert([{ post_slug: slug, reaction_type: type, user_id: user.id }]);
+        const { data: sessionData } = await supabase.auth.getSession();
+        const user = sessionData?.session?.user;
+        
+        if (!user) {
+            const modal = document.getElementById('auth-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+            } else {
+                alert("React gochuuf dursa Sign Up ykn Login godhadhu!");
+            }
+            return;
+        }
 
-    if (!error) {
-        alert("Milkaa'inaan react godheetta! 👍");
-        loadReactions();
-    } else {
-        alert("Rakkina: " + error.message);
+        const { error } = await supabase
+            .from('reactions')
+            .insert([{ post_slug: slug, reaction_type: type, user_id: user.id }]);
+
+        if (!error) {
+            alert("Milkaa'inaan react godheetta! 👍");
+            loadReactions();
+        } else {
+            alert("Rakkina Database: " + error.message);
+        }
+    } catch (e) {
+        console.error("Reaction error:", e);
     }
 }
 
 async function loadReactions() {
-    if (typeof supabase === 'undefined') return;
-    const slug = getPostSlug();
-    const { data, error } = await supabase
-        .from('reactions')
-        .select('reaction_type, post_slug')
-        .eq('post_slug', slug);
+    try {
+        if (typeof supabase === 'undefined') return;
+        const slug = getPostSlug();
+        const { data, error } = await supabase
+            .from('reactions')
+            .select('reaction_type, post_slug')
+            .eq('post_slug', slug);
 
-    if (!error && data) {
-        let counts = { like: 0, love: 0, funny: 0 };
-        data.forEach(r => {
-            if (counts[r.reaction_type] !== undefined) {
-                counts[r.reaction_type]++;
-            }
-        });
-        ['like', 'love', 'funny'].forEach(type => {
-            const el = document.getElementById(`${type}-count`);
-            if (el) el.innerText = counts[type];
-        });
+        if (!error && data) {
+            let counts = { like: 0, love: 0, funny: 0 };
+            data.forEach(r => {
+                if (counts[r.reaction_type] !== undefined) {
+                    counts[r.reaction_type]++;
+                }
+            });
+            ['like', 'love', 'funny'].forEach(type => {
+                const el = document.getElementById(`${type}-count`);
+                if (el) el.innerText = counts[type];
+            });
+        }
+    } catch (e) {
+        console.error("Load reactions error:", e);
     }
 }
 
 // === COMMENTS LOGIC ===
 async function submitComment() {
-    const slug = getPostSlug();
-    if (typeof supabase === 'undefined') return;
+    try {
+        const slug = getPostSlug();
+        if (typeof supabase === 'undefined') return;
 
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    if (!user) {
-        const modal = document.getElementById('auth-modal');
-        if (modal) {
-            modal.style.display = 'flex';
-        } else {
-            alert("Yaada kennuuf dursa Sign Up ykn Login godhadhu!");
+        const { data: sessionData } = await supabase.auth.getSession();
+        const user = sessionData?.session?.user;
+        
+        if (!user) {
+            const modal = document.getElementById('auth-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+            } else {
+                alert("Yaada kennuuf dursa Sign Up ykn Login godhadhu!");
+            }
+            return;
         }
-        return;
-    }
 
-    const textEl = document.getElementById('comment-text');
-    if (!textEl) return;
-    const text = textEl.value.trim();
-    if (!text) {
-        alert("Maaloo yaada kee barreessi!");
-        return;
-    }
+        const textEl = document.getElementById('comment-text');
+        if (!textEl) return;
+        const text = textEl.value.trim();
+        if (!text) {
+            alert("Maaloo yaada kee barreessi!");
+            return;
+        }
 
-    const { data, error } = await supabase
-        .from('comments')
-        .insert([{ post_slug: slug, comment_text: text, user_email: user.email }]);
+        const { error } = await supabase
+            .from('comments')
+            .insert([{ post_slug: slug, comment_text: text, user_email: user.email }]);
 
-    if (!error) {
-        textEl.value = '';
-        loadComments();
-    } else {
-        alert("Rakkina: " + error.message);
+        if (!error) {
+            textEl.value = '';
+            alert("Yaadni kee milkaa'inaan nannaa'eera! 💬");
+            loadComments();
+        } else {
+            alert("Rakkina Database: " + error.message);
+        }
+    } catch (e) {
+        console.error("Comment submit error:", e);
     }
 }
 
 async function loadComments() {
-    if (typeof supabase === 'undefined') return;
-    const slug = getPostSlug();
-    const { data, error } = await supabase
-        .from('comments')
-        .select('*')
-        .eq('post_slug', slug)
-        .order('created_at', { ascending: false });
+    try {
+        if (typeof supabase === 'undefined') return;
+        const slug = getPostSlug();
+        const { data, error } = await supabase
+            .from('comments')
+            .select('*')
+            .eq('post_slug', slug)
+            .order('created_at', { ascending: false });
 
-    if (!error && data) {
-        const list = document.getElementById('comment-list');
-        if (!list) return;
-        list.innerHTML = '';
+        if (!error && data) {
+            const list = document.getElementById('comment-list');
+            if (!list) return;
+            list.innerHTML = '';
 
-        data.forEach(c => {
-            const div = document.createElement('div');
-            const isLight = document.body.classList.contains('light-mode');
-            div.style.cssText = isLight
-                ? 'background:#f5f5f5; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #000000;'
-                : 'background:#1a1a1a; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #ffffff;';
-            const nameColor = isLight ? '#000000' : '#ffffff';
-            const textColor = isLight ? '#333' : '#ccc';
-            div.innerHTML = `<strong style="color:${nameColor};">${c.user_email}</strong><p style="color:${textColor}; margin:6px 0 0; font-size:14px;">${c.comment_text}</p>`;
-            list.appendChild(div);
-        });
+            data.forEach(c => {
+                const div = document.createElement('div');
+                const isLight = document.body.classList.contains('light-mode');
+                div.style.cssText = isLight
+                    ? 'background:#f5f5f5; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #000000;'
+                    : 'background:#1a1a1a; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #ffffff;';
+                const nameColor = isLight ? '#000000' : '#ffffff';
+                const textColor = isLight ? '#333' : '#ccc';
+                div.innerHTML = `<strong style="color:${nameColor};">${c.user_email}</strong><p style="color:${textColor}; margin:6px 0 0; font-size:14px;">${c.comment_text}</p>`;
+                list.appendChild(div);
+            });
 
-        const countEl = document.getElementById('comment-count');
-        const headingCountEl = document.getElementById('comment-heading-count');
-        if (countEl) countEl.innerText = data.length;
-        if (headingCountEl) headingCountEl.innerText = data.length;
+            const countEl = document.getElementById('comment-count');
+            const headingCountEl = document.getElementById('comment-heading-count');
+            if (countEl) countEl.innerText = data.length;
+            if (headingCountEl) headingCountEl.innerText = data.length;
+        }
+    } catch (e) {
+        console.error("Load comments error:", e);
     }
 }
 
