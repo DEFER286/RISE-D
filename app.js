@@ -42,13 +42,13 @@ async function handleAuthSubmit() {
             return;
         }
 
-        if (typeof supabase === 'undefined') {
+        if (typeof sbClient === 'undefined') {
             alert("Supabase client is not loaded!");
             return;
         }
 
         if (isSignUpMode) {
-            const { data, error } = await supabase.auth.signUp({ email, password });
+            const { data, error } = await sbClient.auth.signUp({ email, password });
             if (error) {
                 alert("Rakkina Sign Up: " + error.message);
             } else {
@@ -57,7 +57,7 @@ async function handleAuthSubmit() {
                 toggleAuthMode();
             }
         } else {
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            const { data, error } = await sbClient.auth.signInWithPassword({ email, password });
             if (error) {
                 alert("Rakkina Login: " + error.message);
             } else {
@@ -70,6 +70,7 @@ async function handleAuthSubmit() {
         }
     } catch (err) {
         console.error("Auth error:", err);
+        alert("Dogoggora: " + err.message);
     }
 }
 
@@ -78,12 +79,12 @@ async function handleReaction(type) {
     try {
         const slug = getPostSlug();
         
-        if (typeof supabase === 'undefined') {
+        if (typeof sbClient === 'undefined') {
             alert("Supabase CDN hin fe'amne!");
             return;
         }
 
-        const { data: sessionData } = await supabase.auth.getSession();
+        const { data: sessionData } = await sbClient.auth.getSession();
         const user = sessionData?.session?.user;
         
         if (!user) {
@@ -96,7 +97,7 @@ async function handleReaction(type) {
             return;
         }
 
-        const { error } = await supabase
+        const { error } = await sbClient
             .from('reactions')
             .insert([{ post_slug: slug, reaction_type: type, user_id: user.id }]);
 
@@ -108,14 +109,15 @@ async function handleReaction(type) {
         }
     } catch (e) {
         console.error("Reaction error:", e);
+        alert("Dogoggora: " + e.message);
     }
 }
 
 async function loadReactions() {
     try {
-        if (typeof supabase === 'undefined') return;
+        if (typeof sbClient === 'undefined') return;
         const slug = getPostSlug();
-        const { data, error } = await supabase
+        const { data, error } = await sbClient
             .from('reactions')
             .select('reaction_type, post_slug')
             .eq('post_slug', slug);
@@ -141,9 +143,12 @@ async function loadReactions() {
 async function submitComment() {
     try {
         const slug = getPostSlug();
-        if (typeof supabase === 'undefined') return;
+        if (typeof sbClient === 'undefined') {
+            alert("Supabase hin fe'amne!");
+            return;
+        }
 
-        const { data: sessionData } = await supabase.auth.getSession();
+        const { data: sessionData } = await sbClient.auth.getSession();
         const user = sessionData?.session?.user;
         
         if (!user) {
@@ -164,7 +169,7 @@ async function submitComment() {
             return;
         }
 
-        const { error } = await supabase
+        const { error } = await sbClient
             .from('comments')
             .insert([{ post_slug: slug, comment_text: text, user_email: user.email }]);
 
@@ -177,14 +182,15 @@ async function submitComment() {
         }
     } catch (e) {
         console.error("Comment submit error:", e);
+        alert("Dogoggora: " + e.message);
     }
 }
 
 async function loadComments() {
     try {
-        if (typeof supabase === 'undefined') return;
+        if (typeof sbClient === 'undefined') return;
         const slug = getPostSlug();
-        const { data, error } = await supabase
+        const { data, error } = await sbClient
             .from('comments')
             .select('*')
             .eq('post_slug', slug)
@@ -203,7 +209,13 @@ async function loadComments() {
                     : 'background:#1a1a1a; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #ffffff;';
                 const nameColor = isLight ? '#000000' : '#ffffff';
                 const textColor = isLight ? '#333' : '#ccc';
-                div.innerHTML = `<strong style="color:${nameColor};">${c.user_email}</strong><p style="color:${textColor}; margin:6px 0 0; font-size:14px;">${c.comment_text}</p>`;
+                const nameEl = document.createElement('strong');
+                nameEl.style.color = nameColor;
+                nameEl.textContent = c.user_email;
+                const textEl = document.createElement('p');
+                textEl.style.cssText = `color:${textColor}; margin:6px 0 0; font-size:14px;`;
+                textEl.textContent = c.comment_text;
+                div.append(nameEl, textEl);
                 list.appendChild(div);
             });
 
@@ -263,3 +275,4 @@ window.addEventListener('DOMContentLoaded', () => {
         updateSaveButtonVisual();
     }, 600);
 });
+
