@@ -85,8 +85,8 @@
 
     <!-- Supabase CDN & Configuration Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase-config.js"></script>
-    <script src="app.js"></script>
+    <script src="/supabase-config.js"></script>
+    <script src="/app.js"></script>
 </head>
 <body>
     <script>
@@ -232,6 +232,8 @@
                             <button onclick="sharePost('${post.title.replace(/'/g, "\\'")}')" class="reaction-btn">↗ Share</button>
                             <button onclick="toggleComments()" class="reaction-btn">💬 <span id="comment-count">0</span> Comments</button>
                         </div>`;
+
+                        loadReactions(); loadComments(); updateSaveButtonVisual();
 
                         if (post.image) {
                             document.getElementById('post-image-container').innerHTML = 
