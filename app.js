@@ -48,13 +48,27 @@ async function handleAuthSubmit() {
         }
 
         if (isSignUpMode) {
+            if (password.length < 6) {
+                alert("Password yoo xiqqaate qubee 6 ta'uu qaba!");
+                return;
+            }
             const { data, error } = await sbClient.auth.signUp({ email, password });
             if (error) {
                 alert("Rakkina Sign Up: " + error.message);
-            } else {
-                alert("Galmeen milkaa'e! Amma login gochuu dandeessa.");
-                isSignUpMode = false;
+            } else if (data.session) {
+                // Email confirmation cufaa yoo ta'e, battalumatti seena
+                alert("Galmeen milkaa'e! Amma seentee jirta. 🎉");
+                const modal = document.getElementById('auth-modal');
+                if (modal) modal.style.display = 'none';
+                isSignUpMode = true;
                 toggleAuthMode();
+                updateAuthUI();
+                loadReactions();
+                loadComments();
+            } else {
+                alert("Galmeen milkaa'e! Email kee ilaalii mirkaneessi, booda login godhi.");
+                isSignUpMode = true;
+                toggleAuthMode(); // gara Sign In deebi'a
             }
         } else {
             const { data, error } = await sbClient.auth.signInWithPassword({ email, password });
@@ -64,6 +78,7 @@ async function handleAuthSubmit() {
                 alert("Milkaa'inaan seenteetta! 🎉");
                 const modal = document.getElementById('auth-modal');
                 if (modal) modal.style.display = 'none';
+                updateAuthUI();
                 loadReactions();
                 loadComments();
             }
@@ -71,6 +86,52 @@ async function handleAuthSubmit() {
     } catch (err) {
         console.error("Auth error:", err);
         alert("Dogoggora: " + err.message);
+    }
+}
+
+// === LOGOUT + AUTH STATUS ===
+async function updateAuthUI() {
+    const el = document.getElementById('auth-status');
+    if (!el || typeof sbClient === 'undefined') return;
+    try {
+        const { data } = await sbClient.auth.getSession();
+        const user = data && data.session ? data.session.user : null;
+        el.innerHTML = '';
+        if (user) {
+            const who = document.createElement('span');
+            who.textContent = '👤 ' + user.email.split('@')[0];
+            const out = document.createElement('button');
+            out.textContent = 'Logout';
+            out.style.cssText = 'background:none; border:1px solid #666; color:inherit; border-radius:14px; padding:3px 12px; font-size:12px; cursor:pointer; margin-left:10px;';
+            out.addEventListener('click', handleLogout);
+            el.append(who, out);
+        } else {
+            const inBtn = document.createElement('button');
+            inBtn.textContent = 'Sign In / Sign Up';
+            inBtn.style.cssText = 'background:none; border:1px solid #666; color:inherit; border-radius:14px; padding:3px 12px; font-size:12px; cursor:pointer;';
+            inBtn.addEventListener('click', () => {
+                const modal = document.getElementById('auth-modal');
+                if (modal) modal.style.display = 'flex';
+            });
+            el.append(inBtn);
+        }
+    } catch (e) {
+        console.error("Auth UI error:", e);
+    }
+}
+
+async function handleLogout() {
+    try {
+        const { error } = await sbClient.auth.signOut();
+        if (error) {
+            alert("Rakkina Logout: " + error.message);
+            return;
+        }
+        updateAuthUI();
+        loadComments();
+        loadReactions();
+    } catch (e) {
+        alert("Dogoggora: " + e.message);
     }
 }
 
@@ -354,5 +415,6 @@ window.addEventListener('DOMContentLoaded', () => {
         loadReactions();
         loadComments();
         updateSaveButtonVisual();
+        updateAuthUI();
     }, 600);
 });
