@@ -171,7 +171,7 @@ async function submitComment() {
 
         const { error } = await sbClient
             .from('comments')
-            .insert([{ post_slug: slug, comment_text: text, user_email: user.email }]);
+            .insert([{ post_slug: slug, comment_text: text, user_email: user.email, user_id: user.id }]);
 
         if (!error) {
             textEl.value = '';
@@ -186,10 +186,22 @@ async function submitComment() {
     }
 }
 
+function makeCommentAction(label, onClick) {
+    const b = document.createElement('button');
+    b.textContent = label;
+    b.style.cssText = 'background:none; border:none; padding:0; font-size:12px; cursor:pointer; color:#999;';
+    b.addEventListener('click', onClick);
+    return b;
+}
+
 async function loadComments() {
     try {
         if (typeof sbClient === 'undefined') return;
         const slug = getPostSlug();
+
+        const { data: sessionData } = await sbClient.auth.getSession();
+        const myId = sessionData?.session?.user?.id;
+
         const { data, error } = await sbClient
             .from('comments')
             .select('*')
@@ -209,6 +221,7 @@ async function loadComments() {
                     : 'background:#1a1a1a; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #ffffff;';
                 const nameColor = isLight ? '#000000' : '#ffffff';
                 const textColor = isLight ? '#333' : '#ccc';
+
                 const nameEl = document.createElement('strong');
                 nameEl.style.color = nameColor;
                 nameEl.textContent = c.user_email;
@@ -216,6 +229,18 @@ async function loadComments() {
                 textEl.style.cssText = `color:${textColor}; margin:6px 0 0; font-size:14px;`;
                 textEl.textContent = c.comment_text;
                 div.append(nameEl, textEl);
+
+                // Edit / Delete: yaada ofiisaaf qofa
+                if (myId && c.user_id === myId) {
+                    const actions = document.createElement('div');
+                    actions.style.cssText = 'margin-top:8px; display:flex; gap:16px;';
+                    actions.append(
+                        makeCommentAction('✏️ Edit', () => startEditComment(c, textEl, actions, isLight)),
+                        makeCommentAction('🗑 Delete', () => deleteComment(c.id))
+                    );
+                    div.append(actions);
+                }
+
                 list.appendChild(div);
             });
 
@@ -226,6 +251,62 @@ async function loadComments() {
         }
     } catch (e) {
         console.error("Load comments error:", e);
+    }
+}
+
+function startEditComment(c, textEl, actions, isLight) {
+    const ta = document.createElement('textarea');
+    ta.value = c.comment_text;
+    ta.style.cssText = `width:100%; box-sizing:border-box; height:80px; resize:none; margin-top:6px; padding:8px; font-size:14px; border-radius:8px; outline:none; border:1px solid ${isLight ? '#ccc' : '#555'}; background:${isLight ? '#fff' : '#111'}; color:${isLight ? '#000' : '#fff'};`;
+    textEl.replaceWith(ta);
+    ta.focus();
+
+    actions.innerHTML = '';
+    actions.append(
+        makeCommentAction('💾 Save', async () => {
+            const newText = ta.value.trim();
+            if (!newText) {
+                alert("Yaadni duwwaa ta'uu hin danda'u!");
+                return;
+            }
+            try {
+                const { data, error } = await sbClient
+                    .from('comments')
+                    .update({ comment_text: newText })
+                    .eq('id', c.id)
+                    .select();
+                if (error) {
+                    alert("Rakkina Database: " + error.message);
+                } else if (!data || data.length === 0) {
+                    alert("Yaada kana jijjiiruuf hayyama hin qabdu.");
+                } else {
+                    loadComments();
+                }
+            } catch (e) {
+                alert("Dogoggora: " + e.message);
+            }
+        }),
+        makeCommentAction('✖ Cancel', () => loadComments())
+    );
+}
+
+async function deleteComment(id) {
+    if (!confirm("Yaada kana haquu barbaaddaa?")) return;
+    try {
+        const { data, error } = await sbClient
+            .from('comments')
+            .delete()
+            .eq('id', id)
+            .select();
+        if (error) {
+            alert("Rakkina Database: " + error.message);
+        } else if (!data || data.length === 0) {
+            alert("Yaada kana haquuf hayyama hin qabdu.");
+        } else {
+            loadComments();
+        }
+    } catch (e) {
+        alert("Dogoggora: " + e.message);
     }
 }
 
@@ -275,4 +356,3 @@ window.addEventListener('DOMContentLoaded', () => {
         updateSaveButtonVisual();
     }, 600);
 });
-
