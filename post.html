@@ -115,6 +115,7 @@
         <!-- Comment Section -->
         <div id="comment-section" style="display:none; margin-top:30px; padding-top:20px; border-top:1px solid #333;">
             <h3 style="color:#ffffff; font-size:16px; margin-bottom:16px;">💬 Yaada Kenname (<span id="comment-heading-count">0</span>)</h3>
+            <div id="auth-status" style="font-size:13px; color:#aaa; margin-bottom:14px;"></div>
             <div id="comment-list"></div>
             <div style="margin-top:16px;">
                 <textarea id="comment-text" placeholder="Yaada kee barreessi..." style="width:100%;background:#1a1a1a;border:1px solid #444;color:#fff;border-radius:8px;padding:12px;font-size:14px;margin-bottom:10px;box-sizing:border-box;outline:none;resize:none;height:90px;"></textarea>
@@ -233,7 +234,7 @@
                             <button onclick="toggleComments()" class="reaction-btn">💬 <span id="comment-count">0</span> Comments</button>
                         </div>`;
 
-                        loadReactions(); loadComments(); updateSaveButtonVisual();
+                        loadReactions(); loadComments(); updateSaveButtonVisual(); updateAuthUI();
 
                         if (post.image) {
                             document.getElementById('post-image-container').innerHTML = 
