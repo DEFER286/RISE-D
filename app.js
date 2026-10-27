@@ -171,7 +171,7 @@ async function submitComment() {
 
         const { error } = await sbClient
             .from('comments')
-            .insert([{ post_slug: slug, comment_text: text, user_email: user.email, user_id: user.id }]);
+            .insert([{ post_slug: slug, comment_text: text, user_name: user.email.split('@')[0], user_id: user.id }]);
 
         if (!error) {
             textEl.value = '';
@@ -224,7 +224,7 @@ async function loadComments() {
 
                 const nameEl = document.createElement('strong');
                 nameEl.style.color = nameColor;
-                nameEl.textContent = c.user_email;
+                nameEl.textContent = c.user_name || (c.user_email ? c.user_email.split('@')[0] : 'User');
                 const textEl = document.createElement('p');
                 textEl.style.cssText = `color:${textColor}; margin:6px 0 0; font-size:14px;`;
                 textEl.textContent = c.comment_text;
