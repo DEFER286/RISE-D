@@ -67,7 +67,42 @@
         .page-title-bar h2 { font-size: 1.3em; font-weight: 800; color: #000000; margin: 0 0 6px; font-family: 'Poppins', sans-serif; }
         .page-title-bar p { font-size: 13px; color: #777; margin: 0; }
 
-        /* === SAVED CARD === */
+        /* === LAYOUT SELECTOR BAR (Categories, List View, Grid View) === */
+        .layout-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 16px;
+            background: #f8f8f8;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .layout-btn {
+            background: #e4e4e4;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #333;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .layout-btn.active {
+            background: #ff4500;
+            color: #ffffff;
+        }
+
+        /* === SAVED CONTAINER VIEWS === */
+        #saved-articles-container {
+            max-width: 600px; 
+            margin: 10px auto 0;
+        }
+
+        /* 1. List View (Default) */
         .saved-card {
             display: block;
             text-decoration: none;
@@ -78,11 +113,47 @@
             border-radius: 12px;
             border-left: 4px solid #000000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s, border 0.3s;
         }
         .saved-card:hover { transform: translateX(4px); box-shadow: 0 4px 14px rgba(0,0,0,0.09); }
         .saved-card-title { color: #000000; font-weight: bold; font-size: 15px; font-family: sans-serif; }
         .saved-card-arrow { color: #000000; font-size: 18px; }
+
+        /* 2. Grid View Style */
+        #saved-articles-container.grid-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        #saved-articles-container.grid-layout .saved-card {
+            margin: 0;
+            border-left: 1px solid #ebebeb;
+            border-top: 4px solid #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #saved-articles-container.grid-layout .saved-card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* 3. Categories View Style */
+        #saved-articles-container.categories-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .category-group-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: #ff4500;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #ff4500;
+            display: inline-block;
+            padding-bottom: 2px;
+        }
 
         #no-saved-message {
             color: #888;
@@ -149,7 +220,21 @@
         body.dark-mode .page-title-bar h2 { color: #ffffff; }
         body.dark-mode .page-title-bar p { color: #999; }
 
+        body.dark-mode .layout-bar {
+            background: #0d0d0d;
+            border-color: #2a2a2a;
+        }
+        body.dark-mode .layout-btn {
+            background: #1f1f1f;
+            color: #bbb;
+        }
+        body.dark-mode .layout-btn.active {
+            background: #ff4500;
+            color: #ffffff;
+        }
+
         body.dark-mode .saved-card { background-color: #141414; border-color: #2a2a2a; border-left-color: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+        body.dark-mode #saved-articles-container.grid-layout .saved-card { border-top-color: #ffffff; border-left-color: #2a2a2a; }
         body.dark-mode .saved-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.55); }
         body.dark-mode .saved-card-title { color: #ffffff; }
         body.dark-mode .saved-card-arrow { color: #ffffff; }
@@ -206,8 +291,21 @@
         <p>Barruulee booda dubbisuuf ol-kaayatte asitti argatta.</p>
     </div>
 
+    <!-- Layout Selector Bar -->
+    <div class="layout-bar">
+        <button class="layout-btn" id="btn-categories" onclick="changeLayout('categories')">
+            <span>📑</span> Categories
+        </button>
+        <button class="layout-btn active" id="btn-list" onclick="changeLayout('list')">
+            <span>📋</span> List View
+        </button>
+        <button class="layout-btn" id="btn-grid" onclick="changeLayout('grid')">
+            <span>🗂️</span> Grid View
+        </button>
+    </div>
+
     <div style="padding: 16px;">
-        <div id="saved-articles-container" style="max-width: 600px; margin: 10px auto 0;">
+        <div id="saved-articles-container">
             <p id="no-saved-message">
                 Ammaaf barruun ol-kaa'ame hin jiru.
             </p>
@@ -230,8 +328,6 @@
         if (closeBtn && sideMenu) closeBtn.addEventListener('click', () => { sideMenu.style.display = 'none'; });
 
         // === JAVASCRIPT FOR DARK/LIGHT MODE SYSTEM ===
-        // Single source of truth: applyTheme() always sets class + label + storage
-        // together, in a fixed order, so state can never drift out of sync.
         function applyTheme(theme) {
             const isDark = theme === 'dark';
             document.body.classList.toggle('dark-mode', isDark);
@@ -250,33 +346,91 @@
             });
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        // === LAYOUT SWITCHING LOGIC ===
+        function renderSavedArticles(layoutType = 'list') {
             const container = document.getElementById("saved-articles-container");
-            const message = document.getElementById("no-saved-message");
+            container.innerHTML = "";
 
             let savedArticles = JSON.parse(localStorage.getItem('savedArticlesList')) || [];
 
-            if (savedArticles.length > 0) {
-                if (message) message.remove();
+            if (savedArticles.length === 0) {
+                container.innerHTML = `<p id="no-saved-message">Ammaaf barruun ol-kaa'ame hin jiru.</p>`;
+                return;
+            }
 
+            // Remove previous classes
+            container.classList.remove('grid-layout', 'categories-layout');
+
+            if (layoutType === 'grid') {
+                container.classList.add('grid-layout');
                 savedArticles.forEach(article => {
-                    const card = document.createElement("a");
-                    card.href = article.url;
-                    card.className = "saved-card";
-                    // Yeroo card kana cuqaasan, X button post.html irratti
-                    // gara /saved.html tti akka deebi'u godha.
-                    card.addEventListener('click', () => sessionStorage.setItem('postSource', 'saved'));
-
-                    card.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="saved-card-title">${article.title}</span>
-                            <span class="saved-card-arrow">➔</span>
-                        </div>
-                    `;
-
+                    const card = createCardElement(article);
                     container.appendChild(card);
                 });
+            } else if (layoutType === 'categories') {
+                container.classList.add('categories-layout');
+                
+                // Grouping articles (e.g., using url or title prefix as category mockup, or default group)
+                const categories = {};
+                savedArticles.forEach(article => {
+                    // Simple category grouping logic based on URL or generic tag
+                    let cat = "Gorsa & Barruulee";
+                    if(article.url.includes('motivation')) cat = "Motivation";
+                    else if(article.url.includes('stories')) cat = "Seenaa";
+                    
+                    if(!categories[cat]) categories[cat] = [];
+                    categories[cat].push(article);
+                });
+
+                for (let catName in categories) {
+                    const groupDiv = document.createElement("div");
+                    groupDiv.innerHTML = `<div class="category-group-title">${catName}</div>`;
+                    
+                    categories[catName].forEach(article => {
+                        groupDiv.appendChild(createCardElement(article));
+                    });
+                    container.appendChild(groupDiv);
+                }
+            } else {
+                // Default List View
+                savedArticles.forEach(article => {
+                    container.appendChild(createCardElement(article));
+                });
             }
+        }
+
+        function createCardElement(article) {
+            const card = document.createElement("a");
+            card.href = article.url;
+            card.className = "saved-card";
+            card.addEventListener('click', () => sessionStorage.setItem('postSource', 'saved'));
+
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="saved-card-title">${article.title}</span>
+                    <span class="saved-card-arrow">➔</span>
+                </div>
+            `;
+            return card;
+        }
+
+        function changeLayout(type) {
+            // Update buttons active state
+            document.querySelectorAll('.layout-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${type}`).classList.add('active');
+
+            // Save preference & render
+            localStorage.setItem('savedLayoutPreference', type);
+            renderSavedArticles(type);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const savedPref = localStorage.getItem('savedLayoutPreference') || 'list';
+            document.querySelectorAll('.layout-btn').forEach(btn => btn.classList.remove('active'));
+            if(document.getElementById(`btn-${savedPref}`)) {
+                document.getElementById(`btn-${savedPref}`).classList.add('active');
+            }
+            renderSavedArticles(savedPref);
         });
 
         function searchSaved() {
@@ -289,4 +443,3 @@
 
 </body>
 </html>
-                
