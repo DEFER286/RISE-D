@@ -13,8 +13,48 @@ function getPostSlug() {
 
 let isSignUpMode = false;
 
+const EYE_ON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
+function setPasswordVisible(visible) {
+    const input = document.getElementById('auth-password');
+    const eye = document.getElementById('auth-eye');
+    if (!input || !eye) return;
+    input.type = visible ? 'text' : 'password';
+    eye.innerHTML = visible ? EYE_OFF : EYE_ON;
+    eye.setAttribute('aria-label', visible ? 'Hide password' : 'Show password');
+}
+
+function togglePasswordVisibility() {
+    const input = document.getElementById('auth-password');
+    setPasswordVisible(input && input.type === 'password');
+}
+
+async function handleForgotPassword() {
+    const email = (document.getElementById('auth-email')?.value || '').trim();
+    if (!email) {
+        alert("Dura email kee gubbaa barreessi, booda 'Forgot password?' tuqi.");
+        return;
+    }
+    try {
+        const { error } = await sbClient.auth.resetPasswordForEmail(email, {
+            redirectTo: window.location.origin + '/reset-password.html'
+        });
+        if (error) {
+            alert("Rakkina: " + error.message);
+        } else {
+            alert("Email kee ilaali. Password haaraa kaa'uuf link ergameera (spam folder illee ilaali).");
+        }
+    } catch (e) {
+        alert("Dogoggora: " + e.message);
+    }
+}
+
 function toggleAuthMode() {
     isSignUpMode = !isSignUpMode;
+    setPasswordVisible(false);
+    const forgotEl = document.getElementById('auth-forgot');
+    if (forgotEl) forgotEl.style.display = isSignUpMode ? 'none' : 'block';
     const titleEl = document.getElementById('auth-modal-title');
     const switchEl = document.getElementById('auth-switch-text');
     if (titleEl && switchEl) {
@@ -411,6 +451,7 @@ function updateSaveButtonVisual() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    setPasswordVisible(false);
     setTimeout(() => {
         loadReactions();
         loadComments();
