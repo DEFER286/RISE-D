@@ -1,16 +1,41 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-
-    { "source": "/home", "destination": "/home.html" },
-    { "source": "/about", "destination": "/about.html" },
-    { "source": "/saved", "destination": "/saved.html" },
-    { "source": "/profile", "destination": "/profile.html" },
-
-    { "source": "/motivation", "destination": "/motivation.html" },
-    { "source": "/stories", "destination": "/stories.html" },
-    { "source": "/education", "destination": "/education.html" },
-
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/home",
+      "destination": "/home.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/saved",
+      "destination": "/saved.html"
+    },
+    {
+      "source": "/profile",
+      "destination": "/profile.html"
+    },
+    {
+      "source": "/reset-password",
+      "destination": "/reset-password.html"
+    },
+    {
+      "source": "/motivation",
+      "destination": "/motivation.html"
+    },
+    {
+      "source": "/stories",
+      "destination": "/stories.html"
+    },
+    {
+      "source": "/education",
+      "destination": "/education.html"
+    },
     {
       "source": "/motivation/:slug",
       "destination": "/post.html?cat=motivation&slug=:slug"
@@ -24,17 +49,51 @@
       "destination": "/post.html?cat=education&slug=:slug"
     }
   ],
-
   "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true },
-
-    { "source": "/home.html", "destination": "/home", "permanent": true },
-    { "source": "/about.html", "destination": "/about", "permanent": true },
-    { "source": "/saved.html", "destination": "/saved", "permanent": true },
-    { "source": "/profile.html", "destination": "/profile", "permanent": true },
-
-    { "source": "/stories.html", "destination": "/stories", "permanent": true },
-    { "source": "/education.html", "destination": "/education", "permanent": true },
-    { "source": "/motivation.html", "destination": "/motivation", "permanent": true }
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/home.html",
+      "destination": "/home",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/saved.html",
+      "destination": "/saved",
+      "permanent": true
+    },
+    {
+      "source": "/profile.html",
+      "destination": "/profile",
+      "permanent": true
+    },
+    {
+      "source": "/reset-password.html",
+      "destination": "/reset-password",
+      "permanent": true
+    },
+    {
+      "source": "/stories.html",
+      "destination": "/stories",
+      "permanent": true
+    },
+    {
+      "source": "/education.html",
+      "destination": "/education",
+      "permanent": true
+    },
+    {
+      "source": "/motivation.html",
+      "destination": "/motivation",
+      "permanent": true
+    }
   ]
 }
