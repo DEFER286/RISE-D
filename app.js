@@ -203,7 +203,6 @@ async function handleReaction(type) {
             .insert([{ post_slug: slug, reaction_type: type, user_id: user.id }]);
 
         if (!error) {
-            alert("Milkaa'inaan react godheetta! 👍");
             loadReactions();
         } else {
             alert("Rakkina Database: " + error.message);
@@ -276,7 +275,6 @@ async function submitComment() {
 
         if (!error) {
             textEl.value = '';
-            alert("Yaadni kee milkaa'inaan nannaa'eera! 💬");
             loadComments();
         } else {
             alert("Rakkina Database: " + error.message);
