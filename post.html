@@ -307,7 +307,7 @@
             const grid = document.getElementById('related-grid');
             grid.innerHTML = '';
             items.forEach(item => {
-                const desc = item.description || (item.body ? item.body.replace(/\*\*(.*?)\*\"/g, '$1').substring(0, 80) + '...' : '');
+                const desc = item.description || (item.body ? item.body.replace(/\*\*/g, '').substring(0, 80) + '...' : '');
                 const card = document.createElement('a');
                 card.href = `/${item.cat}/${item.slug}`; 
                 card.className = 'related-card';
