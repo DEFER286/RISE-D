@@ -38,15 +38,15 @@
     },
     {
       "source": "/motivation/:slug",
-      "destination": "/post.html?cat=motivation&slug=:slug"
+      "destination": "/api/post?cat=motivation&slug=:slug"
     },
     {
       "source": "/stories/:slug",
-      "destination": "/post.html?cat=stories&slug=:slug"
+      "destination": "/api/post?cat=stories&slug=:slug"
     },
     {
       "source": "/education/:slug",
-      "destination": "/post.html?cat=education&slug=:slug"
+      "destination": "/api/post?cat=education&slug=:slug"
     }
   ],
   "redirects": [
