@@ -84,13 +84,22 @@
         .saved-card-title { color: #000000; font-weight: bold; font-size: 15px; font-family: sans-serif; }
         .saved-card-arrow { color: #000000; font-size: 18px; }
 
-        /* Suuraa Kaardii keessatti argamu (Image Style) */
-        .saved-card img {
-            width: 100%;
-            height: 140px;
+        /* === SAVED POST THUMBNAIL === */
+        .saved-card-image {
+            display: none;
+            width: calc(100% + 40px);
+            aspect-ratio: 16 / 9;
+            height: auto;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 12px;
+            margin: -16px -20px 14px;
+            border-radius: 11px 11px 0 0;
+            background: #222;
+        }
+        .saved-card.has-image .saved-card-image { display: block; }
+        .layout-grid .saved-card-image {
+            width: calc(100% + 28px);
+            margin: -14px -14px 12px;
+            border-radius: 11px 11px 0 0;
         }
 
         #no-saved-message {
@@ -136,6 +145,7 @@
             transition: background 0.3s, color 0.3s;
         }
 
+
         /* === LAYOUT PICKER === */
         .layout-picker { display: none; max-width: 600px; margin: 18px auto 0; padding: 0 16px; gap: 10px; justify-content: center; }
         .layout-btn {
@@ -150,13 +160,12 @@
 
         /* === LAYOUT: GRID === */
         #saved-articles-container.layout-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .layout-grid .saved-card { margin: 0; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
+        .layout-grid .saved-card { margin: 0; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; }
         .layout-grid .saved-card:hover { transform: translateY(-2px); }
-        .layout-grid .saved-card img { height: 90px; margin-bottom: 8px; }
-        .layout-grid .saved-card-row { flex-direction: column; align-items: flex-start !important; gap: 8px; flex: 1; justify-content: space-between; }
-        .layout-grid .saved-card-title { font-size: 13px; line-height: 1.35; word-break: break-word; }
-        .layout-grid .saved-card-arrow { align-self: flex-end; font-size: 14px; }
-        .saved-card-badge { display: none; font-size: 11px; color: #777; margin-bottom: 6px; }
+        .layout-grid .saved-card-row { flex-direction: column; align-items: flex-start !important; gap: 10px; flex: 1; justify-content: space-between; }
+        .layout-grid .saved-card-title { font-size: 14px; line-height: 1.35; word-break: break-word; }
+        .layout-grid .saved-card-arrow { align-self: flex-end; }
+        .saved-card-badge { display: none; font-size: 11px; color: #777; margin-bottom: 8px; }
         .layout-grid .saved-card-badge { display: block; }
         #no-saved-message { grid-column: 1 / -1; }
 
@@ -285,6 +294,8 @@
         if (closeBtn && sideMenu) closeBtn.addEventListener('click', () => { sideMenu.style.display = 'none'; });
 
         // === JAVASCRIPT FOR DARK/LIGHT MODE SYSTEM ===
+        // Single source of truth: applyTheme() always sets class + label + storage
+        // together, in a fixed order, so state can never drift out of sync.
         function applyTheme(theme) {
             const isDark = theme === 'dark';
             document.body.classList.toggle('dark-mode', isDark);
@@ -318,19 +329,62 @@
         }
         function catLabel(key) { return CAT_LABELS[key] || '📌 Kan biraa'; }
 
+        // Suuraa barruu saved ta'e argachuuf:
+        // 1) localStorage keessatti image URL yoo jiraate isa fayyadama.
+        // 2) Yoo hin jirre, fuula barruu irraa og:image / twitter:image dubbisa.
+        async function findArticleImage(article) {
+            const directImage = article.image || article.imageUrl || article.thumbnail || article.thumbnailUrl;
+            if (directImage) return directImage;
+
+            try {
+                const response = await fetch(article.url, { credentials: 'same-origin' });
+                if (!response.ok) return '';
+                const htmlText = await response.text();
+                const doc = new DOMParser().parseFromString(htmlText, 'text/html');
+
+                const metaImage =
+                    doc.querySelector('meta[property="og:image"]')?.content ||
+                    doc.querySelector('meta[name="twitter:image"]')?.content ||
+                    doc.querySelector('meta[property="twitter:image"]')?.content;
+
+                const postImage = metaImage ||
+                    doc.querySelector('article img')?.getAttribute('src') ||
+                    doc.querySelector('main img')?.getAttribute('src') ||
+                    doc.querySelector('.post-content img')?.getAttribute('src') ||
+                    doc.querySelector('img')?.getAttribute('src') ||
+                    doc.querySelector('article img')?.getAttribute('data-src');
+
+                return postImage ? new URL(postImage, article.url).href : '';
+            } catch (error) {
+                console.warn('Saved post image could not be loaded:', article.url, error);
+                return '';
+            }
+        }
+
         function buildCard(article) {
             const card = document.createElement('a');
             card.href = article.url;
             card.className = 'saved-card';
             card.addEventListener('click', () => sessionStorage.setItem('postSource', 'saved'));
 
-            // Suuraan yoo jiraate kaardii keessatti akka mul'atuuf
-            if (article.image) {
-                const img = document.createElement('img');
-                img.src = article.image;
-                img.alt = article.title;
-                card.appendChild(img);
-            }
+            const image = document.createElement('img');
+            image.className = 'saved-card-image';
+            image.alt = article.title ? article.title : 'Post image';
+            image.loading = 'lazy';
+            image.decoding = 'async';
+
+            findArticleImage(article).then(imageUrl => {
+                if (!imageUrl) return;
+                try {
+                    const safeUrl = new URL(imageUrl, window.location.origin);
+                    if (!['http:', 'https:'].includes(safeUrl.protocol)) return;
+                    image.onload = () => card.classList.add('has-image');
+                    image.onerror = () => card.classList.remove('has-image');
+                    image.src = safeUrl.href;
+                } catch (error) {
+                    console.warn('Invalid saved post image URL:', imageUrl);
+                }
+            });
 
             const badge = document.createElement('span');
             badge.className = 'saved-card-badge';
@@ -349,7 +403,7 @@
             arrow.textContent = '➔';
 
             row.append(title, arrow);
-            card.append(badge, row);
+            card.append(image, badge, row);
             return card;
         }
 
@@ -378,6 +432,7 @@
                 });
             }
 
+            // kan dhiyeenya ol-kaa'ame dura
             const items = saved.slice().reverse();
 
             if (layout === 'cats') {
@@ -426,6 +481,7 @@
             document.querySelectorAll('.saved-card').forEach(card => {
                 card.style.display = card.textContent.toLowerCase().includes(input) ? '' : 'none';
             });
+            // Categories keessatti: kutaan duwwaa ta'e haa dhokatu
             document.querySelectorAll('.cat-group').forEach(group => {
                 const anyVisible = Array.from(group.querySelectorAll('.saved-card')).some(c => c.style.display !== 'none');
                 group.style.display = anyVisible ? '' : 'none';
@@ -435,3 +491,4 @@
 
 </body>
 </html>
+                
