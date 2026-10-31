@@ -84,6 +84,15 @@
         .saved-card-title { color: #000000; font-weight: bold; font-size: 15px; font-family: sans-serif; }
         .saved-card-arrow { color: #000000; font-size: 18px; }
 
+        /* Suuraa Kaardii keessatti argamu (Image Style) */
+        .saved-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
         #no-saved-message {
             color: #888;
             font-style: italic;
@@ -127,7 +136,6 @@
             transition: background 0.3s, color 0.3s;
         }
 
-
         /* === LAYOUT PICKER === */
         .layout-picker { display: none; max-width: 600px; margin: 18px auto 0; padding: 0 16px; gap: 10px; justify-content: center; }
         .layout-btn {
@@ -142,12 +150,13 @@
 
         /* === LAYOUT: GRID === */
         #saved-articles-container.layout-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .layout-grid .saved-card { margin: 0; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; }
+        .layout-grid .saved-card { margin: 0; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
         .layout-grid .saved-card:hover { transform: translateY(-2px); }
-        .layout-grid .saved-card-row { flex-direction: column; align-items: flex-start !important; gap: 10px; flex: 1; justify-content: space-between; }
-        .layout-grid .saved-card-title { font-size: 14px; line-height: 1.35; word-break: break-word; }
-        .layout-grid .saved-card-arrow { align-self: flex-end; }
-        .saved-card-badge { display: none; font-size: 11px; color: #777; margin-bottom: 8px; }
+        .layout-grid .saved-card img { height: 90px; margin-bottom: 8px; }
+        .layout-grid .saved-card-row { flex-direction: column; align-items: flex-start !important; gap: 8px; flex: 1; justify-content: space-between; }
+        .layout-grid .saved-card-title { font-size: 13px; line-height: 1.35; word-break: break-word; }
+        .layout-grid .saved-card-arrow { align-self: flex-end; font-size: 14px; }
+        .saved-card-badge { display: none; font-size: 11px; color: #777; margin-bottom: 6px; }
         .layout-grid .saved-card-badge { display: block; }
         #no-saved-message { grid-column: 1 / -1; }
 
@@ -276,8 +285,6 @@
         if (closeBtn && sideMenu) closeBtn.addEventListener('click', () => { sideMenu.style.display = 'none'; });
 
         // === JAVASCRIPT FOR DARK/LIGHT MODE SYSTEM ===
-        // Single source of truth: applyTheme() always sets class + label + storage
-        // together, in a fixed order, so state can never drift out of sync.
         function applyTheme(theme) {
             const isDark = theme === 'dark';
             document.body.classList.toggle('dark-mode', isDark);
@@ -315,8 +322,15 @@
             const card = document.createElement('a');
             card.href = article.url;
             card.className = 'saved-card';
-            // X button post.html irratti gara /saved.html akka deebi'u
             card.addEventListener('click', () => sessionStorage.setItem('postSource', 'saved'));
+
+            // Suuraan yoo jiraate kaardii keessatti akka mul'atuuf
+            if (article.image) {
+                const img = document.createElement('img');
+                img.src = article.image;
+                img.alt = article.title;
+                card.appendChild(img);
+            }
 
             const badge = document.createElement('span');
             badge.className = 'saved-card-badge';
@@ -364,7 +378,6 @@
                 });
             }
 
-            // kan dhiyeenya ol-kaa'ame dura
             const items = saved.slice().reverse();
 
             if (layout === 'cats') {
@@ -413,7 +426,6 @@
             document.querySelectorAll('.saved-card').forEach(card => {
                 card.style.display = card.textContent.toLowerCase().includes(input) ? '' : 'none';
             });
-            // Categories keessatti: kutaan duwwaa ta'e haa dhokatu
             document.querySelectorAll('.cat-group').forEach(group => {
                 const anyVisible = Array.from(group.querySelectorAll('.saved-card')).some(c => c.style.display !== 'none');
                 group.style.display = anyVisible ? '' : 'none';
@@ -423,4 +435,3 @@
 
 </body>
 </html>
-                
