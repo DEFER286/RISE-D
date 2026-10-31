@@ -335,6 +335,15 @@
         const POST_INDEX = {};
         const CAT_ICONS = { motivation: '🔥', stories: '📚', education: '🎓' };
 
+        const TITLE_INDEX = {};
+
+        function safeDecode(str) {
+            try { return decodeURIComponent(str); } catch (e) { return str; }
+        }
+        function normText(str) {
+            return safeDecode(String(str || '')).toLowerCase().replace(/\s+/g, ' ').trim();
+        }
+
         async function loadPostIndex() {
             const cats = Object.keys(CAT_LABELS);
             const results = await Promise.all(cats.map(c =>
@@ -343,17 +352,33 @@
             results.forEach((data, i) => {
                 (data.items || []).forEach(p => {
                     if (!p.slug) return;
-                    POST_INDEX[cats[i] + '/' + p.slug] = { image: p.image || '', title: p.title || '' };
+                    const info = { image: p.image || '', title: p.title || '', cat: cats[i] };
+                    POST_INDEX[cats[i] + '/' + normText(p.slug)] = info;
+                    if (p.title) TITLE_INDEX[normText(p.title)] = info;
                 });
             });
         }
 
-        function slugOf(article) {
-            if (article.id) return article.id;
+        // Post kana data keessaa barbaada: URL, id fi maqaa irraa (mala hedduun)
+        function lookupInfo(article, catKey) {
+            const cands = [];
             try {
                 const u = new URL(article.url, window.location.origin);
-                return u.pathname.split('/').filter(Boolean).pop() || '';
-            } catch (e) { return ''; }
+                const last = u.pathname.split('/').filter(Boolean).pop();
+                if (last) cands.push(last);
+                const q = u.searchParams.get('slug');
+                if (q) cands.push(q);
+            } catch (e) {}
+            if (article.id) cands.push(String(article.id));
+
+            for (const c of cands) {
+                const k = normText(c);
+                if (POST_INDEX[catKey + '/' + k]) return POST_INDEX[catKey + '/' + k];
+                for (const cat of Object.keys(CAT_LABELS)) {
+                    if (POST_INDEX[cat + '/' + k]) return POST_INDEX[cat + '/' + k];
+                }
+            }
+            return TITLE_INDEX[normText(article.title)] || {};
         }
 
         function makeThumbIcon(catKey) {
@@ -364,8 +389,8 @@
         }
 
         function buildCard(article) {
-            const catKey = getCategory(article.url);
-            const info = POST_INDEX[catKey + '/' + slugOf(article)] || {};
+            const info = lookupInfo(article, getCategory(article.url));
+            const catKey = info.cat || getCategory(article.url);
 
             const card = document.createElement('a');
             card.href = article.url;
