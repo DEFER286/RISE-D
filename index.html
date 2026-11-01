@@ -54,9 +54,9 @@
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0a0a0a;
-  color: white;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  background: #020617;
+  color: #ffffff;
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
@@ -66,74 +66,68 @@ nav {
   position: fixed;
   top: 0; left: 0;
   width: 100%;
-  background: rgba(10, 10, 10, 0.92);
-  backdrop-filter: blur(10px);
+  background: #0b1020;
   display: flex;
   align-items: center;
-  padding: 15px 24px;
+  padding: 16px 22px;
   box-sizing: border-box;
   z-index: 1000;
-  border-bottom: 1px solid rgba(255,152,0,0.1);
 }
 
 .logo {
-  font-weight: bold;
-  font-size: 18px;
-  color: #FF9800;
-  letter-spacing: 1px;
+  font-weight: 700;
+  font-size: clamp(15px, 3.2vw, 20px);
+  color: #4ade80;
+  letter-spacing: 0.3px;
 }
 
 /* HERO */
 .hero {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 20px;
-  background-image:
-    linear-gradient(rgba(0,0,0,0.52), rgba(0,0,0,0.52)),
-    url('/images/hero-index.webp');
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
+  padding: 100px 24px 60px;
+  box-sizing: border-box;
+  background: #020617;
 }
 
 .hero h1 {
-  font-size: 40px;
-  margin-bottom: 14px;
-  letter-spacing: 2px;
-  color: #FF9800;
+  font-size: clamp(28px, 7.7vw, 56px);
+  font-weight: 700;
   line-height: 1.2;
+  margin: 0 0 26px;
+  color: #ffffff;
+  max-width: 760px;
 }
 
 .hero p {
-  color: #aaa;
-  font-size: 15px;
-  margin-bottom: 32px;
-  max-width: 380px;
+  color: #cbd5e1;
+  font-size: clamp(13px, 3vw, 20px);
+  margin: 0 0 26px;
+  max-width: 640px;
   line-height: 1.6;
 }
 
 .btn {
-  background: linear-gradient(135deg, #FF9800, #ffb74d);
-  color: #111;
-  padding: 14px 34px;
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  color: #052e16;
+  padding: 14px 32px;
   border: none;
-  border-radius: 40px;
+  border-radius: 50px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: 500;
   text-decoration: none;
-  transition: 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
   display: inline-block;
 }
 
 .btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 28px rgba(255,152,0,0.45);
+  box-shadow: 0 0 28px rgba(74,222,128,0.4);
 }
 
 /* FOOTER */
@@ -160,17 +154,15 @@ footer a:hover { opacity: 0.75; }
 
 <!-- NAVBAR -->
 <nav>
-  <div class="logo">⚡ RISE TODAY</div>
+  <div class="logo">RISE TODAY</div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <h1>RISE TODAY - Gorsa jireenyaa </h1>
-  <p>Tarkaanfi tokko fudhu... Milkaa'inni si eega jira 🔥</p>
-  <a href="/home.html" class="btn">🚀 View Website</a>
+  <h1>🔥 RISE UP DESIGN YOUR FUTURE</h1>
+  <p>"TARKAANFI TOKKO FUDHU.. MILKAA'INNI SI EEGA Jira"</p>
+  <a href="/home.html" class="btn">🚀 Get Started</a>
 </section>
-
-
 
 <!-- FOOTER -->
 <footer id="footer">
