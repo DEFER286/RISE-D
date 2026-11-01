@@ -352,7 +352,7 @@
             results.forEach((data, i) => {
                 (data.items || []).forEach(p => {
                     if (!p.slug) return;
-                    const info = { image: p.image || '', title: p.title || '', cat: cats[i] };
+                    const info = { image: p.image || '', title: p.title || '', cat: cats[i], slug: p.slug };
                     POST_INDEX[cats[i] + '/' + normText(p.slug)] = info;
                     if (p.title) TITLE_INDEX[normText(p.title)] = info;
                 });
@@ -388,12 +388,35 @@
             return d;
         }
 
+        // Barruulee durii (slug/ID jijjiirame) sirreessa: id fi URL isaanii data irraa haaromsa
+        function healSavedList() {
+            let list;
+            try { list = JSON.parse(localStorage.getItem('savedArticlesList')) || []; } catch (e) { return; }
+            const out = [];
+            const seen = new Set();
+            let changed = false;
+            list.forEach(a => {
+                const info = lookupInfo(a, getCategory(a.url));
+                let item = a;
+                if (info && info.slug) {
+                    const url = '/' + info.cat + '/' + info.slug;
+                    if (a.id !== info.slug || a.url !== url) changed = true;
+                    const keepTitle = a.title && a.title !== 'Rise Today Article';
+                    item = { id: info.slug, title: keepTitle ? a.title : (info.title || a.title), url: url };
+                }
+                if (seen.has(item.id)) { changed = true; return; }
+                seen.add(item.id);
+                out.push(item);
+            });
+            if (changed) localStorage.setItem('savedArticlesList', JSON.stringify(out));
+        }
+
         function buildCard(article) {
             const info = lookupInfo(article, getCategory(article.url));
             const catKey = info.cat || getCategory(article.url);
 
             const card = document.createElement('a');
-            card.href = article.url;
+            card.href = info.slug ? '/' + info.cat + '/' + info.slug : article.url;
             card.className = 'saved-card';
             // X button post.html irratti gara /saved.html akka deebi'u
             card.addEventListener('click', () => sessionStorage.setItem('postSource', 'saved'));
@@ -503,7 +526,7 @@
                 });
             });
             renderSaved();                                  // battalumatti agarsiisa
-            loadPostIndex().then(renderSaved).catch(() => {}); // suuraan erga dhufee deebi'ee agarsiisa
+            loadPostIndex().then(() => { healSavedList(); renderSaved(); }).catch(() => {}); // suuraan erga dhufee deebi'ee agarsiisa
         });
 
         function searchSaved() {
