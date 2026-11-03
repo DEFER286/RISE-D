@@ -53,20 +53,67 @@ async function handleForgotPassword() {
 function toggleAuthMode() {
     isSignUpMode = !isSignUpMode;
     setPasswordVisible(false);
-    const forgotEl = document.getElementById('auth-forgot');
-    if (forgotEl) forgotEl.style.display = isSignUpMode ? 'none' : 'block';
-    const titleEl = document.getElementById('auth-modal-title');
-    const switchEl = document.getElementById('auth-switch-text');
-    if (titleEl && switchEl) {
-        if (isSignUpMode) {
-            titleEl.innerText = "Create an Account (Sign Up)";
-            switchEl.innerText = "Already have an account? Sign In";
-        } else {
-            titleEl.innerText = "Sign In to Your Account";
-            switchEl.innerText = "Don't have an account? Sign Up";
-        }
+    const $ = (id) => document.getElementById(id);
+    if ($('auth-forgot')) $('auth-forgot').style.display = isSignUpMode ? 'none' : 'block';
+    if ($('auth-pw-hint')) $('auth-pw-hint').style.display = isSignUpMode ? 'block' : 'none';
+    if ($('auth-modal-title')) $('auth-modal-title').innerText = isSignUpMode ? 'Create an Account' : 'Sign In to Your Account';
+    if ($('auth-submit')) $('auth-submit').innerText = isSignUpMode ? 'SIGN UP' : 'SIGN IN';
+    if ($('auth-password')) $('auth-password').autocomplete = isSignUpMode ? 'new-password' : 'current-password';
+    if ($('auth-switch-text')) {
+        $('auth-switch-text').innerHTML = isSignUpMode
+            ? 'Already have an account? <span class="au-link">SIGN IN</span>'
+            : 'Don\'t have an account yet? <span class="au-link">CREATE ONE NOW</span>';
     }
 }
+
+// === SOCIAL LOGIN (Google / Facebook) ===
+// Supabase irratti provider banaa yoo ta'e qofa button mul'ata. Dirqisiisuuf: const OAUTH_FORCE = ['google'];
+const OAUTH_FORCE = [];
+
+async function handleOAuth(provider) {
+    try {
+        if (typeof sbClient === 'undefined') {
+            alert("Supabase hin fe'amne!");
+            return;
+        }
+        const { error } = await sbClient.auth.signInWithOAuth({
+            provider: provider,
+            options: { redirectTo: window.location.origin + window.location.pathname }
+        });
+        if (error) alert("Rakkina: " + error.message);
+    } catch (e) {
+        alert("Dogoggora: " + e.message);
+    }
+}
+
+async function initSocialButtons() {
+    const box = document.getElementById('auth-social');
+    if (!box) return;
+    let enabled = {};
+    try {
+        const r = await fetch(SUPABASE_URL + '/auth/v1/settings', { headers: { apikey: SUPABASE_KEY } });
+        if (r.ok) {
+            const settings = await r.json();
+            enabled = settings.external || {};
+        }
+    } catch (e) {}
+    let any = false;
+    box.querySelectorAll('[data-provider]').forEach(btn => {
+        const on = enabled[btn.dataset.provider] === true || OAUTH_FORCE.includes(btn.dataset.provider);
+        btn.style.display = on ? 'flex' : 'none';
+        if (on) any = true;
+    });
+    box.style.display = any ? 'block' : 'none';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    initSocialButtons();
+    // Enter tuquun Sign In/Sign Up ergisa
+    ['auth-email', 'auth-password'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleAuthSubmit(); });
+    });
+});
 
 async function handleAuthSubmit() {
     try {
