@@ -1,3 +1,4 @@
+
 backend:
   name: github
   repo: DEFER286/RISE-D
@@ -21,11 +22,17 @@ collections:
             add_to_top: true
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
-              - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: naannoo-kee-ilaali (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
+              - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: naannoo-kee-ilaali (Iddoo duwwaa dhiisi malee sarara xiqqaan walitti fidi)" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Onnachiisoo", name: "body", widget: "markdown" }
               - { label: "Meta Description", name: "description", widget: "string", required: false }
               - { label: "Photo", name: "image", widget: "image", required: false }
+
+              # Photo Attribution
+              - { label: "Photographer Name", name: "imageCredit", widget: "string", required: false, hint: "Maqaa nama suuraa kaasee" }
+              - { label: "Image Source", name: "imageSource", widget: "string", required: false, hint: "Fakkeenya: Unsplash, Pexels, Pixabay" }
+              - { label: "Original Photo URL", name: "imageSourceUrl", widget: "string", required: false, hint: "Link suuraa original" }
+              - { label: "Image License", name: "imageLicense", widget: "string", required: false, hint: "Fakkeenya: Unsplash License" }
 
   # Instructive Stories JSON
   - name: "instructive_data"
@@ -41,11 +48,17 @@ collections:
             add_to_top: true
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
-              - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gatii-kee-beeki (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
+              - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gatii-kee-beeki (Iddoo duwwaa dhiisi malee sarara xiqqaan walitti fidi)" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Barruu Barsiisoo", name: "body", widget: "markdown" }
               - { label: "Meta Description", name: "description", widget: "string", required: false }
               - { label: "Photo", name: "image", widget: "image", required: false }
+
+              # Photo Attribution
+              - { label: "Photographer Name", name: "imageCredit", widget: "string", required: false, hint: "Maqaa nama suuraa kaasee" }
+              - { label: "Image Source", name: "imageSource", widget: "string", required: false, hint: "Fakkeenya: Unsplash, Pexels, Pixabay" }
+              - { label: "Original Photo URL", name: "imageSourceUrl", widget: "string", required: false, hint: "Link suuraa original" }
+              - { label: "Image License", name: "imageLicense", widget: "string", required: false, hint: "Fakkeenya: Unsplash License" }
 
   # Gorsa Barnootaa JSON
   - name: "education_data"
@@ -61,9 +74,14 @@ collections:
             add_to_top: true
             fields:
               - { label: "Mata-duree", name: "title", widget: "string" }
-              - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gorsa-barnootaa (Iddoo duwwaa utuu hin dhiisin sarara xiqqaan walitti fidi)" }
+              - { label: "Slug", name: "slug", widget: "string", hint: "Fakkeenya: gorsa-barnootaa (Iddoo duwwaa dhiisi malee sarara xiqqaan walitti fidi)" }
               - { label: "Guyyaa", name: "date", widget: "datetime" }
               - { label: "Qabiyyee Barruu", name: "body", widget: "markdown" }
               - { label: "Meta Description", name: "description", widget: "string", required: false }
               - { label: "Photo", name: "image", widget: "image", required: false }
-              
+
+              # Photo Attribution
+              - { label: "Photographer Name", name: "imageCredit", widget: "string", required: false, hint: "Maqaa nama suuraa kaasee" }
+              - { label: "Image Source", name: "imageSource", widget: "string", required: false, hint: "Fakkeenya: Unsplash, Pexels, Pixabay" }
+              - { label: "Original Photo URL", name: "imageSourceUrl", widget: "string", required: false, hint: "Link suuraa original" }
+              - { label: "Image License", name: "imageLicense", widget: "string", required: false, hint: "Fakkeenya: Unsplash License" }
