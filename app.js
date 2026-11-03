@@ -129,6 +129,42 @@ async function handleAuthSubmit() {
     }
 }
 
+// === VIEW COUNTER ===
+function formatViews(n) {
+    if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.0', '') + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'K';
+    return String(n);
+}
+
+async function registerView() {
+    try {
+        if (typeof sbClient === 'undefined') return;
+        const slug = getPostSlug();
+        const el = document.getElementById('post-views');
+        if (!slug || !el) return;
+
+        // Nama tokko guyyaatti al tokko qofa lakkaa'ama
+        const key = 'viewed_' + slug;
+        const today = new Date().toISOString().slice(0, 10);
+        let views = null;
+
+        if (localStorage.getItem(key) !== today) {
+            const { data, error } = await sbClient.rpc('increment_view', { p_slug: slug });
+            if (!error) {
+                views = data;
+                localStorage.setItem(key, today);
+            }
+        }
+        if (views === null) {
+            const { data } = await sbClient.from('post_views').select('views').eq('post_slug', slug).maybeSingle();
+            views = data ? data.views : 0;
+        }
+        el.textContent = ' · 👁 ' + formatViews(Number(views));
+    } catch (e) {
+        console.error("View counter error:", e);
+    }
+}
+
 // === LOGOUT + AUTH STATUS ===
 async function updateAuthUI() {
     const el = document.getElementById('auth-status');
@@ -240,7 +276,12 @@ async function loadReactions() {
 }
 
 // === COMMENTS LOGIC ===
+let commentBusy = false;
 async function submitComment() {
+    if (commentBusy) return;
+    commentBusy = true;
+    const sendBtn = document.getElementById('comment-send');
+    if (sendBtn) sendBtn.disabled = true;
     try {
         const slug = getPostSlug();
         if (typeof sbClient === 'undefined') {
@@ -275,25 +316,51 @@ async function submitComment() {
 
         if (!error) {
             textEl.value = '';
-            loadComments();
+            textEl.style.height = 'auto';
+            loadComments(true);
         } else {
             alert("Rakkina Database: " + error.message);
         }
     } catch (e) {
         console.error("Comment submit error:", e);
         alert("Dogoggora: " + e.message);
+    } finally {
+        commentBusy = false;
+        if (sendBtn) sendBtn.disabled = false;
     }
 }
 
 function makeCommentAction(label, onClick) {
     const b = document.createElement('button');
+    b.type = 'button';
     b.textContent = label;
-    b.style.cssText = 'background:none; border:none; padding:0; font-size:12px; cursor:pointer; color:#999;';
     b.addEventListener('click', onClick);
     return b;
 }
 
-async function loadComments() {
+const AVATAR_COLORS = ['#e53935', '#8e24aa', '#3949ab', '#1e88e5', '#00897b', '#43a047', '#fb8c00', '#6d4c41', '#546e7a', '#d81b60'];
+function avatarColor(name) {
+    let h = 0;
+    for (const ch of String(name)) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    return AVATAR_COLORS[h % AVATAR_COLORS.length];
+}
+
+function timeAgo(iso) {
+    const t = new Date(iso).getTime();
+    const s = Math.floor((Date.now() - t) / 1000);
+    if (isNaN(s) || s < 60) return 'Amma';
+    const m = Math.floor(s / 60);
+    if (m < 60) return m + 'm';
+    const hr = Math.floor(m / 60);
+    if (hr < 24) return hr + 'h';
+    const d = Math.floor(hr / 24);
+    if (d < 7) return d + 'd';
+    const w = Math.floor(d / 7);
+    if (w < 5) return w + 'w';
+    return new Date(t).toLocaleDateString();
+}
+
+async function loadComments(scrollToBottom) {
     try {
         if (typeof sbClient === 'undefined') return;
         const slug = getPostSlug();
@@ -305,43 +372,65 @@ async function loadComments() {
             .from('comments')
             .select('*')
             .eq('post_slug', slug)
-            .order('created_at', { ascending: false });
+            .order('created_at', { ascending: true });
 
         if (!error && data) {
             const list = document.getElementById('comment-list');
             if (!list) return;
+            const prevScroll = list.scrollTop;
             list.innerHTML = '';
 
-            data.forEach(c => {
-                const div = document.createElement('div');
-                const isLight = document.body.classList.contains('light-mode');
-                div.style.cssText = isLight
-                    ? 'background:#f5f5f5; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #000000;'
-                    : 'background:#1a1a1a; border-radius:10px; padding:12px; margin-bottom:10px; text-align:left; border-left: 3px solid #ffffff;';
-                const nameColor = isLight ? '#000000' : '#ffffff';
-                const textColor = isLight ? '#333' : '#ccc';
+            if (data.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'cm-empty';
+                empty.textContent = "Yaadni hin jiru. Isa jalqabaa ta'i! 💬";
+                list.appendChild(empty);
+            }
 
-                const nameEl = document.createElement('strong');
-                nameEl.style.color = nameColor;
-                nameEl.textContent = c.user_name || (c.user_email ? c.user_email.split('@')[0] : 'User');
+            data.forEach(c => {
+                const name = c.user_name || (c.user_email ? c.user_email.split('@')[0] : 'User');
+
+                const item = document.createElement('div');
+                item.className = 'cm-item';
+
+                const avatar = document.createElement('div');
+                avatar.className = 'cm-avatar';
+                avatar.textContent = name.charAt(0) || '?';
+                avatar.style.background = avatarColor(name);
+
+                const main = document.createElement('div');
+                main.className = 'cm-main';
+
+                const bubble = document.createElement('div');
+                bubble.className = 'cm-bubble';
+                const nameEl = document.createElement('span');
+                nameEl.className = 'cm-name';
+                nameEl.textContent = name;
                 const textEl = document.createElement('p');
-                textEl.style.cssText = `color:${textColor}; margin:6px 0 0; font-size:14px;`;
+                textEl.className = 'cm-text';
                 textEl.textContent = c.comment_text;
-                div.append(nameEl, textEl);
+                bubble.append(nameEl, textEl);
+
+                const meta = document.createElement('div');
+                meta.className = 'cm-meta';
+                const time = document.createElement('span');
+                time.textContent = timeAgo(c.created_at);
+                meta.appendChild(time);
 
                 // Edit / Delete: yaada ofiisaaf qofa
                 if (myId && c.user_id === myId) {
-                    const actions = document.createElement('div');
-                    actions.style.cssText = 'margin-top:8px; display:flex; gap:16px;';
-                    actions.append(
-                        makeCommentAction('✏️ Edit', () => startEditComment(c, textEl, actions, isLight)),
-                        makeCommentAction('🗑 Delete', () => deleteComment(c.id))
+                    meta.append(
+                        makeCommentAction('Edit', () => startEditComment(c, bubble, meta)),
+                        makeCommentAction('Delete', () => deleteComment(c.id))
                     );
-                    div.append(actions);
                 }
 
-                list.appendChild(div);
+                main.append(bubble, meta);
+                item.append(avatar, main);
+                list.appendChild(item);
             });
+
+            list.scrollTop = scrollToBottom ? list.scrollHeight : prevScroll;
 
             const countEl = document.getElementById('comment-count');
             const headingCountEl = document.getElementById('comment-heading-count');
@@ -353,16 +442,19 @@ async function loadComments() {
     }
 }
 
-function startEditComment(c, textEl, actions, isLight) {
+function startEditComment(c, bubble, meta) {
+    const box = document.createElement('div');
+    box.className = 'cm-edit-box';
     const ta = document.createElement('textarea');
     ta.value = c.comment_text;
-    ta.style.cssText = `width:100%; box-sizing:border-box; height:80px; resize:none; margin-top:6px; padding:8px; font-size:14px; border-radius:8px; outline:none; border:1px solid ${isLight ? '#ccc' : '#555'}; background:${isLight ? '#fff' : '#111'}; color:${isLight ? '#000' : '#fff'};`;
-    textEl.replaceWith(ta);
+    ta.maxLength = 1000;
+    box.appendChild(ta);
+    bubble.replaceWith(box);
     ta.focus();
 
-    actions.innerHTML = '';
-    actions.append(
-        makeCommentAction('💾 Save', async () => {
+    meta.innerHTML = '';
+    meta.append(
+        makeCommentAction('Save', async () => {
             const newText = ta.value.trim();
             if (!newText) {
                 alert("Yaadni duwwaa ta'uu hin danda'u!");
@@ -385,7 +477,7 @@ function startEditComment(c, textEl, actions, isLight) {
                 alert("Dogoggora: " + e.message);
             }
         }),
-        makeCommentAction('✖ Cancel', () => loadComments())
+        makeCommentAction('Cancel', () => loadComments())
     );
 }
 
