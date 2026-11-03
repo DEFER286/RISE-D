@@ -4,7 +4,7 @@
     <meta name="robots" content="index, follow" />
     <meta name="robots" content="max-image-preview:large">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
     <title>RiseToday - Barruu Guutuu</title>
 
     <meta property="og:type" content="article" />
@@ -78,9 +78,38 @@
         body.light-mode .related-title { color: #000000; }
         body.light-mode .related-card { background-color: #f9f9f9; border-left-color: #000000; color: #333; }
         body.light-mode .related-card-title { color: #000; }
-        body.light-mode #comment-section { border-top-color: #ccc !important; }
-        body.light-mode #comment-section h3 { color: #000000 !important; }
-        body.light-mode #comment-text { background:#f5f5f5 !important; color:#000 !important; border-color:#ccc !important; }
+        /* === COMMENTS MODAL (Facebook style) === */
+        #comments-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 900; align-items: flex-end; justify-content: center; }
+        #comments-sheet { width: 100%; max-width: 640px; height: 88vh; height: 88dvh; background: #242526; color: #e4e6eb; border-radius: 16px 16px 0 0; display: flex; flex-direction: column; overflow: hidden; animation: cmSlide 0.25s ease-out; }
+        @keyframes cmSlide { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .cm-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #3a3b3c; font-weight: 700; font-size: 16px; }
+        .cm-close { background: none; border: none; color: inherit; font-size: 22px; cursor: pointer; line-height: 1; padding: 4px 8px; }
+        #auth-status { padding: 8px 16px; font-size: 12px; color: #b0b3b8; border-bottom: 1px solid #3a3b3c; }
+        #comment-list { flex: 1; overflow-y: auto; padding: 14px 14px 6px; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+        .cm-empty { text-align: center; color: #b0b3b8; padding: 40px 10px; font-size: 14px; }
+        .cm-item { display: flex; gap: 10px; margin-bottom: 14px; align-items: flex-start; }
+        .cm-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #ffffff; font-size: 15px; text-transform: uppercase; }
+        .cm-main { min-width: 0; flex: 1; }
+        .cm-bubble { background: #3a3b3c; border-radius: 18px; padding: 8px 12px; display: inline-block; max-width: 100%; box-sizing: border-box; }
+        .cm-name { font-weight: 700; font-size: 13px; color: #e4e6eb; display: block; }
+        .cm-text { font-size: 15px; color: #e4e6eb; line-height: 1.4; white-space: pre-wrap; word-break: break-word; margin: 2px 0 0; }
+        .cm-meta { display: flex; gap: 14px; font-size: 12px; color: #b0b3b8; padding: 4px 12px 0; font-weight: 600; align-items: center; }
+        .cm-meta button { background: none; border: none; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+        .cm-edit-box textarea { width: 100%; box-sizing: border-box; min-height: 64px; resize: none; background: #3a3b3c; color: #e4e6eb; border: 1px solid #555; border-radius: 14px; padding: 8px 12px; font-size: 16px; font-family: inherit; outline: none; }
+        .cm-inputbar { display: flex; align-items: flex-end; gap: 8px; padding: 10px 12px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid #3a3b3c; background: #242526; }
+        #comment-text { flex: 1; resize: none; max-height: 110px; min-height: 40px; height: 40px; background: #3a3b3c; color: #e4e6eb; border: none; border-radius: 20px; padding: 10px 14px; font-size: 16px; font-family: inherit; outline: none; box-sizing: border-box; line-height: 1.3; overflow-y: auto; }
+        #comment-text::placeholder { color: #b0b3b8; }
+        #comment-send { background: none; border: none; cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center; }
+        #comment-send:disabled { opacity: 0.4; cursor: default; }
+
+        body.light-mode #comments-sheet { background: #ffffff; color: #050505; }
+        body.light-mode .cm-header, body.light-mode #auth-status, body.light-mode .cm-inputbar { border-color: #e4e6eb; background: #ffffff; }
+        body.light-mode #auth-status, body.light-mode .cm-meta, body.light-mode .cm-empty { color: #65676b; }
+        body.light-mode .cm-bubble { background: #f0f2f5; }
+        body.light-mode .cm-name, body.light-mode .cm-text { color: #050505; }
+        body.light-mode #comment-text, body.light-mode .cm-edit-box textarea { background: #f0f2f5; color: #050505; }
+        body.light-mode .cm-edit-box textarea { border-color: #ccc; }
+        body.light-mode #comment-text::placeholder { color: #65676b; }
     </style>
     
     <link rel="icon" type="image/png" href="/images/favicon.png">
@@ -115,17 +144,6 @@
         <!-- Dynamic Action Toolbar -->
         <div id="dynamic-action-toolbar"></div>
 
-        <!-- Comment Section -->
-        <div id="comment-section" style="display:none; margin-top:30px; padding-top:20px; border-top:1px solid #333;">
-            <h3 style="color:#ffffff; font-size:16px; margin-bottom:16px;">💬 Yaada Kenname (<span id="comment-heading-count">0</span>)</h3>
-            <div id="auth-status" style="font-size:13px; color:#aaa; margin-bottom:14px;"></div>
-            <div id="comment-list"></div>
-            <div style="margin-top:16px;">
-                <textarea id="comment-text" placeholder="Yaada kee barreessi..." style="width:100%;background:#1a1a1a;border:1px solid #444;color:#fff;border-radius:8px;padding:12px;font-size:14px;margin-bottom:10px;box-sizing:border-box;outline:none;resize:none;height:90px;"></textarea>
-                <button onclick="submitComment()" style="background:#ffffff;color:#000;border:none;padding:10px 24px;border-radius:20px;font-weight:bold;cursor:pointer;font-size:14px;">Post Comment</button>
-            </div>
-        </div>
-
         <div class="subscribe-inline">
             <div class="subscribe-inline-heading">Discover more from RISE.D</div>
             <p class="subscribe-inline-text">Subscribe to get the latest posts sent to your email.</p>
@@ -138,6 +156,24 @@
         <div class="related-section" id="related-section" style="display:none;">
             <div class="related-title">📖 Barruulee Biroo Dubbisi</div>
             <div class="related-grid" id="related-grid"></div>
+        </div>
+    </div>
+
+    <!-- Comments Modal -->
+    <div id="comments-modal" onclick="if (event.target === this) closeComments()">
+        <div id="comments-sheet" role="dialog" aria-modal="true" aria-label="Yaada">
+            <div class="cm-header">
+                <span>💬 Yaada Kenname (<span id="comment-heading-count">0</span>)</span>
+                <button class="cm-close" type="button" onclick="closeComments()" aria-label="Cufi">✕</button>
+            </div>
+            <div id="auth-status"></div>
+            <div id="comment-list"></div>
+            <div class="cm-inputbar">
+                <textarea id="comment-text" rows="1" maxlength="1000" placeholder="Yaada kee barreessi..."></textarea>
+                <button id="comment-send" type="button" onclick="submitComment()" aria-label="Ergi">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#2d88ff"><path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -268,15 +304,66 @@
             }
         }
 
-        /* === COMMENTS TOGGLE === */
-        function toggleComments() {
-            const section = document.getElementById('comment-section');
-            if (!section) return;
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-            if(section.style.display === 'block') {
-                section.scrollIntoView({ behavior: 'smooth' });
-            }
+        /* === COMMENTS MODAL === */
+        let commentsOpen = false;
+
+        function openComments() {
+            const modal = document.getElementById('comments-modal');
+            if (!modal || commentsOpen) return;
+            commentsOpen = true;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            history.pushState({ rc: 1 }, '');   // back button modal cufa
+            loadComments(true);
+            fitCommentsToViewport();
         }
+
+        function closeComments(fromPop) {
+            const modal = document.getElementById('comments-modal');
+            if (!modal || !commentsOpen) return;
+            commentsOpen = false;
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            const sheet = document.getElementById('comments-sheet');
+            if (sheet) { sheet.style.marginBottom = ''; sheet.style.maxHeight = ''; }
+            if (!fromPop && history.state && history.state.rc) history.back();
+        }
+
+        function toggleComments() { commentsOpen ? closeComments() : openComments(); }
+
+        window.addEventListener('popstate', () => { if (commentsOpen) closeComments(true); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && commentsOpen) closeComments(); });
+
+        // Keyboard bilbilaa yeroo banamu input bar ol ka'a
+        function fitCommentsToViewport() {
+            const sheet = document.getElementById('comments-sheet');
+            const vv = window.visualViewport;
+            if (!commentsOpen || !sheet || !vv) return;
+            const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+            sheet.style.marginBottom = kb + 'px';
+            sheet.style.maxHeight = (vv.height * 0.98) + 'px';
+        }
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', fitCommentsToViewport);
+            window.visualViewport.addEventListener('scroll', fitCommentsToViewport);
+        }
+
+        // Textarea ofumaan guddata + Enter (desktop) ergisa
+        document.addEventListener('DOMContentLoaded', () => {
+            const ta = document.getElementById('comment-text');
+            if (!ta) return;
+            ta.addEventListener('input', () => {
+                ta.style.height = 'auto';
+                ta.style.height = Math.min(ta.scrollHeight, 110) + 'px';
+            });
+            ta.addEventListener('keydown', (e) => {
+                const touch = window.matchMedia('(pointer: coarse)').matches;
+                if (e.key === 'Enter' && !e.shiftKey && !touch) {
+                    e.preventDefault();
+                    submitComment();
+                }
+            });
+        });
 
         /* === RELATED POSTS LOGIC === */
         function loadRelatedPosts(currentItems, currentSlug, currentCat) {
