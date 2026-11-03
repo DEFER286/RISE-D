@@ -120,6 +120,7 @@
         .au-field { position: relative; margin-bottom: 16px; }
         .au-field input { width: 100%; box-sizing: border-box; height: 52px; border: 1px solid #8a8a8a; border-radius: 50px; background: transparent; color: var(--au-text); padding: 0 22px; font-size: 16px; font-family: inherit; outline: none; }
         .au-field.pw input { padding-right: 54px; }
+        .au-field input:-webkit-autofill, .au-field input:-webkit-autofill:focus { -webkit-box-shadow: 0 0 0 1000px var(--au-bg) inset !important; -webkit-text-fill-color: var(--au-text) !important; caret-color: var(--au-text); }
         .au-field input:focus { border: 2px solid var(--au-text); padding-left: 21px; }
         .au-field label { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: #8a8a8a; font-size: 16px; padding: 0 4px; pointer-events: none; transition: all 0.15s ease; }
         .au-field input:focus + label, .au-field input:not(:placeholder-shown) + label { top: 0; font-size: 12px; background: var(--au-bg); color: var(--au-text); }
@@ -132,6 +133,16 @@
         .au-or { display: flex; align-items: center; gap: 14px; margin: 22px 0 16px; font-size: 14px; color: var(--au-text); }
         .au-or::before, .au-or::after { content: ''; flex: 1; height: 1px; background: var(--au-line); }
         .au-social { width: 100%; height: 48px; display: flex; align-items: center; justify-content: center; gap: 12px; background: transparent; color: var(--au-text); border: 1px solid #8a8a8a; border-radius: 50px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 12px; font-family: inherit; }
+
+        /* === PHOTO CREDIT CARD === */
+        #post-image-container.photo-card { background: #262626; border-radius: 20px; padding: 14px; margin: 6px 0 20px; }
+        .photo-credit { padding: 18px 12px 6px; font-size: 15px; color: #b0b0b0; }
+        .photo-credit p { margin: 0 0 14px; line-height: 1.4; }
+        .photo-credit p:last-child { margin-bottom: 6px; }
+        .photo-credit a { color: #4ade80; text-decoration: underline; }
+        body.light-mode #post-image-container.photo-card { background: #f0f0f0; }
+        body.light-mode .photo-credit { color: #555555; }
+        body.light-mode .photo-credit a { color: #0b6b4a; }
     </style>
     
     <link rel="icon" type="image/png" href="/images/favicon.png">
@@ -320,6 +331,7 @@
                         if (post.image) {
                             document.getElementById('post-image-container').innerHTML = 
                             `<img src="${post.image}" alt="${post.title}" itemprop="image" fetchpriority="high" style="width:100%; height:auto; max-height:450px; object-fit:cover; border-radius:12px; display:block; margin:0 auto;">`;
+                            renderPhotoCredit(post);
                         }
                         
                         loadRelatedPosts(data.items, slug, category);
@@ -328,6 +340,65 @@
                     }
                 })
                 .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
+        }
+
+        /* === PHOTO CREDIT (Photographer / Source / License) === */
+        function getPhotoCredit(post) {
+            const keys = Object.keys(post || {});
+            const find = (exact, test) => {
+                for (const k of exact) {
+                    if (typeof post[k] === 'string' && post[k].trim()) return post[k].trim();
+                }
+                for (const k of keys) {
+                    if (test.test(k) && typeof post[k] === 'string' && post[k].trim()) return post[k].trim();
+                }
+                return '';
+            };
+            return {
+                photographer: find(['photographer', 'photographer_name', 'photo_credit', 'image_credit'], /photograph/i),
+                source: find(['image_source', 'photo_source', 'source'], /(image|photo|img).*source|^source$/i),
+                url: find(['original_photo_url', 'original_image_url', 'original_url', 'photo_url', 'image_original_url', 'source_url'], /original|(photo|image|img).*(url|link)|^(url|link)$/i),
+                license: find(['image_license', 'photo_license', 'license'], /licen/i)
+            };
+        }
+
+        function renderPhotoCredit(post) {
+            const c = getPhotoCredit(post);
+            const safeUrl = /^https?:\/\//i.test(c.url) ? c.url : '';
+            if (!c.photographer && !c.source && !safeUrl && !c.license) return;
+
+            const container = document.getElementById('post-image-container');
+            if (!container) return;
+            container.classList.add('photo-card');
+
+            const box = document.createElement('div');
+            box.className = 'photo-credit';
+
+            if (c.photographer) {
+                const p = document.createElement('p');
+                p.textContent = 'Photo: ' + c.photographer;
+                box.appendChild(p);
+            }
+            if (c.source || safeUrl) {
+                const p = document.createElement('p');
+                p.appendChild(document.createTextNode('Source: ' + (c.source || '')));
+                if (safeUrl) {
+                    if (c.source) p.appendChild(document.createTextNode(' · '));
+                    const a = document.createElement('a');
+                    a.href = safeUrl;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.textContent = 'view original';
+                    p.appendChild(a);
+                }
+                box.appendChild(p);
+            }
+            if (c.license) {
+                const p = document.createElement('p');
+                p.textContent = 'License: ' + c.license;
+                box.appendChild(p);
+            }
+            container.appendChild(box);
         }
 
         /* === SHARE LOGIC === */
