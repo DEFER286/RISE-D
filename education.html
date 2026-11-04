@@ -62,15 +62,11 @@
         .theme-btn { width: 100%; background: #333333; color: #ffffff; border: none; padding: 10px; font-size: 14px; font-weight: bold; border-radius: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit; transition: background 0.3s, color 0.3s; }
 
         .hero {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.75)), url('/images/hero-bg.webp');
-            background-color: #111111;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('/images/hero-bg.webp');
             background-size: cover; background-position: center; background-repeat: no-repeat;
             border-radius: 0 0 24px 24px; padding: 40px 20px 30px; text-align: center;
             min-height: 100px;
-            color: #ffffff;
         }
-        .hero h1 { color: #ffffff; font-size: 2em; margin: 0 0 10px; font-weight: 800; }
-        .hero p  { color: rgba(255, 255, 255, 0.88); margin: 0; }
 
         .unified-grid {
             display: grid; grid-template-columns: repeat(2, 1fr);
@@ -98,6 +94,7 @@
         /* === 2. DARK MODE STYLES === */
         body.dark-mode { background: #000000 !important; background-attachment: fixed !important; color: #b3b3b3; }
         body.dark-mode .menu-trigger-btn { background: rgba(0,0,0,0.5); border-color: #333; }
+        body.dark-mode .hero { background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('/images/hero-bg.webp'); }
         body.dark-mode .mini-card { background-color: #1a1a1a; border-color: transparent; }
         body.dark-mode .mini-card-placeholder { background: #2a2a2a; color: #aaa; }
         body.dark-mode .mini-card-title { color: #ffffff; }
@@ -134,8 +131,8 @@
     </div>
 
     <div class="hero">
-        <h1>🎓 Gorsa</h1>
-        <p>Gorsaa fi barnootaa jireenyaa barbaachisan.</p>
+        <h1 style="color:inherit; font-size:2em; margin:0 0 10px; font-weight:800;">🎓 Gorsa</h1>
+        <p style="color:inherit; opacity: 0.8; margin:0;">Gorsaa fi barnootaa jireenyaa barbaachisan.</p>
     </div>
 
     <div style="padding:16px;">
