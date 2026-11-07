@@ -143,6 +143,7 @@
         body.light-mode #post-image-container.photo-card { background: #f0f0f0; }
         body.light-mode .photo-credit { color: #555555; }
         body.light-mode .photo-credit a { color: #0b6b4a; }
+        #post-content code { background: rgba(128,128,128,0.22); padding: 1px 6px; border-radius: 4px; font-family: monospace; font-size: 0.95em; }
     </style>
     
     <link rel="icon" type="image/png" href="/images/favicon.png">
@@ -310,9 +311,7 @@
                         const authorColor = document.body.classList.contains('light-mode') ? '#000' : '#fff';
                         document.getElementById('post-date').innerHTML = `<a href="/about.html" style="color:${authorColor}; text-decoration:none;"><strong>by Defera</strong></a> · ${formatted} · ${minutes} min read`;
 
-                        let parsedBody = post.body.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-                        parsedBody = parsedBody.replace(/\n/g, '<br>');
-                        document.getElementById('post-content').innerHTML = parsedBody;
+                        document.getElementById('post-content').innerHTML = renderPostBody(post.body);
 
                         // Toolbar dynamically inject gochuu
                         document.getElementById('dynamic-action-toolbar').innerHTML = `
@@ -340,6 +339,23 @@
                     }
                 })
                 .catch(() => { document.getElementById('post-title').innerText = "Dogoggorri uumameera!"; });
+        }
+
+        /* === POST BODY RENDERER === */
+        // Admin (Decap CMS) markdown keessatti "\\" (backslash) dabalu, fi *italic*, _italic_, `code` ni hubata.
+        function renderPostBody(raw) {
+            let t = String(raw || '');
+            // 1) Backslash escape (\<, \*, \_ ...) gara qubee idileetti deebisa
+            t = t.replace(/\\([\\`*_{}\[\]()#+\-.!<>|~])/g, '$1');
+            // 2) `code`
+            t = t.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+            // 3) **bold**
+            t = t.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            // 4) *italic* fi _italic_
+            t = t.replace(/(^|[^*\w])\*(?=\S)([^*\n]*?\S)\*(?![*\w])/g, '$1<i>$2</i>');
+            t = t.replace(/(^|[^\w])_(?=\S)([^_\n]*?\S)_(?!\w)/g, '$1<i>$2</i>');
+            // 5) sarara haaraa
+            return t.replace(/\n/g, '<br>');
         }
 
         /* === PHOTO CREDIT (Photographer / Source / License) === */
